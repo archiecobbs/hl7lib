@@ -1,0 +1,132 @@
+<!-- $Id$ -->
+
+<project name="hl7lib" default="build"
+  xmlns:dellroad="urn:org.dellroad.ant"
+  xmlns:antcontrib="urn:net.sf.antcontrib"
+  xmlns:ivy="urn:org.apache.ivy.ant">
+
+    <!-- Configure build & stuff -->
+    <property name="library.version" value="1.0"/>
+    <property name="javac.compiler.flags" value="-Xlint:all"/>
+
+    <!-- Import generic build macros -->
+    <import file="${basedir}/src/build/macros.xml"/>
+
+    <!-- Determine SVN revision and full version -->
+    <dellroad:svnrevision property="svn.revision"/>
+    <property name="full.version" value="${library.version}.${svn.revision}"/>
+    <echo message=""/>
+    <echo message="Version is ${library.version}.${svn.revision}"/>
+    <echo message=""/>
+
+    <!-- Classpath targets -->
+    <target name="javac.classpath" unless="javac.classpath.resolved">
+        <dellroad:ivypath pathid="javac.classpath" conf="javac"/>
+        <property name="javac.classpath.resolved" value="true"/>
+    </target>
+
+    <target name="runtime.classpath" unless="runtime.classpath.resolved">
+        <dellroad:ivypath pathid="runtime.classpath" conf="runtime"/>
+        <property name="runtime.classpath.resolved" value="true"/>
+    </target>
+
+    <target name="unittest.classpath" unless="unittest.classpath.resolved">
+        <dellroad:ivypath pathid="unittest.classpath" conf="test"/>
+        <property name="unittest.classpath.resolved" value="true"/>
+    </target>
+
+    <!-- Main JAR -->
+    <target name="jar" depends="javac" unless="jar.completed">
+        <mkdir dir="build/dist"/>
+        <delete file="build/dist/${ant.project.name}-${full.version}.jar"/>
+        <jar destfile="build/dist/${ant.project.name}-${full.version}.jar">
+            <fileset dir="build/classes"/>
+        </jar>
+        <property name="jar.completed" value="true"/>
+    </target>
+
+    <!-- All distribution files -->
+    <target name="jars" depends="jar, javadoc" unless="jars.completed">
+        <mkdir dir="build/dist"/>
+        <delete file="build/dist/${ant.project.name}-sources-${full.version}.zip"/>
+        <zip destfile="build/dist/${ant.project.name}-sources-${full.version}.zip">
+            <fileset dir="src/java" includes="**/*"/>
+        </zip>
+        <delete file="build/dist/${ant.project.name}-javadocs-${full.version}.zip"/>
+        <zip destfile="build/dist/${ant.project.name}-javadocs-${full.version}.zip">
+            <fileset dir="build/reports/javadoc" includes="**/*"/>
+        </zip>
+        <property name="jars.completed" value="true"/>
+    </target>
+
+    <!-- Build Javadocs -->
+    <target name="javadoc" depends="javac" unless="javadoc.completed">
+        <delete dir="build/javadoc"/>
+        <mkdir dir="build/javadoc"/>
+        <copy todir="build/javadoc">
+            <fileset dir="src/java/org/dellroad/hl7" includes="overview.html"/>
+            <filterset>
+                <filter token="VERSION" value="${full.version}"/>
+            </filterset>
+        </copy>
+        <dellroad:javadoc overview="build/javadoc/overview.html">
+            <additional-classpath>
+                <pathelement path="build/classes"/>
+            </additional-classpath>
+            <links>
+                <link href="http://download.oracle.com/javase/6/docs/api/"/>
+                <link href="http://download.oracle.com/javaee/6/api/"/>
+                <link href="http://www.slf4j.org/api/"/>
+            </links>
+        </dellroad:javadoc>
+        <property name="javadoc.completed" value="true"/>
+    </target>
+
+    <!-- Checkstyle the source -->
+    <target name="checkstyle" description="Run checkstyle report"
+      depends="javac.classpath, unittest.classpath, checkstyle.classpath"
+      unless="checkstyle.completed">
+        <dellroad:checkstyle maxWarnings="0" maxErrors="0"/>
+        <property name="checkstyle.completed" value="true"/>
+    </target>
+
+    <!-- Run unit tests -->
+    <target name="tests" description="Run unit tests"
+      depends="javac, unittest.classpath, testng.classpath, cobertura.classpath"
+      unless="tests.completed">
+        <copy todir="build/test" overwrite="true">
+            <fileset dir="src/test">
+                <include name="**/*.xml"/>
+            </fileset>
+        </copy>
+        <dellroad:unit-tests/>
+        <property name="tests.completed" value="true"/>
+    </target>
+
+    <!-- Publish reports -->
+    <target name="publish" description="Publish build results" depends="reports">
+
+        <!-- Remove exisiting stuff first -->
+        <delete includeemptydirs="false">
+            <fileset dir="publish">
+                <include name="**/*"/>
+            </fileset>
+        </delete>
+
+        <!-- Reports -->
+        <mkdir dir="publish/reports"/>
+        <copy todir="publish/reports">
+            <fileset dir="build/reports">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- Reports target -->
+    <target name="reports-project" depends="javadoc, checkstyle, tests"/>
+
+    <!-- Default target -->
+    <target name="build" depends="clean, jars, reports"/>
+
+</project>
+
