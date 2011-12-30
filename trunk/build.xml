@@ -31,7 +31,11 @@
     </target>
 
     <target name="unittest.classpath" unless="unittest.classpath.resolved">
-        <dellroad:ivypath pathid="unittest.classpath" conf="test"/>
+        <dellroad:ivypath pathid="unittest.classpath.base" conf="test"/>
+        <path id="unittest.classpath">
+            <path refid="unittest.classpath.base"/>
+            <pathelement path="src/test"/>
+        </path>
         <property name="unittest.classpath.resolved" value="true"/>
     </target>
 

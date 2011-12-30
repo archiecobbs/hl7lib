@@ -41,7 +41,7 @@ public final class XMLConverter {
     public static final String HL7_NAMESPACE_URI = null;
 
     /**
-     * XML tag name used by {@link #toXML(HL7Message)}.
+     * XML tag name used by {@link #toXML}.
      */
     public static final String HL7_TAG = "HL7";
 
@@ -65,7 +65,9 @@ public final class XMLConverter {
         } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
         }
-        return documentBuilder.getDOMImplementation().createDocument(HL7_NAMESPACE_URI, HL7_TAG, null);
+        Document document = documentBuilder.getDOMImplementation().createDocument(HL7_NAMESPACE_URI, HL7_TAG, null);
+        document.setXmlStandalone(true);
+        return document;
     }
 
     /**
