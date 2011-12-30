@@ -19,8 +19,7 @@ public abstract class Input1Test extends InputTest {
 
     @BeforeClass
     public void loadMessages() throws HL7ContentException, IOException {
-        List<HL7Message> list = readMessages(
-          Input1Test.class.getResourceAsStream("input1.txt"));
+        List<HL7Message> list = readMessages(Input1Test.class.getResourceAsStream("input1.txt"));
         assert list.size() == 2;
         this.msg1 = list.get(0);
         this.msg2 = list.get(1);

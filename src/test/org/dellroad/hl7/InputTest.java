@@ -20,8 +20,7 @@ public abstract class InputTest {
     /**
      * Reads all messages from the reader, then closes it.
      */
-    protected List<HL7Message> readMessages(HL7Reader reader)
-      throws HL7ContentException, IOException {
+    protected List<HL7Message> readMessages(HL7Reader reader) throws HL7ContentException, IOException {
         ArrayList<HL7Message> list = new ArrayList<HL7Message>();
         while (true) {
             try {
@@ -39,9 +38,8 @@ public abstract class InputTest {
      *
      * @see HL7FileReader
      */
-    protected List<HL7Message> readMessages(InputStream in)
-      throws HL7ContentException, IOException {
-        return readMessages(new HL7FileReader(in));
+    protected List<HL7Message> readMessages(InputStream in) throws HL7ContentException, IOException {
+        return this.readMessages(new HL7FileReader(in));
     }
 }
 

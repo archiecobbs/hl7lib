@@ -25,8 +25,7 @@ public class XMLConverterTest extends InputTest {
 
     @BeforeClass
     public void loadMessage() throws HL7ContentException, IOException {
-        this.msg = readMessages(
-          getClass().getResourceAsStream("input3.txt")).iterator().next();
+        this.msg = this.readMessages(this.getClass().getResourceAsStream("input3.txt")).iterator().next();
     }
 
     @Test(dataProvider = "xmlTests")
@@ -36,7 +35,14 @@ public class XMLConverterTest extends InputTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         XMLConverter.stream(doc, out);
         InputStream in = new ByteArrayInputStream(out.toByteArray());
-        compare(in, getClass().getResourceAsStream(resource));
+        try {
+            this.compare(in, getClass().getResourceAsStream(resource));
+        } catch (RuntimeException e) {
+            System.out.println("Mismatched XML:");
+            System.out.write(out.toByteArray());
+            System.out.flush();
+            throw e;
+        }
     }
 
     @DataProvider(name = "xmlTests")
@@ -47,17 +53,15 @@ public class XMLConverterTest extends InputTest {
         return list.iterator();
     }
 
-    public void compare(InputStream actual, InputStream expected)
-      throws IOException {
+    public void compare(InputStream actual, InputStream expected) throws IOException {
         int line = 1;
         int pos = 0;
         while (true) {
             int byte1 = actual.read();
             int byte2 = expected.read();
             if (byte1 != byte2) {
-                throw new RuntimeException("difference at " + line + ":"
-                  + pos + ": expected " + format(byte1) + " but read "
-                  + format(byte2));
+                throw new RuntimeException("difference at " + line + ":" + pos
+                  + ": expected " + this.format(byte1) + " but read " + this.format(byte2));
             }
             switch (byte1) {
             case -1:
