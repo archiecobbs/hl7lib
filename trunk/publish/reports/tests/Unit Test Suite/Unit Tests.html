@@ -1,0 +1,1195 @@
+<html>
+<head>
+<title>TestNG:  Unit Tests</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Unit Tests</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>223/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Thu Dec 29 21:37:42 CST 2011</td>
+</tr>
+<tr><td>Total time:</td><td>0 seconds (370 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testACK()'><b>testACK</b><br>Test class: org.dellroad.hl7.MSHSegmentTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testBogus()'><b>testBogus</b><br>Test class: org.dellroad.hl7.HL7SepsTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testComplex()'><b>testComplex</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: abc~def, [[[Ljava.lang.String;@238b8914</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testComplex()'><b>testComplex</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: ab\F\cd&efg^hijk~foo^b&ar~bleh&&s~~adf^^a, [[[Ljava.lang.String;@1dd49247</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testConstructor()'><b>testConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testCopyConstructor()'><b>testCopyConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testDefault()'><b>testDefault</b><br>Test class: org.dellroad.hl7.HL7SepsTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testEmpty()'><b>testEmpty</b><br>Test class: org.dellroad.hl7.HL7FieldTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: f, $F$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: r, $R$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: c, $S$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: s, $T$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: $, $E$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xxf, xx$F$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xxr, xx$R$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xxc, xx$S$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xxs, xx$T$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xx$, xx$E$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: fxx, $F$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: rxx, $R$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: cxx, $S$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: sxx, $T$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: $xx, $E$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yyfxx, yy$F$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yyrxx, yy$R$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yycxx, yy$S$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yysxx, yy$T$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yy$xx, yy$E$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: frcs$, $F$$R$$S$$T$$E$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: aafrcs$zz, aa$F$$R$$S$$T$$E$zz</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscape()'><b>testEscape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: a serf circus, a $T$e$R$$F$ $S$i$R$$S$u$T$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeFail()'><b>testEscapeFail</b><br>Test class: org.dellroad.hl7.HL7SepsTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: f, $F$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: r, $R$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: c, $S$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: s, $T$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: $, $E$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xxf, xx$F$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xxr, xx$R$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xxc, xx$S$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xxs, xx$T$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: xx$, xx$E$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: fxx, $F$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: rxx, $R$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: cxx, $S$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: sxx, $T$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: $xx, $E$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yyfxx, yy$F$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yyrxx, yy$R$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yycxx, yy$S$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yysxx, yy$T$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: yy$xx, yy$E$xx</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: frcs$, $F$$R$$S$$T$$E$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: aafrcs$zz, aa$F$$R$$S$$T$$E$zz</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testEscapeReverse()'><b>testEscapeReverse</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: a serf circus, a $T$e$R$$F$ $S$i$R$$S$u$T$</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testExceptions()'><b>testExceptions</b><br>Test class: org.dellroad.hl7.HL7FieldTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 3, SendingApplication</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 4, SendingFacility</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 5, ReceivingApplication</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 6, ReceivingFacility</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 7, Timestamp</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 9, MessageType</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 10, ControlID</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 11, ProcessingID</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testFields()'><b>testFields</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: 12, VersionID</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: , /, 0, -1, [I@6ecf829d</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: /, /, 0, -1, [I@79884a40</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: /a, /, 0, -1, [I@62c2ee15</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: a/a, /, 0, -1, [I@6b9cd75a</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: a//a, /, 0, -1, [I@5fe8ce8</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: a//, /, 0, -1, [I@ad4d66b</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: //a, /, 0, -1, [I@1b49105b</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: abcdef, /, 0, -1, [I@59d0d45b</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: ab/cd/ef, /, 0, -1, [I@1d25d06e</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: ab/cd/ef, /, 2, 4, [I@1d96f4b5</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: ab/cd/ef, /, 2, 5, [I@219ba640</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7UtilTest.testFind()'><b>testFind</b><br>Test class: org.dellroad.hl7.HL7UtilTest<br>Parameters: ab/cd/ef, /, 2, 6, [I@71bfc4fc</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7UtilTest@1232784a</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testFindSegment()'><b>testFindSegment</b><br>Test class: org.dellroad.hl7.HL7MessageTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.0, 0, MSH</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.1, 0, |</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.2, 0, ^~\&</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.3, 0, ST01</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.4, 0, B</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.5, 0, IM</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.6, 0, B</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.7, 0, 20061211154319</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.8, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.9.1, 0, ADT</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.9.2, 0, A08</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.10, 0, 6917898</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.11, 0, P</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.12, 0, 2.2</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.13, 0, 6917898</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.14, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.15, 0, AL</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.16, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.17, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.18, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.19, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.20, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.21, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.22, 0, 2.2b</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.23, 0, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: EVN.1, 0, A08</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: EVN.5, 0, MRP</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.1, 0, 1</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.2.1, 0, 01001991</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.2.2, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.2.3, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.2.4, 0, ST01</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.2.5, 0, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.1, 0, 988747372</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.2, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.3, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.4, 0, ST01B</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.5, 0, MR</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.6, 0, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.1, 1, 983928341</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.2, 1, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.3, 1, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.4, 1, ST01C</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.5, 1, MR</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.6, 1, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.1, 2, 93823848</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.2, 2, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.3, 2, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.4, 2, ST01</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.5, 2, PI</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3.6, 2, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.4, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.5.1, 0, JONES6</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.5.2, 0, SMITH</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.5.3, 0, P</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.5.4, 0, ""</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.11.1, 0, 123 MAIN ST</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1, 0, AAA</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1.2.1, 0, 111</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1.2.2, 0, 222</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1.2.3, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1.2.4, 0, 444</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.2, 0, foobar</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.2.1.2, 0, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.3, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.3, 1, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.3, 2, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.3, 3, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.4.1, 0, escapes1=:;~\&</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGet()'><b>testGet</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.4.2, 0, escapes2=|^~\&</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.0, 0, MSH</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.1, 0, \F\</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.2, 0, \S\\R\\E\\T\</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.8, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.9, 0, ADT^A08</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.14, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.21, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.22, 0, 2.2b</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: MSH.23, 0, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: EVN.1, 0, A08</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: EVN.5, 0, MRP</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.3, 0, 988747372^^^ST01B^MR~983928341^^^ST01C^MR~93823848^^^ST01^PI</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: PID.11, 0, 123 MAIN ST^^ANYTOWN^AL^35432^USA^H^01^^^^^^^^^Y</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1, 0, AAA^111&222&&444^^3333^~BBB^111&222&&^^3333</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1, 4, AAA^111&222&&444^^3333^~BBB^111&222&&^^3333</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1, 5, two</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.1, 6, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.3, 0, ~~</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.4, 0, escapes1=:;\R\\E\\T\^escapes2=\F\\S\\R\\E\\T\</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.5, 0, </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testGetField()'><b>testGetField</b><br>Test class: org.dellroad.hl7.HL7MessageTest<br>Parameters: ZAX.6, 0, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testHBOCWorkaround()'><b>testHBOCWorkaround</b><br>Test class: org.dellroad.hl7.HL7MessageTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.io.HL7FileReaderTest.testInput()'><b>testInput</b><br>Test class: org.dellroad.hl7.io.HL7FileReaderTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.io.HL7FileReaderTest@78e61fd1</td></tr>
+<tr>
+<td title='org.dellroad.hl7.llp.LLPStreamTest.testInput()'><b>testInput</b><br>Test class: org.dellroad.hl7.llp.LLPStreamTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.llp.LLPStreamTest@2c766a24</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SegmentTest.testInvalid()'><b>testInvalid</b><br>Test class: org.dellroad.hl7.HL7SegmentTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SegmentTest@2f774b9b</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testInvalid()'><b>testInvalid</b><br>Test class: org.dellroad.hl7.MSHSegmentTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.llp.LLPStreamTest.testMaxLength()'><b>testMaxLength</b><br>Test class: org.dellroad.hl7.llp.LLPStreamTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.llp.LLPStreamTest@2c766a24</td></tr>
+<tr>
+<td title='org.dellroad.hl7.llp.LLPStreamTest.testOutput()'><b>testOutput</b><br>Test class: org.dellroad.hl7.llp.LLPStreamTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.llp.LLPStreamTest@2c766a24</td></tr>
+<tr>
+<td title='org.dellroad.hl7.io.HL7FileWriterTest.testOutput()'><b>testOutput</b><br>Test class: org.dellroad.hl7.io.HL7FileWriterTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.io.HL7FileWriterTest@6a5f6303</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.HL7SegmentTest<br>Parameters: A, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SegmentTest@2f774b9b</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.HL7SegmentTest<br>Parameters: ^M, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SegmentTest@2f774b9b</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.HL7SegmentTest<br>Parameters: 
+, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SegmentTest@2f774b9b</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.HL7SegmentTest<br>Parameters: AB, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SegmentTest@2f774b9b</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.HL7SegmentTest<br>Parameters: ABCD, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SegmentTest@2f774b9b</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.HL7SegmentTest<br>Parameters: ABC|DEF, ABC|DEF</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SegmentTest@2f774b9b</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.HL7SegmentTest<br>Parameters: ABC|DEF^GHI|JKL, ABC|DEF^GHI|JKL</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SegmentTest@2f774b9b</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSHabcde, MSHabcde</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSHabcd, MSHabcd</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSHabc, MSHabc</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSHabcdef, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSHab, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSHa, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSH, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: FOO|^~\&, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSH|^~\&, MSH|^~\&</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSH|^|, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSH|^^, null</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.MSHSegmentTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.MSHSegmentTest<br>Parameters: MSH|^~\&|3|4|5|6|7|8|9||11, MSH|^~\&|3|4|5|6|7|8|9||11</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.MSHSegmentTest@4c331059</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7MessageTest.testParseConstructor()'><b>testParseConstructor</b><br>Test class: org.dellroad.hl7.HL7MessageTest</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7MessageTest@1c5d9084</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testRepeated()'><b>testRepeated</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: [Ljava.lang.String;@651db6bb, abc</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testRepeated()'><b>testRepeated</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: [Ljava.lang.String;@1c7e2da, ~</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testRepeated()'><b>testRepeated</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: [Ljava.lang.String;@69fe571f, abc~def</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testRepeated()'><b>testRepeated</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: [Ljava.lang.String;@3909ea96, abc~~def</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testRepeated()'><b>testRepeated</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: [Ljava.lang.String;@3a083b1b, a\R\c~d\R\f</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testRepeated()'><b>testRepeated</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: [Ljava.lang.String;@72608760, ~a~~b~~c</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testSimple()'><b>testSimple</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testSimple()'><b>testSimple</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: foo</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testSimple()'><b>testSimple</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: bar</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testSimple()'><b>testSimple</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: a b c</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7FieldTest.testSimple()'><b>testSimple</b><br>Test class: org.dellroad.hl7.HL7FieldTest<br>Parameters: |&^%$#@</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7FieldTest@42bad8a8</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testToString()'><b>testToString</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: |^~\&, |^~\&</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testToString()'><b>testToString</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: abc, abc</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testToString()'><b>testToString</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: abcd, abcd</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testToString()'><b>testToString</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: abcde, abcde</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: foo $bar, foo $bar</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: foo $, foo $</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: $, $</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: $foo, $foo</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: foo $$ bar, foo  bar</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: foo $a$ bar, foo  bar</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: foo $bb$ bar, foo  bar</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: foobar $jam$, foobar </td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.HL7SepsTest.testUnescape()'><b>testUnescape</b><br>Test class: org.dellroad.hl7.HL7SepsTest<br>Parameters: $foo$jam$bam, jam$bam</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.HL7SepsTest@4104c575</td></tr>
+<tr>
+<td title='org.dellroad.hl7.XMLConverterTest.testXML()'><b>testXML</b><br>Test class: org.dellroad.hl7.XMLConverterTest<br>Parameters: true, output3.xml</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.XMLConverterTest@203fa5ac</td></tr>
+<tr>
+<td title='org.dellroad.hl7.XMLConverterTest.testXML()'><b>testXML</b><br>Test class: org.dellroad.hl7.XMLConverterTest<br>Parameters: false, output3-verbose.xml</td>
+<td></td>
+<td>0</td>
+<td>org.dellroad.hl7.XMLConverterTest@203fa5ac</td></tr>
+</table><p>
+</body>
+</html>
