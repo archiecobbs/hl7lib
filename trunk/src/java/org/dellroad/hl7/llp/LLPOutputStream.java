@@ -11,7 +11,6 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 
 import org.dellroad.hl7.HL7Message;
 import org.dellroad.hl7.HL7Segment;
@@ -36,11 +35,7 @@ public class LLPOutputStream implements HL7Writer {
         if (out == null)
             throw new IllegalArgumentException("out is null");
         this.outputStream = new BufferedOutputStream(out);
-        try {
-            this.outputWriter = new OutputStreamWriter(this.outputStream, LLPConstants.CHARACTER_ENCODING);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        this.outputWriter = new OutputStreamWriter(this.outputStream, LLPConstants.CHARACTER_ENCODING);
     }
 
     /**

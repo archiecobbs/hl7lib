@@ -15,7 +15,7 @@ import java.util.Date;
  *
  * <p>
  * This subclass does not allow accessing MSH.1 or MSH.2 except
- * indirectly via {@link #getHL7Seps} and {@link #setHL7Seps}.
+ * indirectly via {@link #getHL7Seps} and {@link #setHL7Seps setHL7Seps()}.
  */
 @SuppressWarnings("serial")
 public class MSHSegment extends HL7Segment {
@@ -41,10 +41,10 @@ public class MSHSegment extends HL7Segment {
 
         // Parse "MSH", MSH.1, and MSH.2
         if (!line.startsWith(MSH_SEGMENT_NAME))
-            throw new HL7ContentException("MSH segment does not start with `" + MSH_SEGMENT_NAME + "'");
+            throw new HL7ContentException("MSH segment does not start with `" + MSH_SEGMENT_NAME + "'").setContent(line);
         this.fields.add(new HL7Field(MSH_SEGMENT_NAME));
         if (line.length() < 6)
-            throw new HL7ContentException("MSH segment is truncated");
+            throw new HL7ContentException("MSH segment is truncated").setContent(line);
         char fieldSep = line.charAt(3);
         char repSep = line.charAt(5);
         char compSep = line.charAt(4);
@@ -66,7 +66,7 @@ public class MSHSegment extends HL7Segment {
         if (fieldSep23 == line.length())
             return;
         if (line.charAt(fieldSep23) != fieldSep)
-            throw new HL7ContentException("bogus extra characters in MSH.2");
+            throw new HL7ContentException("bogus extra characters in MSH.2").setContent(line);
         this.parseAndAddFields(line.substring(fieldSep23 + 1), seps);
     }
 
