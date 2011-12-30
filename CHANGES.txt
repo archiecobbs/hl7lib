@@ -1,4 +1,9 @@
 
+Version Next
+
+    - Add "content" property to HL7ContentException
+    - Added LLPInputStream.skip()
+
 Version 1.0.4 Released Dec 29, 2011
 
     - Initial release

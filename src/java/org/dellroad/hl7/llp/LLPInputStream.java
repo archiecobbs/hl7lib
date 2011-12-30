@@ -11,7 +11,6 @@ import java.io.BufferedInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 
 import org.dellroad.hl7.HL7ContentException;
 import org.dellroad.hl7.HL7Message;
@@ -82,18 +81,44 @@ public class LLPInputStream implements HL7Reader {
         this.readByte(LLPConstants.TRAILING_BYTE_1);
 
         // Extract message text
-        String text;
-        try {
-            text = new String(buf, 0, len, LLPConstants.CHARACTER_ENCODING);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (this.buf.length > MAX_BUFLEN)
-                this.buf = new byte[MIN_BUFLEN];
-        }
+        String text = new String(buf, 0, len, LLPConstants.CHARACTER_ENCODING);
+        if (this.buf.length > MAX_BUFLEN)
+            this.buf = new byte[MIN_BUFLEN];
 
         // Return parsed message
-        return new HL7Message(text);
+        try {
+            return new HL7Message(text);
+        } catch (HL7ContentException e) {
+            throw e.setContent(text);
+        }
+    }
+
+    /**
+     * Advance past the end of the current message. This method can be used (for example) to skip over the remaining portion
+     * of a badly framed message that resulted in a {@link LLPException} in an attempt to salvage the connection.
+     *
+     * <p>
+     * This method just reads until the next occurrence of a {@link LLPConstants#TRAILING_BYTE_0} byte
+     * followed immediately by a {@link LLPConstants#TRAILING_BYTE_1} byte, then returns.
+     *
+     * @throws EOFException if there is no more input
+     * @throws IOException if an error occurs on the underlying stream
+     */
+    public void skip() throws IOException {
+        int state = 0;
+        while (true) {
+            int ch = this.inputStream.read();
+            if (ch == -1)
+                throw new EOFException();
+            if (state == 0) {
+                if (ch == LLPConstants.TRAILING_BYTE_0)
+                    state = 1;
+            } else {
+                if (ch == LLPConstants.TRAILING_BYTE_1)
+                    return;
+                state = 0;
+            }
+        }
     }
 
     private void readByte(int value) throws IOException {
@@ -101,9 +126,9 @@ public class LLPInputStream implements HL7Reader {
         if ((ch = this.inputStream.read()) == -1)
             throw new EOFException();
         if (ch != value) {
-            throw new LLPException("expected to read 0x"
-              + Integer.toHexString(value) + " but read 0x"
-              + Integer.toHexString(ch) + " instead");
+            String expected = String.format("0x%02x", value);
+            String actual = String.format("0x%02x", ch);
+            throw new LLPException("expected to read " + expected + " but read " + actual + " instead");
         }
     }
 
