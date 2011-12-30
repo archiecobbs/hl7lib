@@ -19,7 +19,6 @@
     </configurations>
 
     <dependencies>
-        <dependency force="true" org="org.slf4j" name="slf4j" rev="1.6.1" conf="base->log4j"/>
         <dependency force="true" org="org.testng" name="testng" rev="6.2+" conf="test->default"/>
     </dependencies>
 
