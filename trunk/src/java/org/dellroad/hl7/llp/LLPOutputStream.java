@@ -39,7 +39,7 @@ public class LLPOutputStream implements HL7Writer {
     }
 
     /**
-     * Write a message using HL7 LLP framing.
+     * Write a message using HL7 LLP framing and flush the underlying output.
      */
     public void writeMessage(HL7Message message) throws IOException {
 
