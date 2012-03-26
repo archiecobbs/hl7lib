@@ -162,7 +162,11 @@ public final class XMLConverter {
 
         // Create and configure Transformer
         TransformerFactory transformFactory = TransformerFactory.newInstance();
-        transformFactory.setAttribute("indent-number", 2);
+        try {
+            transformFactory.setAttribute("indent-number", 2);
+        } catch (IllegalArgumentException e) {
+            // ignore
+        }
         Transformer transformer;
         try {
             transformer = transformFactory.newTransformer();
