@@ -18,7 +18,7 @@
 <FONT color="green">015</FONT>     *<a name="line.15"></a>
 <FONT color="green">016</FONT>     * &lt;p&gt;<a name="line.16"></a>
 <FONT color="green">017</FONT>     * This subclass does not allow accessing MSH.1 or MSH.2 except<a name="line.17"></a>
-<FONT color="green">018</FONT>     * indirectly via {@link #getHL7Seps} and {@link #setHL7Seps}.<a name="line.18"></a>
+<FONT color="green">018</FONT>     * indirectly via {@link #getHL7Seps} and {@link #setHL7Seps setHL7Seps()}.<a name="line.18"></a>
 <FONT color="green">019</FONT>     */<a name="line.19"></a>
 <FONT color="green">020</FONT>    @SuppressWarnings("serial")<a name="line.20"></a>
 <FONT color="green">021</FONT>    public class MSHSegment extends HL7Segment {<a name="line.21"></a>
@@ -44,10 +44,10 @@
 <FONT color="green">041</FONT>    <a name="line.41"></a>
 <FONT color="green">042</FONT>            // Parse "MSH", MSH.1, and MSH.2<a name="line.42"></a>
 <FONT color="green">043</FONT>            if (!line.startsWith(MSH_SEGMENT_NAME))<a name="line.43"></a>
-<FONT color="green">044</FONT>                throw new HL7ContentException("MSH segment does not start with `" + MSH_SEGMENT_NAME + "'");<a name="line.44"></a>
+<FONT color="green">044</FONT>                throw new HL7ContentException("MSH segment does not start with `" + MSH_SEGMENT_NAME + "'").setContent(line);<a name="line.44"></a>
 <FONT color="green">045</FONT>            this.fields.add(new HL7Field(MSH_SEGMENT_NAME));<a name="line.45"></a>
 <FONT color="green">046</FONT>            if (line.length() &lt; 6)<a name="line.46"></a>
-<FONT color="green">047</FONT>                throw new HL7ContentException("MSH segment is truncated");<a name="line.47"></a>
+<FONT color="green">047</FONT>                throw new HL7ContentException("MSH segment is truncated").setContent(line);<a name="line.47"></a>
 <FONT color="green">048</FONT>            char fieldSep = line.charAt(3);<a name="line.48"></a>
 <FONT color="green">049</FONT>            char repSep = line.charAt(5);<a name="line.49"></a>
 <FONT color="green">050</FONT>            char compSep = line.charAt(4);<a name="line.50"></a>
@@ -69,7 +69,7 @@
 <FONT color="green">066</FONT>            if (fieldSep23 == line.length())<a name="line.66"></a>
 <FONT color="green">067</FONT>                return;<a name="line.67"></a>
 <FONT color="green">068</FONT>            if (line.charAt(fieldSep23) != fieldSep)<a name="line.68"></a>
-<FONT color="green">069</FONT>                throw new HL7ContentException("bogus extra characters in MSH.2");<a name="line.69"></a>
+<FONT color="green">069</FONT>                throw new HL7ContentException("bogus extra characters in MSH.2").setContent(line);<a name="line.69"></a>
 <FONT color="green">070</FONT>            this.parseAndAddFields(line.substring(fieldSep23 + 1), seps);<a name="line.70"></a>
 <FONT color="green">071</FONT>        }<a name="line.71"></a>
 <FONT color="green">072</FONT>    <a name="line.72"></a>

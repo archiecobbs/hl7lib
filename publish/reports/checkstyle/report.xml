@@ -82,7 +82,7 @@
 <file name="/Users/archie/proj/hl7lib/trunk/src/java/org/dellroad/hl7/io/package-info.java">
 </file>
 <file name="/Users/archie/proj/hl7lib/trunk/src/java/org/dellroad/hl7/llp/LLPConstants.java">
-<error line="13" severity="info" message="interfaces should describe a type and hence have methods." source="com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck"/>
+<error line="15" severity="info" message="interfaces should describe a type and hence have methods." source="com.puppycrawl.tools.checkstyle.checks.design.InterfaceIsTypeCheck"/>
 </file>
 <file name="/Users/archie/proj/hl7lib/trunk/src/java/org/dellroad/hl7/llp/LLPException.java">
 </file>
