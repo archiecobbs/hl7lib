@@ -1,6 +1,7 @@
 
-Version Next
+Version 1.0.10 Released May 3, 2012
 
+    - Fix IllegalArgumentException when not using xalan-j
     - Add "content" property to HL7ContentException
     - Added LLPInputStream.skip()
 
