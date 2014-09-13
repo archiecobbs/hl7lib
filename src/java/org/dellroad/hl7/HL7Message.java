@@ -125,7 +125,7 @@ public class HL7Message implements Serializable {
      *
      * @return list of all message segments including MSH
      */
-    public List<HL7Segment> getSegments() {
+    public HL7SegmentList getSegments() {
         return this.segments;
     }
 
