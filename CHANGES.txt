@@ -1,4 +1,4 @@
-Version 1.0.17 Released September 19, 2014
+Version 1.0.18 Released September 19, 2014
 
     - Accept ACK's containing an MSH.9.2 sub-field
 

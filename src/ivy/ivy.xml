@@ -19,7 +19,7 @@
     </configurations>
 
     <dependencies>
-        <dependency force="true" org="org.testng" name="testng" rev="6.2+" conf="test->default"/>
+        <dependency force="true" org="org.testng" name="testng" rev="6.8+" conf="test->default"/>
     </dependencies>
 
 </ivy-module>
