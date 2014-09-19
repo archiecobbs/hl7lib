@@ -28,7 +28,8 @@ public class MSHSegment extends HL7Segment {
 
     public static final String TIMESTAMP_FORMAT = "yyyyMMddHHmmss.SSSZ";
 
-    private static final HL7Field ACK_MSH_9 = new HL7Field("ACK");
+    private static final String ACK = "ACK";
+    private static final HL7Field ACK_MSH_9 = new HL7Field(ACK);
     private static final HL7Field ACK_MSA_1 = new HL7Field("AA");
 
     /**
@@ -303,7 +304,7 @@ public class MSHSegment extends HL7Segment {
         if (controlID == null || procID == null)
             throw new HL7ContentException("insufficient fields for ACK'ing");
         MSHSegment ackMSH = ack.getMSHSegment();
-        return ACK_MSH_9.equals(ackMSH.getMessageType())
+        return ACK.equals(ack.getField("MSH.9").get(0, 0, 0))
           && controlID.equals(ack.getField("MSA.2"))
           && procID.equals(ackMSH.getProcessingID())
           && ACK_MSA_1.equals(ack.getField("MSA.1"));

@@ -132,6 +132,10 @@ public class MSHSegmentTest extends Input1Test {
         assertEquals(ack.get("MSA.0"), "MSA");
         assertEquals(ack.get("MSA.1"), "AA");
         assertEquals(ack.getField("MSA.2"), msh.getControlID());
+
+        // Sometimes ACK MSH.9 also contains MSH.9.2 from original (e.g., "ACK^A08" instead of just "ACK")
+        ackmsh.setMessageType(new HL7Field("ACK^A08", HL7Seps.DEFAULT));
+        assertTrue(msh.isACK(ack));
     }
 
     @Test
