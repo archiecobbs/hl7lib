@@ -1,0 +1,9 @@
+#summary Where to download hl7lib
+
+The current release of *hl7lib* is version *1.0.18* and is available here:
+
+  * [https://s3.amazonaws.com/archie-public/hl7lib/hl7lib-1.0.18.jar hl7lib-1.0.18.jar]
+  * [https://s3.amazonaws.com/archie-public/hl7lib/hl7lib-javadocs-1.0.18.zip hl7lib-javadocs-1.0.18.zip]
+  * [https://s3.amazonaws.com/archie-public/hl7lib/hl7lib-sources-1.0.18.zip hl7lib-sources-1.0.18.zip]
+
+Changes are noted [http://hl7lib.googlecode.com/svn/trunk/CHANGES here].
