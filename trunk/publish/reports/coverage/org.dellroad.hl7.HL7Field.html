@@ -154,35 +154,35 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     * @param seps HL7 separator characters</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;75</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;76</td>  <td class="nbHitsCovered">&nbsp;1594</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> HL7Field(String field, HL7Seps seps) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;77</td>  <td class="nbHitsCovered">&nbsp;1594</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span>[] repSeps = HL7Util.find(field, seps.getRepSep());</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;78</td>  <td class="nbHitsCovered">&nbsp;1594</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.value = <span class="keyword">new</span> String[repSeps.length][][];</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;79</td>  <td class="nbHitsCovered">&nbsp;1594</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span> repPosn = 0;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;80</td>  <td class="nbHitsCovered"><a title="Line 80: Conditional coverage 100% (2/2).">&nbsp;3280</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 80: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; repSeps.length; i++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;81</td>  <td class="nbHitsCovered">&nbsp;1686</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">int</span>[] compSeps = HL7Util.find(field, seps.getCompSep(), repPosn, repSeps[i]);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;82</td>  <td class="nbHitsCovered">&nbsp;1686</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">this</span>.value[i] = <span class="keyword">new</span> String[compSeps.length][];</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;83</td>  <td class="nbHitsCovered">&nbsp;1686</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">int</span> compPosn = repPosn;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;84</td>  <td class="nbHitsCovered"><a title="Line 84: Conditional coverage 100% (2/2).">&nbsp;4350</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 84: Conditional coverage 100% (2/2).">            <span class="keyword">for</span> (<span class="keyword">int</span> j = 0; j &lt; compSeps.length; j++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;85</td>  <td class="nbHitsUncovered"><a title="Line 85: Conditional coverage 50% (1/2).">&nbsp;2664</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 85: Conditional coverage 50% (1/2).">                <span class="keyword">if</span> (!seps.hasSubcomponentSeparator()) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;76</td>  <td class="nbHitsCovered">&nbsp;1595</td>  <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> HL7Field(String field, HL7Seps seps) {</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;77</td>  <td class="nbHitsCovered">&nbsp;1595</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span>[] repSeps = HL7Util.find(field, seps.getRepSep());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;78</td>  <td class="nbHitsCovered">&nbsp;1595</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.value = <span class="keyword">new</span> String[repSeps.length][][];</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;79</td>  <td class="nbHitsCovered">&nbsp;1595</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span> repPosn = 0;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;80</td>  <td class="nbHitsCovered"><a title="Line 80: Conditional coverage 100% (2/2).">&nbsp;3282</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 80: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; repSeps.length; i++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;81</td>  <td class="nbHitsCovered">&nbsp;1687</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">int</span>[] compSeps = HL7Util.find(field, seps.getCompSep(), repPosn, repSeps[i]);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;82</td>  <td class="nbHitsCovered">&nbsp;1687</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">this</span>.value[i] = <span class="keyword">new</span> String[compSeps.length][];</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;83</td>  <td class="nbHitsCovered">&nbsp;1687</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">int</span> compPosn = repPosn;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;84</td>  <td class="nbHitsCovered"><a title="Line 84: Conditional coverage 100% (2/2).">&nbsp;4353</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 84: Conditional coverage 100% (2/2).">            <span class="keyword">for</span> (<span class="keyword">int</span> j = 0; j &lt; compSeps.length; j++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;85</td>  <td class="nbHitsUncovered"><a title="Line 85: Conditional coverage 50% (1/2).">&nbsp;2666</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 85: Conditional coverage 50% (1/2).">                <span class="keyword">if</span> (!seps.hasSubcomponentSeparator()) {</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;86</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                    <span class="keyword">this</span>.value[i][j] = <span class="keyword">new</span> String[] { seps.unescape(field.substring(compPosn, compSeps[j])) };</span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;87</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;                    <span class="keyword">continue</span>;</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;88</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;89</td>  <td class="nbHitsCovered">&nbsp;2664</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">int</span>[] subSeps = HL7Util.find(field, seps.getSubSep(), compPosn, compSeps[j]);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;90</td>  <td class="nbHitsCovered">&nbsp;2664</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">this</span>.value[i][j] = <span class="keyword">new</span> String[subSeps.length];</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;91</td>  <td class="nbHitsCovered">&nbsp;2664</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">int</span> subPosn = compPosn;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;92</td>  <td class="nbHitsCovered"><a title="Line 92: Conditional coverage 100% (2/2).">&nbsp;5437</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 92: Conditional coverage 100% (2/2).">                <span class="keyword">for</span> (<span class="keyword">int</span> k = 0; k &lt; subSeps.length; k++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;93</td>  <td class="nbHitsCovered">&nbsp;2773</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">this</span>.value[i][j][k] = seps.unescape(field.substring(subPosn, subSeps[k]));</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;94</td>  <td class="nbHitsCovered">&nbsp;2773</td>  <td class="src"><pre class="src">&nbsp;                    subPosn = subSeps[k] + 1;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;89</td>  <td class="nbHitsCovered">&nbsp;2666</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">int</span>[] subSeps = HL7Util.find(field, seps.getSubSep(), compPosn, compSeps[j]);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;90</td>  <td class="nbHitsCovered">&nbsp;2666</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">this</span>.value[i][j] = <span class="keyword">new</span> String[subSeps.length];</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;91</td>  <td class="nbHitsCovered">&nbsp;2666</td>  <td class="src"><pre class="src">&nbsp;                <span class="keyword">int</span> subPosn = compPosn;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;92</td>  <td class="nbHitsCovered"><a title="Line 92: Conditional coverage 100% (2/2).">&nbsp;5441</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 92: Conditional coverage 100% (2/2).">                <span class="keyword">for</span> (<span class="keyword">int</span> k = 0; k &lt; subSeps.length; k++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;93</td>  <td class="nbHitsCovered">&nbsp;2775</td>  <td class="src"><pre class="src">&nbsp;                    <span class="keyword">this</span>.value[i][j][k] = seps.unescape(field.substring(subPosn, subSeps[k]));</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;94</td>  <td class="nbHitsCovered">&nbsp;2775</td>  <td class="src"><pre class="src">&nbsp;                    subPosn = subSeps[k] + 1;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;95</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;96</td>  <td class="nbHitsCovered">&nbsp;2664</td>  <td class="src"><pre class="src">&nbsp;                compPosn = compSeps[j] + 1;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;96</td>  <td class="nbHitsCovered">&nbsp;2666</td>  <td class="src"><pre class="src">&nbsp;                compPosn = compSeps[j] + 1;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;97</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;98</td>  <td class="nbHitsCovered">&nbsp;1686</td>  <td class="src"><pre class="src">&nbsp;            repPosn = repSeps[i] + 1;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;98</td>  <td class="nbHitsCovered">&nbsp;1687</td>  <td class="src"><pre class="src">&nbsp;            repPosn = repSeps[i] + 1;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;99</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;100</td>  <td class="nbHitsCovered">&nbsp;1594</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;100</td>  <td class="nbHitsCovered">&nbsp;1595</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;101</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;102</td>  <td class="nbHits">&nbsp;</td>
@@ -260,11 +260,11 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;143</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> String get(<span class="keyword">int</span> repnum, <span class="keyword">int</span> compnum, <span class="keyword">int</span> subnum) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;144</td>  <td class="nbHitsUncovered"><a title="Line 144: Conditional coverage 50% (3/6) [each condition: 50%, 50%, 50%].">&nbsp;752</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 144: Conditional coverage 50% (3/6) [each condition: 50%, 50%, 50%].">        <span class="keyword">if</span> (repnum &lt; 0 || compnum &lt; 0 || subnum &lt; 0)</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;144</td>  <td class="nbHitsUncovered"><a title="Line 144: Conditional coverage 50% (3/6) [each condition: 50%, 50%, 50%].">&nbsp;810</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 144: Conditional coverage 50% (3/6) [each condition: 50%, 50%, 50%].">        <span class="keyword">if</span> (repnum &lt; 0 || compnum &lt; 0 || subnum &lt; 0)</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;145</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"negative index"</span>);</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;146</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="keyword">try</span> {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;147</td>  <td class="nbHitsCovered">&nbsp;752</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">this</span>.value[repnum][compnum][subnum];</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;147</td>  <td class="nbHitsCovered">&nbsp;810</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">this</span>.value[repnum][compnum][subnum];</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;148</td>  <td class="nbHitsCovered">&nbsp;12</td>  <td class="src"><pre class="src">&nbsp;        } <span class="keyword">catch</span> (ArrayIndexOutOfBoundsException e) {</pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;149</td>  <td class="nbHitsCovered">&nbsp;12</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">return</span> <span class="keyword">null</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;150</td>  <td class="nbHits">&nbsp;</td>
@@ -287,23 +287,23 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;159</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">void</span> append(StringBuilder buf, HL7Seps seps) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;160</td>  <td class="nbHitsCovered"><a title="Line 160: Conditional coverage 100% (2/2).">&nbsp;2480</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 160: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; <span class="keyword">this</span>.value.length; i++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;161</td>  <td class="nbHitsCovered"><a title="Line 161: Conditional coverage 100% (2/2).">&nbsp;1289</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 161: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> (i &gt; 0)</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;162</td>  <td class="nbHitsCovered">&nbsp;98</td>  <td class="src"><pre class="src">&nbsp;                buf.append(seps.getRepSep());</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;163</td>  <td class="nbHitsCovered"><a title="Line 163: Conditional coverage 100% (2/2).">&nbsp;3403</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 163: Conditional coverage 100% (2/2).">            <span class="keyword">for</span> (<span class="keyword">int</span> j = 0; j &lt; <span class="keyword">this</span>.value[i].length; j++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;164</td>  <td class="nbHitsCovered"><a title="Line 164: Conditional coverage 100% (2/2).">&nbsp;2114</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 164: Conditional coverage 100% (2/2).">                <span class="keyword">if</span> (j &gt; 0)</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;165</td>  <td class="nbHitsCovered">&nbsp;825</td>  <td class="src"><pre class="src">&nbsp;                    buf.append(seps.getCompSep());</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;166</td>  <td class="nbHitsCovered"><a title="Line 166: Conditional coverage 100% (2/2).">&nbsp;4344</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 166: Conditional coverage 100% (2/2).">                <span class="keyword">for</span> (<span class="keyword">int</span> k = 0; k &lt; <span class="keyword">this</span>.value[i][j].length; k++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;167</td>  <td class="nbHitsCovered"><a title="Line 167: Conditional coverage 100% (2/2).">&nbsp;2230</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 167: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span> (k &gt; 0)</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;168</td>  <td class="nbHitsCovered">&nbsp;116</td>  <td class="src"><pre class="src">&nbsp;                        buf.append(seps.getSubSep());</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;169</td>  <td class="nbHitsCovered">&nbsp;2230</td>  <td class="src"><pre class="src">&nbsp;                    seps.escape(<span class="keyword">this</span>.value[i][j][k], buf);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;160</td>  <td class="nbHitsCovered"><a title="Line 160: Conditional coverage 100% (2/2).">&nbsp;2880</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 160: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (<span class="keyword">int</span> i = 0; i &lt; <span class="keyword">this</span>.value.length; i++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;161</td>  <td class="nbHitsCovered"><a title="Line 161: Conditional coverage 100% (2/2).">&nbsp;1504</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 161: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> (i &gt; 0)</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;162</td>  <td class="nbHitsCovered">&nbsp;128</td>  <td class="src"><pre class="src">&nbsp;                buf.append(seps.getRepSep());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;163</td>  <td class="nbHitsCovered"><a title="Line 163: Conditional coverage 100% (2/2).">&nbsp;4058</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 163: Conditional coverage 100% (2/2).">            <span class="keyword">for</span> (<span class="keyword">int</span> j = 0; j &lt; <span class="keyword">this</span>.value[i].length; j++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;164</td>  <td class="nbHitsCovered"><a title="Line 164: Conditional coverage 100% (2/2).">&nbsp;2554</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 164: Conditional coverage 100% (2/2).">                <span class="keyword">if</span> (j &gt; 0)</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;165</td>  <td class="nbHitsCovered">&nbsp;1050</td>  <td class="src"><pre class="src">&nbsp;                    buf.append(seps.getCompSep());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;166</td>  <td class="nbHitsCovered"><a title="Line 166: Conditional coverage 100% (2/2).">&nbsp;5284</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 166: Conditional coverage 100% (2/2).">                <span class="keyword">for</span> (<span class="keyword">int</span> k = 0; k &lt; <span class="keyword">this</span>.value[i][j].length; k++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;167</td>  <td class="nbHitsCovered"><a title="Line 167: Conditional coverage 100% (2/2).">&nbsp;2730</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 167: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span> (k &gt; 0)</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;168</td>  <td class="nbHitsCovered">&nbsp;176</td>  <td class="src"><pre class="src">&nbsp;                        buf.append(seps.getSubSep());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;169</td>  <td class="nbHitsCovered">&nbsp;2730</td>  <td class="src"><pre class="src">&nbsp;                    seps.escape(<span class="keyword">this</span>.value[i][j][k], buf);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;170</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;171</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;            }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;172</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;173</td>  <td class="nbHitsCovered">&nbsp;1191</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;173</td>  <td class="nbHitsCovered">&nbsp;1376</td>  <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;174</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;175</td>  <td class="nbHits">&nbsp;</td>
@@ -320,9 +320,9 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;181</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> String toString(HL7Seps seps) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;182</td>  <td class="nbHitsCovered">&nbsp;97</td>  <td class="src"><pre class="src">&nbsp;        StringBuilder buf = <span class="keyword">new</span> StringBuilder();</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;183</td>  <td class="nbHitsCovered">&nbsp;97</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.append(buf, seps);</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;184</td>  <td class="nbHitsCovered">&nbsp;97</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> buf.toString();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;182</td>  <td class="nbHitsCovered">&nbsp;212</td>  <td class="src"><pre class="src">&nbsp;        StringBuilder buf = <span class="keyword">new</span> StringBuilder();</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;183</td>  <td class="nbHitsCovered">&nbsp;212</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">this</span>.append(buf, seps);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;184</td>  <td class="nbHitsCovered">&nbsp;212</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> buf.toString();</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;185</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;186</td>  <td class="nbHits">&nbsp;</td>
@@ -337,7 +337,7 @@
   <td class="src"><pre class="src">&nbsp;    @Override</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;191</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> String toString() {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;192</td>  <td class="nbHitsCovered">&nbsp;97</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">this</span>.toString(HL7Seps.DEFAULT);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;192</td>  <td class="nbHitsCovered">&nbsp;212</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> <span class="keyword">this</span>.toString(HL7Seps.DEFAULT);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;193</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;194</td>  <td class="nbHits">&nbsp;</td>
@@ -346,10 +346,10 @@
   <td class="src"><pre class="src">&nbsp;    @Override</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;196</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">boolean</span> equals(Object obj) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;197</td>  <td class="nbHitsUncovered"><a title="Line 197: Conditional coverage 50% (1/2).">&nbsp;883</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 197: Conditional coverage 50% (1/2).">        <span class="keyword">if</span> (!(obj <span class="keyword">instanceof</span> HL7Field))</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;197</td>  <td class="nbHitsUncovered"><a title="Line 197: Conditional coverage 50% (1/2).">&nbsp;885</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 197: Conditional coverage 50% (1/2).">        <span class="keyword">if</span> (!(obj <span class="keyword">instanceof</span> HL7Field))</a></span></pre></td></tr>
 <tr>  <td class="numLineCover">&nbsp;198</td>  <td class="nbHitsUncovered">&nbsp;0</td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;            <span class="keyword">return</span> <span class="keyword">false</span>;</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;199</td>  <td class="nbHitsCovered">&nbsp;883</td>  <td class="src"><pre class="src">&nbsp;        HL7Field that = (HL7Field)obj;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;200</td>  <td class="nbHitsCovered">&nbsp;883</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> Arrays.deepEquals(<span class="keyword">this</span>.value, that.value);</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;199</td>  <td class="nbHitsCovered">&nbsp;885</td>  <td class="src"><pre class="src">&nbsp;        HL7Field that = (HL7Field)obj;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;200</td>  <td class="nbHitsCovered">&nbsp;885</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> Arrays.deepEquals(<span class="keyword">this</span>.value, that.value);</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;201</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;202</td>  <td class="nbHits">&nbsp;</td>
@@ -389,6 +389,6 @@
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 5/3/12 1:05 PM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.0.3 on 9/19/14 2:05 PM.</div>
 </body>
 </html>

@@ -63,7 +63,7 @@
   <td class="src"><pre class="src">&nbsp;<span class="comment">     */</span></pre></td></tr>
 <tr>  <td class="numLine">&nbsp;24</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] find(String value, <span class="keyword">char</span> sep) {</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;25</td>  <td class="nbHitsCovered">&nbsp;1779</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> find(value, sep, 0, value.length());</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;25</td>  <td class="nbHitsCovered">&nbsp;1780</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> find(value, sep, 0, value.length());</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;26</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;27</td>  <td class="nbHits">&nbsp;</td>
@@ -115,24 +115,24 @@
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;51</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="comment">// Count occurrences</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;52</td>  <td class="nbHitsCovered">&nbsp;6141</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span> count = 0;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;53</td>  <td class="nbHitsCovered"><a title="Line 53: Conditional coverage 100% (2/2).">&nbsp;43207</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 53: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; end; i++) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;54</td>  <td class="nbHitsCovered"><a title="Line 54: Conditional coverage 100% (2/2).">&nbsp;37066</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 54: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> (value.charAt(i) == sep)</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;55</td>  <td class="nbHitsCovered">&nbsp;3066</td>  <td class="src"><pre class="src">&nbsp;                count++;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;52</td>  <td class="nbHitsCovered">&nbsp;6145</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span> count = 0;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;53</td>  <td class="nbHitsCovered"><a title="Line 53: Conditional coverage 100% (2/2).">&nbsp;43231</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 53: Conditional coverage 100% (2/2).">        <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; end; i++) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;54</td>  <td class="nbHitsCovered"><a title="Line 54: Conditional coverage 100% (2/2).">&nbsp;37086</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 54: Conditional coverage 100% (2/2).">            <span class="keyword">if</span> (value.charAt(i) == sep)</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;55</td>  <td class="nbHitsCovered">&nbsp;3067</td>  <td class="src"><pre class="src">&nbsp;                count++;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;56</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;57</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;58</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="comment">// Allocate array and record them</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;59</td>  <td class="nbHitsCovered">&nbsp;6141</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span>[] positions = <span class="keyword">new</span> <span class="keyword">int</span>[count + 1];</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;60</td>  <td class="nbHitsCovered"><a title="Line 60: Conditional coverage 100% (2/2).">&nbsp;6141</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 60: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (count &gt; 0) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;61</td>  <td class="nbHitsCovered">&nbsp;527</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">int</span> j = 0;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;62</td>  <td class="nbHitsUncovered"><a title="Line 62: Conditional coverage 50% (1/2).">&nbsp;19243</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 62: Conditional coverage 50% (1/2).">            <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; end; i++) {</a></span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;63</td>  <td class="nbHitsCovered"><a title="Line 63: Conditional coverage 100% (2/2).">&nbsp;19243</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 63: Conditional coverage 100% (2/2).">                <span class="keyword">if</span> (value.charAt(i) == sep) {</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;64</td>  <td class="nbHitsCovered">&nbsp;3066</td>  <td class="src"><pre class="src">&nbsp;                    positions[j++] = i;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;65</td>  <td class="nbHitsCovered"><a title="Line 65: Conditional coverage 100% (2/2).">&nbsp;3066</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 65: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span> (j == count)</a></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;66</td>  <td class="nbHitsCovered">&nbsp;527</td>  <td class="src"><pre class="src">&nbsp;                        <span class="keyword">break</span>;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;59</td>  <td class="nbHitsCovered">&nbsp;6145</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">int</span>[] positions = <span class="keyword">new</span> <span class="keyword">int</span>[count + 1];</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;60</td>  <td class="nbHitsCovered"><a title="Line 60: Conditional coverage 100% (2/2).">&nbsp;6145</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 60: Conditional coverage 100% (2/2).">        <span class="keyword">if</span> (count &gt; 0) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;61</td>  <td class="nbHitsCovered">&nbsp;528</td>  <td class="src"><pre class="src">&nbsp;            <span class="keyword">int</span> j = 0;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;62</td>  <td class="nbHitsUncovered"><a title="Line 62: Conditional coverage 50% (1/2).">&nbsp;19247</a></td>  <td class="src"><pre class="src"><span class="srcUncovered">&nbsp;<a title="Line 62: Conditional coverage 50% (1/2).">            <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; end; i++) {</a></span></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;63</td>  <td class="nbHitsCovered"><a title="Line 63: Conditional coverage 100% (2/2).">&nbsp;19247</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 63: Conditional coverage 100% (2/2).">                <span class="keyword">if</span> (value.charAt(i) == sep) {</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;64</td>  <td class="nbHitsCovered">&nbsp;3067</td>  <td class="src"><pre class="src">&nbsp;                    positions[j++] = i;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;65</td>  <td class="nbHitsCovered"><a title="Line 65: Conditional coverage 100% (2/2).">&nbsp;3067</a></td>  <td class="src"><pre class="src">&nbsp;<a title="Line 65: Conditional coverage 100% (2/2).">                    <span class="keyword">if</span> (j == count)</a></pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;66</td>  <td class="nbHitsCovered">&nbsp;528</td>  <td class="src"><pre class="src">&nbsp;                        <span class="keyword">break</span>;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;67</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;                }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;68</td>  <td class="nbHits">&nbsp;</td>
@@ -143,8 +143,8 @@
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;71</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;        <span class="comment">// Done</span></pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;72</td>  <td class="nbHitsCovered">&nbsp;6141</td>  <td class="src"><pre class="src">&nbsp;        positions[count] = end;</pre></td></tr>
-<tr>  <td class="numLineCover">&nbsp;73</td>  <td class="nbHitsCovered">&nbsp;6141</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> positions;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;72</td>  <td class="nbHitsCovered">&nbsp;6145</td>  <td class="src"><pre class="src">&nbsp;        positions[count] = end;</pre></td></tr>
+<tr>  <td class="numLineCover">&nbsp;73</td>  <td class="nbHitsCovered">&nbsp;6145</td>  <td class="src"><pre class="src">&nbsp;        <span class="keyword">return</span> positions;</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;74</td>  <td class="nbHits">&nbsp;</td>
   <td class="src"><pre class="src">&nbsp;    }</pre></td></tr>
 <tr>  <td class="numLine">&nbsp;75</td>  <td class="nbHits">&nbsp;</td>
@@ -153,6 +153,6 @@
   <td class="src"><pre class="src">&nbsp;</pre></td></tr>
 </table>
 
-<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 1.9.4.1 on 5/3/12 1:05 PM.</div>
+<div class="footer">Report generated by <a href="http://cobertura.sourceforge.net/" target="_top">Cobertura</a> 2.0.3 on 9/19/14 2:05 PM.</div>
 </body>
 </html>
