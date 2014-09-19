@@ -34,7 +34,7 @@ public class HL7FileReaderTest extends Input1Test {
         assertEquals(this.msg1.toString(), this.msg2.toString(seps1));
     }
 
-    private List cdr(List list) {
+    private <E> List<E> cdr(List<E> list) {
         return list.subList(1, list.size());
     }
 }
