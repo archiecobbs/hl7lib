@@ -78,8 +78,8 @@
                 <pathelement path="build/classes"/>
             </additional-classpath>
             <links>
-                <link href="http://download.oracle.com/javase/6/docs/api/"/>
-                <link href="http://download.oracle.com/javaee/6/api/"/>
+                <link href="https://docs.oracle.com/javase/7/docs/api/"/>
+                <link href="https://docs.oracle.com/javaee/7/api/"/>
                 <link href="http://www.slf4j.org/api/"/>
             </links>
         </dellroad:javadoc>
@@ -128,6 +128,9 @@
 
     <!-- Reports target -->
     <target name="reports-project" depends="javadoc, checkstyle, tests"/>
+
+    <!-- Release time stuff -->
+    <target name="release" depends="clean, jars, reports, publish"/>
 
     <!-- Default target -->
     <target name="build" depends="clean, jars, reports"/>

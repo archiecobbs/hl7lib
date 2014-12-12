@@ -1,4 +1,4 @@
-Version 1.0.23 Released December 12, 2014
+Version 1.0.24 Released December 12, 2014
 
     - Added XMLStreamWriter support to XMLConverter
 
