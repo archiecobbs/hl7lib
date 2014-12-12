@@ -14,6 +14,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
+
+import org.dellroad.stuff.xml.EmptyTagXMLStreamWriter;
+import org.dellroad.stuff.xml.IndentXMLStreamWriter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -38,7 +43,30 @@ public class XMLConverterTest extends InputTest {
         try {
             this.compare(in, getClass().getResourceAsStream(resource));
         } catch (RuntimeException e) {
-            System.out.println("Mismatched XML:");
+            System.out.println("Mismatched XML: " + e);
+            System.out.write(out.toByteArray());
+            System.out.flush();
+            throw e;
+        }
+    }
+
+    @Test(dataProvider = "xmlStreamTests")
+    public void testStreamXML(boolean omit, String resource) throws Exception {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final XMLStreamWriter writer = new IndentXMLStreamWriter(new EmptyTagXMLStreamWriter(
+          XMLOutputFactory.newInstance().createXMLStreamWriter(out, "UTF-8")), 2);
+        writer.setDefaultNamespace(XMLConverter.HL7_NAMESPACE_URI);
+        writer.writeStartDocument("UTF-8", "1.0");
+        writer.writeStartElement(XMLConverter.HL7_TAG);
+        XMLConverter.appendMessage(writer, this.msg, omit);
+        writer.writeEndElement();
+        writer.close();
+        out.write('\n');    // add final newline
+        final InputStream in = new ByteArrayInputStream(out.toByteArray());
+        try {
+            this.compare(in, getClass().getResourceAsStream(resource));
+        } catch (RuntimeException e) {
+            System.out.println("Mismatched XML: " + e);
             System.out.write(out.toByteArray());
             System.out.flush();
             throw e;
@@ -50,6 +78,14 @@ public class XMLConverterTest extends InputTest {
         ArrayList<Object[]> list = new ArrayList<Object[]>();
         list.add(new Object[] { Boolean.TRUE, "output3.xml" });
         list.add(new Object[] { Boolean.FALSE, "output3-verbose.xml" });
+        return list.iterator();
+    }
+
+    @DataProvider(name = "xmlStreamTests")
+    public Iterator<Object[]> genXMLStreamTests() {
+        ArrayList<Object[]> list = new ArrayList<Object[]>();
+        list.add(new Object[] { Boolean.TRUE, "output3-stream.xml" });
+        list.add(new Object[] { Boolean.FALSE, "output3-stream-verbose.xml" });
         return list.iterator();
     }
 

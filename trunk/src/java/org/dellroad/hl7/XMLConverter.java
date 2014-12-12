@@ -17,6 +17,8 @@ import java.io.OutputStreamWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -100,6 +102,21 @@ public final class XMLConverter {
     }
 
     /**
+     * Convert a message to XML and append it to the given {@link XMLStreamWriter}.
+     *
+     * @param writer XML output
+     * @param message HL7 message to append
+     * @param omitEmpty Omit empty tags (other than the last one)
+     */
+    public static void appendMessage(XMLStreamWriter writer, HL7Message message, boolean omitEmpty) throws XMLStreamException {
+        writer.writeStartElement(MESSAGE_TAG);
+        writer.setDefaultNamespace(HL7_NAMESPACE_URI);
+        for (HL7Segment segment : message.getSegments())
+            XMLConverter.appendSegment(writer, segment, omitEmpty);
+        writer.writeEndElement();
+    }
+
+    /**
      * Convert a segment to XML and append it to the given element.
      *
      * @param parent an XML {@link Element} or {@link Document} node
@@ -153,6 +170,64 @@ public final class XMLConverter {
             }
         }
         parent.appendChild(segXML);
+    }
+
+    /**
+     * Convert a segment to XML and write it to the given {@link XMLStreamWriter}.
+     *
+     * @param writer XML output
+     * @param segment HL7 segment to append
+     * @param omitEmpty Omit empty tags (other than the last one)
+     */
+    public static void appendSegment(XMLStreamWriter writer, HL7Segment segment, boolean omitEmpty) throws XMLStreamException {
+        final String segName = segment.getName();
+        final HL7Field[] fields = segment.getFields();
+        writer.writeStartElement(segName);
+        writer.setDefaultNamespace(HL7_NAMESPACE_URI);
+        for (int i = 1; i < fields.length; i++) {
+            final HL7Field field = fields[i];
+            if (omitEmpty && i < fields.length - 1 && field.isEmpty())
+                continue;
+            final String fieldTag = segName + "." + i;
+            for (String[][] repeat : field.getValue()) {
+                writer.writeStartElement(fieldTag);
+                if (repeat.length == 1 && repeat[0].length == 1) {
+                    if (repeat[0][0].length() > 0)
+                        writer.writeCharacters(repeat[0][0]);
+                    writer.writeEndElement();
+                    continue;
+                }
+                for (int j = 0; j < repeat.length; j++) {
+                    final String[] comp = repeat[j];
+                    if (omitEmpty
+                      && j < repeat.length - 1
+                      && comp.length == 1 && comp[0].length() == 0)
+                        continue;
+                    final String compTag = fieldTag + "." + (j + 1);
+                    writer.writeStartElement(compTag);
+                    if (comp.length == 1) {
+                        if (comp[0].length() > 0)
+                            writer.writeCharacters(comp[0]);
+                        writer.writeEndElement();
+                        continue;
+                    }
+                    for (int k = 0; k < comp.length; k++) {
+                        final String subcomp = comp[k];
+                        if (omitEmpty
+                          && k < comp.length - 1 && subcomp.length() == 0)
+                            continue;
+                        final String subcompTag = compTag + "." + (k + 1);
+                        writer.writeStartElement(subcompTag);
+                        if (subcomp.length() > 0)
+                            writer.writeCharacters(subcomp);
+                        writer.writeEndElement();
+                    }
+                    writer.writeEndElement();
+                }
+                writer.writeEndElement();
+            }
+        }
+        writer.writeEndElement();
     }
 
     /**
