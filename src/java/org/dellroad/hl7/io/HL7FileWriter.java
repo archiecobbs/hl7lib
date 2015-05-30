@@ -1,8 +1,6 @@
 
 /*
  * Copyright (C) 2008 Archie L. Cobbs. All rights reserved.
- *
- * $Id$
  */
 
 package org.dellroad.hl7.io;
