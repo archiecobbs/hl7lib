@@ -263,6 +263,20 @@
         </sequential>
     </macrodef>
 
+    <!-- GIT revision -->
+    <macrodef uri="urn:org.dellroad.ant" name="gitrevision">
+        <attribute name="property" default="git.revision" description="Name of property to set"/>
+        <attribute name="dir" default="${basedir}" description="Target checked-out git directory"/>
+        <sequential>
+            <exec outputproperty="@{property}" executable="git" logError="true" failonerror="true">
+                <arg value="describe"/>
+                <arg value="-C"/>
+                <arg value="@{dir}"/>
+                <arg value="--dirty=M"/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <!-- Hostname -->
     <macrodef uri="urn:org.dellroad.ant" name="hostname">
         <attribute name="property" default="host.name" description="Name of property to set"/>
