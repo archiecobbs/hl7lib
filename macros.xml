@@ -269,8 +269,8 @@
         <attribute name="dir" default="${basedir}" description="Target checked-out git directory"/>
         <sequential>
             <exec outputproperty="@{property}" executable="git" logError="true" failonerror="true">
-                <arg value="describe"/>
                 <arg value="-C"/>
+                <arg value="describe"/>
                 <arg value="@{dir}"/>
                 <arg value="--dirty=M"/>
             </exec>
