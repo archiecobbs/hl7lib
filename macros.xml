@@ -56,7 +56,15 @@
                     <available file="${ant.library.dir}/@{file}" type="file"/>
                 </and>
             </condition>
-            <fail message="ERROR: can't find @{file}; please install in ${data.dir}/java or ${ant.library.dir}, or pass -D@{property}=... on the command line">
+            <condition property="@{property}" value="/usr/share/java/ant/@{file}">
+                <and>
+                    <not>
+                        <isset property="@{property}"/>
+                    </not>
+                    <available file="/usr/share/java/ant/@{file}" type="file"/>
+                </and>
+            </condition>
+            <fail message="ERROR: can't find @{file}; please install in ${data.dir}/java, ${ant.library.dir}, or /usr/share/java/ant/, or pass -D@{property}=... on the command line">
                 <condition>
                     <not>
                         <isset property="@{property}"/>
