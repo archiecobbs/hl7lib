@@ -251,6 +251,35 @@
         ************* MACROS AND PRESETDEFS ****************
 -->
 
+    <!-- SCM revision -->
+    <macrodef uri="urn:org.dellroad.ant" name="scmrevision">
+        <attribute name="property" default="git.revision" description="Name of property to set"/>
+        <attribute name="dir" default="${basedir}" description="Target checked-out source code directory"/>
+        <sequential>
+            <exec outputproperty="@{property}" executable="/bin/sh" logError="true" failonerror="true">
+                <arg value="-c"/>
+                <arg value="
+                    if command -v git &gt;/dev/null 2>&amp;1; then
+                        GITREV=`git -C '@{dir}' describe --dirty=M 2>&amp;1`;
+                        if [ $$? -eq 0 ]; then
+                            echo &quot;$${GITREV}&quot;;
+                            exit;
+                        fi;
+                    fi;
+                    if command -v svnversion &gt;/dev/null 2>&amp;1; then
+                        svnversion -c '@{dir}' | sed '${sed.extended.flag}'
+                          -e 's/^[0-9]+://g'
+                          -e 's/^-1M$$/0/g'
+                          -e 's/^Un(versioned|committed).*$$/0/g';
+                        exit;
+                    fi;
+                    echo Error: can\'t determine SCM version;
+                    exit 1;
+                "/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <!-- SVN revision -->
     <macrodef uri="urn:org.dellroad.ant" name="svnrevision">
         <attribute name="property" default="svn.revision" description="Name of property to set"/>
@@ -599,24 +628,27 @@
 
     <macrodef uri="urn:org.dellroad.ant" name="verifyclean">
         <sequential>
-            <exec outputproperty="verifyclean.svn.version" executable="/bin/sh" logError="true" failonerror="true">
-                <arg value="-c"/>
-                <arg value="svnversion"/>
-            </exec>
-            <fail message="!&#10;&#10;
-                *** ERROR ***&#10;&#10;
-                The checked out code is not clean (SVN revision is `${verifyclean.svn.version}').&#10;&#10;
-                Please SVN update and/or commit first (or invoke ant with -Dpublish.dirty=true&#10;
-                if you really know what you're doing).&#10;">
-                <condition>
-                    <not>
-                        <or>
-                            <isset property="publish.dirty"/>
-                            <matches pattern="^[0-9.]+$" string="${verifyclean.svn.version}"/>
-                        </or>
-                    </not>
-                </condition>
-            </fail>
+            <antcontrib:if>
+                <not>
+                    <isset property="publish.dirty"/>
+                </not>
+                <antcontrib:then>
+                    <exec executable="/bin/sh" logError="true" failonerror="true">
+                        <arg value="-c"/>
+                        <arg value="
+                            if command -v git &gt;/dev/null 2&gt;&amp;1
+                               &amp;&amp; git -C '@{dir}' describe --dirty=XXDIRTYXX 2&gt;&amp;1 | grep -q XXDIRTYXX
+                              || command -v svnversion &gt;/dev/null 2&gt;&amp;1
+                               &amp;&amp; svnversion -c '@{dir}' 2&gt;&amp;1 | grep -qv '^[0-9.]+$$'; then
+                                echo '*** ERROR ***';
+                                echo 'The checked out code is not clean. Please update and/or commit code first';
+                                echo '(or invoke ant with -Dpublish.dirty=true if you really know what you'\''re doing)';
+                                exit 1;
+                            fi;
+                        "/>
+                    </exec>
+                </antcontrib:then>
+            </antcontrib:if>
         </sequential>
     </macrodef>
 
@@ -641,7 +673,7 @@
                 </antcontrib:then>
             </antcontrib:if>
             <mkdir dir="dist/RPMS"/>
-            <dellroad:svnrevision property="svn_revision"/>
+            <dellroad:scmrevision property="scm_revision"/>
             <antcontrib:if>
                 <available file="src/rpm/@{specfile}" type="file"/>
                 <antcontrib:then>
@@ -655,14 +687,17 @@
                         <fileset dir="src/sources">
                             <include name="**/*"/>
                             <exclude name="**/.svn"/>
+                            <exclude name="**/.git"/>
                         </fileset>
                     </copy>
                 </antcontrib:then>
             </antcontrib:if>
             <source-preparation/>
-            <!-- _topdir definition is a workaround for a bug in ant 1.7.0 Rpm.java, line 123 (missing space) -->
-            <rpm topdir="build/rpm" specfile="@{specfile}" command="@{buildflag} --define '_topdir ${basedir}/build/rpm'
-              --define 'svn_revision ${svn_revision}' @{rpmflags}" rpmBuildCommand="rpmbuild"
+            <basename property="spec.@{specfile}.name" file="@{specfile}"/>
+            <rpm topdir="build/rpm" specfile="${spec.@{specfile}.name}" command="@{buildflag}
+              --define 'svn_revision ${scm_revision}'
+              --define 'scm_revision ${scm_revision}'
+              @{rpmflags}" rpmBuildCommand="rpmbuild"
               failOnError="true"/>
             <copy todir="dist" overwrite="true" verbose="true">
                 <fileset dir="build/rpm">
@@ -675,7 +710,7 @@
     <!-- RPM publish -->
     <macrodef uri="urn:org.dellroad.ant" name="rpmdist">
         <attribute name="repohost" default="" description="Hostname of server where repository lives"/>
-        <attribute name="repodir" default="/opt/repo/devel" description="Base RPM repository directory"/>
+        <attribute name="repodir" default="/opt/repo/rpm" description="Base RPM repository directory"/>
         <attribute name="osname" default="" description="Repository O/S name (default current)"/>
         <attribute name="osrel" default="" description="Repository O/S release (default current)"/>
         <attribute name="susever" default="" description="Repository openSuSE version (OBSOLETE - do not use)"/>
@@ -1340,7 +1375,7 @@
     <target name="javac-project"/>
 
     <target name="reports" depends="reports-project" unless="reports.completed">
-        <dellroad:svnrevision property="svn_revision"/>
+        <dellroad:scmrevision property="scm_revision"/>
         <tstamp>
             <format property="current.time" pattern="EEEE dd MMM yyyy HH:mm:ss"/>
         </tstamp>
@@ -1348,7 +1383,8 @@
           in="${build.macros.dir}/reports-index.xsl" out="build/reports/index.html">
             <param name="basedir" expression="${basedir}"/>
             <param name="ant.project.name" expression="${ant.project.name}"/>
-            <param name="svn.revision" expression="${svn_revision}"/>
+            <param name="svn.revision" expression="${scm_revision}"/>
+            <param name="scm.revision" expression="${scm_revision}"/>
             <param name="version" expression="${version}"/>
             <param name="timestamp" expression="${current.time}"/>
         </xslt>
