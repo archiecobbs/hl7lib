@@ -21,7 +21,7 @@
 
     <!-- Project should override these as necessary -->
     <property name="javac.compiler.flags" value="-Xlint:all"/>
-    <property name="java.source.version" value="1.7"/>
+    <property name="java.source.version" value="1.8"/>
 
 <!--
         ************* DETERMINE BASE DIRECTORY ****************
@@ -1112,7 +1112,8 @@
                     <delete dir="@{dir}"/>
                     <mkdir dir="@{dir}"/>
                     <taskdef uri="urn:net.sf.checkstyle"
-                      resource="checkstyletask.properties" classpathref="checkstyle.classpath"/>
+                      resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+                      classpathref="checkstyle.classpath"/>
                     <checkstyle:checkstyle failOnViolation="false" failureProperty="checkstyle.failed"
                       config="@{config}" maxErrors="@{maxErrors}" maxWarnings="@{maxWarnings}">
                         <property key="checkstyle.cache.file" file="@{dir}/cachefile"/>
@@ -1285,7 +1286,7 @@
 
     <!-- Find Checkstyle -->
     <target name="checkstyle.classpath" unless="checkstyle.classpath.resolved">
-        <dellroad:ivymodpath pathid="checkstyle.classpath" rev="5.7" org="com.puppycrawl" mod="checkstyle"/>
+        <dellroad:ivymodpath pathid="checkstyle.classpath" rev="6+" org="com.puppycrawl" mod="checkstyle"/>
         <property name="checkstyle.classpath.resolved" value="true"/>
     </target>
 

@@ -230,7 +230,6 @@
             <property name="severity" value="warning"/>
         </module>
 <!--    <module name="ModifiedControlVariable"/> -->
-        <module name="RedundantThrows"/>
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
 <!--    <module name="StringLiteralEquality"/> -->
