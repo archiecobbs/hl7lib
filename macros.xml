@@ -639,7 +639,7 @@
                             if command -v git &gt;/dev/null 2&gt;&amp;1
                                &amp;&amp; git -C '@{dir}' describe --dirty=XXDIRTYXX 2&gt;&amp;1 | grep -q XXDIRTYXX
                               || command -v svnversion &gt;/dev/null 2&gt;&amp;1
-                               &amp;&amp; svnversion -c '@{dir}' 2&gt;&amp;1 | grep -qv '^[0-9.]+$$'; then
+                               &amp;&amp; ! svnversion -c '@{dir}' 2&gt;&amp;1 | grep -qvE '^(Unversioned directory|[0-9.]+)$$'; then
                                 echo '*** ERROR ***';
                                 echo 'The checked out code is not clean. Please update and/or commit code first';
                                 echo '(or invoke ant with -Dpublish.dirty=true if you really know what you'\''re doing)';
