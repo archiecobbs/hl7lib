@@ -253,7 +253,7 @@
 
     <!-- SCM revision -->
     <macrodef uri="urn:org.dellroad.ant" name="scmrevision">
-        <attribute name="property" default="git.revision" description="Name of property to set"/>
+        <attribute name="property" default="scm.revision" description="Name of property to set"/>
         <attribute name="dir" default="${basedir}" description="Target checked-out source code directory"/>
         <sequential>
             <exec outputproperty="@{property}" executable="/bin/sh" logError="true" failonerror="true">
