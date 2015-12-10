@@ -9,354 +9,352 @@
 <pre><span class="sourceLineNo">001</span><a name="line.1"></a>
 <span class="sourceLineNo">002</span>/*<a name="line.2"></a>
 <span class="sourceLineNo">003</span> * Copyright (C) 2008 Archie L. Cobbs. All rights reserved.<a name="line.3"></a>
-<span class="sourceLineNo">004</span> *<a name="line.4"></a>
-<span class="sourceLineNo">005</span> * $Id$<a name="line.5"></a>
-<span class="sourceLineNo">006</span> */<a name="line.6"></a>
+<span class="sourceLineNo">004</span> */<a name="line.4"></a>
+<span class="sourceLineNo">005</span><a name="line.5"></a>
+<span class="sourceLineNo">006</span>package org.dellroad.hl7;<a name="line.6"></a>
 <span class="sourceLineNo">007</span><a name="line.7"></a>
-<span class="sourceLineNo">008</span>package org.dellroad.hl7;<a name="line.8"></a>
-<span class="sourceLineNo">009</span><a name="line.9"></a>
-<span class="sourceLineNo">010</span>import java.text.SimpleDateFormat;<a name="line.10"></a>
-<span class="sourceLineNo">011</span>import java.util.Date;<a name="line.11"></a>
-<span class="sourceLineNo">012</span><a name="line.12"></a>
-<span class="sourceLineNo">013</span>/**<a name="line.13"></a>
-<span class="sourceLineNo">014</span> * Represents an MSH segment.<a name="line.14"></a>
-<span class="sourceLineNo">015</span> *<a name="line.15"></a>
-<span class="sourceLineNo">016</span> * &lt;p&gt;<a name="line.16"></a>
-<span class="sourceLineNo">017</span> * This subclass does not allow accessing MSH.1 or MSH.2 except<a name="line.17"></a>
-<span class="sourceLineNo">018</span> * indirectly via {@link #getHL7Seps} and {@link #setHL7Seps setHL7Seps()}.<a name="line.18"></a>
-<span class="sourceLineNo">019</span> */<a name="line.19"></a>
-<span class="sourceLineNo">020</span>@SuppressWarnings("serial")<a name="line.20"></a>
-<span class="sourceLineNo">021</span>public class MSHSegment extends HL7Segment {<a name="line.21"></a>
-<span class="sourceLineNo">022</span><a name="line.22"></a>
-<span class="sourceLineNo">023</span>    public static final String DEFAULT_PROCESSING_ID = "P";<a name="line.23"></a>
-<span class="sourceLineNo">024</span>    public static final String DEFAULT_VERSION_ID = "2.3";<a name="line.24"></a>
-<span class="sourceLineNo">025</span><a name="line.25"></a>
-<span class="sourceLineNo">026</span>    public static final String MSH_SEGMENT_NAME = "MSH";<a name="line.26"></a>
-<span class="sourceLineNo">027</span>    public static final String MSA_SEGMENT_NAME = "MSA";<a name="line.27"></a>
+<span class="sourceLineNo">008</span>import java.text.SimpleDateFormat;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import java.util.Date;<a name="line.9"></a>
+<span class="sourceLineNo">010</span><a name="line.10"></a>
+<span class="sourceLineNo">011</span>/**<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Represents an MSH segment.<a name="line.12"></a>
+<span class="sourceLineNo">013</span> *<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * &lt;p&gt;<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * This subclass does not allow accessing MSH.1 or MSH.2 except<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * indirectly via {@link #getHL7Seps} and {@link #setHL7Seps setHL7Seps()}.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>@SuppressWarnings("serial")<a name="line.18"></a>
+<span class="sourceLineNo">019</span>public class MSHSegment extends HL7Segment {<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>    public static final String DEFAULT_PROCESSING_ID = "P";<a name="line.21"></a>
+<span class="sourceLineNo">022</span>    public static final String DEFAULT_VERSION_ID = "2.3";<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>    public static final String MSH_SEGMENT_NAME = "MSH";<a name="line.24"></a>
+<span class="sourceLineNo">025</span>    public static final String MSA_SEGMENT_NAME = "MSA";<a name="line.25"></a>
+<span class="sourceLineNo">026</span><a name="line.26"></a>
+<span class="sourceLineNo">027</span>    public static final String TIMESTAMP_FORMAT = "yyyyMMddHHmmss.SSSZ";<a name="line.27"></a>
 <span class="sourceLineNo">028</span><a name="line.28"></a>
-<span class="sourceLineNo">029</span>    public static final String TIMESTAMP_FORMAT = "yyyyMMddHHmmss.SSSZ";<a name="line.29"></a>
-<span class="sourceLineNo">030</span><a name="line.30"></a>
-<span class="sourceLineNo">031</span>    private static final String ACK = "ACK";<a name="line.31"></a>
-<span class="sourceLineNo">032</span>    private static final HL7Field ACK_MSH_9 = new HL7Field(ACK);<a name="line.32"></a>
-<span class="sourceLineNo">033</span>    private static final HL7Field ACK_MSA_1 = new HL7Field("AA");<a name="line.33"></a>
-<span class="sourceLineNo">034</span><a name="line.34"></a>
-<span class="sourceLineNo">035</span>    /**<a name="line.35"></a>
-<span class="sourceLineNo">036</span>     * Parsing constructor.<a name="line.36"></a>
-<span class="sourceLineNo">037</span>     *<a name="line.37"></a>
-<span class="sourceLineNo">038</span>     * @param line encoded HL7 MSH segment<a name="line.38"></a>
-<span class="sourceLineNo">039</span>     * @throws HL7ContentException if segment is invalid<a name="line.39"></a>
-<span class="sourceLineNo">040</span>     */<a name="line.40"></a>
-<span class="sourceLineNo">041</span>    public MSHSegment(String line) throws HL7ContentException {<a name="line.41"></a>
-<span class="sourceLineNo">042</span><a name="line.42"></a>
-<span class="sourceLineNo">043</span>        // Parse "MSH", MSH.1, and MSH.2<a name="line.43"></a>
-<span class="sourceLineNo">044</span>        if (!line.startsWith(MSH_SEGMENT_NAME))<a name="line.44"></a>
-<span class="sourceLineNo">045</span>            throw new HL7ContentException("MSH segment does not start with `" + MSH_SEGMENT_NAME + "'").setContent(line);<a name="line.45"></a>
-<span class="sourceLineNo">046</span>        this.fields.add(new HL7Field(MSH_SEGMENT_NAME));<a name="line.46"></a>
-<span class="sourceLineNo">047</span>        if (line.length() &lt; 6)<a name="line.47"></a>
-<span class="sourceLineNo">048</span>            throw new HL7ContentException("MSH segment is truncated").setContent(line);<a name="line.48"></a>
-<span class="sourceLineNo">049</span>        char fieldSep = line.charAt(3);<a name="line.49"></a>
-<span class="sourceLineNo">050</span>        char repSep = line.charAt(5);<a name="line.50"></a>
-<span class="sourceLineNo">051</span>        char compSep = line.charAt(4);<a name="line.51"></a>
-<span class="sourceLineNo">052</span>        char subSep = '\u0000';<a name="line.52"></a>
-<span class="sourceLineNo">053</span>        char escChar = '\u0000';<a name="line.53"></a>
-<span class="sourceLineNo">054</span>        int fieldSep23 = 6;<a name="line.54"></a>
-<span class="sourceLineNo">055</span>        if (line.length() &gt;= 7 &amp;&amp; line.charAt(6) != fieldSep) {<a name="line.55"></a>
-<span class="sourceLineNo">056</span>            fieldSep23++;<a name="line.56"></a>
-<span class="sourceLineNo">057</span>            escChar = line.charAt(6);<a name="line.57"></a>
-<span class="sourceLineNo">058</span>            if (line.length() &gt;= 8 &amp;&amp; line.charAt(7) != fieldSep) {<a name="line.58"></a>
-<span class="sourceLineNo">059</span>                fieldSep23++;<a name="line.59"></a>
-<span class="sourceLineNo">060</span>                subSep = line.charAt(7);<a name="line.60"></a>
-<span class="sourceLineNo">061</span>            }<a name="line.61"></a>
-<span class="sourceLineNo">062</span>        }<a name="line.62"></a>
-<span class="sourceLineNo">063</span>        HL7Seps seps = new HL7Seps(fieldSep, compSep, repSep, escChar, subSep);<a name="line.63"></a>
-<span class="sourceLineNo">064</span>        this.setHL7Seps(seps);<a name="line.64"></a>
-<span class="sourceLineNo">065</span><a name="line.65"></a>
-<span class="sourceLineNo">066</span>        // Parse remaining fields (if any)<a name="line.66"></a>
-<span class="sourceLineNo">067</span>        if (fieldSep23 == line.length())<a name="line.67"></a>
-<span class="sourceLineNo">068</span>            return;<a name="line.68"></a>
-<span class="sourceLineNo">069</span>        if (line.charAt(fieldSep23) != fieldSep)<a name="line.69"></a>
-<span class="sourceLineNo">070</span>            throw new HL7ContentException("bogus extra characters in MSH.2").setContent(line);<a name="line.70"></a>
-<span class="sourceLineNo">071</span>        this.parseAndAddFields(line.substring(fieldSep23 + 1), seps);<a name="line.71"></a>
-<span class="sourceLineNo">072</span>    }<a name="line.72"></a>
-<span class="sourceLineNo">073</span><a name="line.73"></a>
-<span class="sourceLineNo">074</span>    /**<a name="line.74"></a>
-<span class="sourceLineNo">075</span>     * Constructor.<a name="line.75"></a>
+<span class="sourceLineNo">029</span>    private static final String ACK = "ACK";<a name="line.29"></a>
+<span class="sourceLineNo">030</span>    private static final HL7Field ACK_MSH_9 = new HL7Field(ACK);<a name="line.30"></a>
+<span class="sourceLineNo">031</span>    private static final HL7Field ACK_MSA_1 = new HL7Field("AA");<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span>    /**<a name="line.33"></a>
+<span class="sourceLineNo">034</span>     * Parsing constructor.<a name="line.34"></a>
+<span class="sourceLineNo">035</span>     *<a name="line.35"></a>
+<span class="sourceLineNo">036</span>     * @param line encoded HL7 MSH segment<a name="line.36"></a>
+<span class="sourceLineNo">037</span>     * @throws HL7ContentException if segment is invalid<a name="line.37"></a>
+<span class="sourceLineNo">038</span>     */<a name="line.38"></a>
+<span class="sourceLineNo">039</span>    public MSHSegment(String line) throws HL7ContentException {<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>        // Parse "MSH", MSH.1, and MSH.2<a name="line.41"></a>
+<span class="sourceLineNo">042</span>        if (!line.startsWith(MSH_SEGMENT_NAME))<a name="line.42"></a>
+<span class="sourceLineNo">043</span>            throw new HL7ContentException("MSH segment does not start with `" + MSH_SEGMENT_NAME + "'").setContent(line);<a name="line.43"></a>
+<span class="sourceLineNo">044</span>        this.fields.add(new HL7Field(MSH_SEGMENT_NAME));<a name="line.44"></a>
+<span class="sourceLineNo">045</span>        if (line.length() &lt; 6)<a name="line.45"></a>
+<span class="sourceLineNo">046</span>            throw new HL7ContentException("MSH segment is truncated").setContent(line);<a name="line.46"></a>
+<span class="sourceLineNo">047</span>        char fieldSep = line.charAt(3);<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        char repSep = line.charAt(5);<a name="line.48"></a>
+<span class="sourceLineNo">049</span>        char compSep = line.charAt(4);<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        char subSep = '\u0000';<a name="line.50"></a>
+<span class="sourceLineNo">051</span>        char escChar = '\u0000';<a name="line.51"></a>
+<span class="sourceLineNo">052</span>        int fieldSep23 = 6;<a name="line.52"></a>
+<span class="sourceLineNo">053</span>        if (line.length() &gt;= 7 &amp;&amp; line.charAt(6) != fieldSep) {<a name="line.53"></a>
+<span class="sourceLineNo">054</span>            fieldSep23++;<a name="line.54"></a>
+<span class="sourceLineNo">055</span>            escChar = line.charAt(6);<a name="line.55"></a>
+<span class="sourceLineNo">056</span>            if (line.length() &gt;= 8 &amp;&amp; line.charAt(7) != fieldSep) {<a name="line.56"></a>
+<span class="sourceLineNo">057</span>                fieldSep23++;<a name="line.57"></a>
+<span class="sourceLineNo">058</span>                subSep = line.charAt(7);<a name="line.58"></a>
+<span class="sourceLineNo">059</span>            }<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        }<a name="line.60"></a>
+<span class="sourceLineNo">061</span>        HL7Seps seps = new HL7Seps(fieldSep, compSep, repSep, escChar, subSep);<a name="line.61"></a>
+<span class="sourceLineNo">062</span>        this.setHL7Seps(seps);<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>        // Parse remaining fields (if any)<a name="line.64"></a>
+<span class="sourceLineNo">065</span>        if (fieldSep23 == line.length())<a name="line.65"></a>
+<span class="sourceLineNo">066</span>            return;<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        if (line.charAt(fieldSep23) != fieldSep)<a name="line.67"></a>
+<span class="sourceLineNo">068</span>            throw new HL7ContentException("bogus extra characters in MSH.2").setContent(line);<a name="line.68"></a>
+<span class="sourceLineNo">069</span>        this.parseAndAddFields(line.substring(fieldSep23 + 1), seps);<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    }<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>    /**<a name="line.72"></a>
+<span class="sourceLineNo">073</span>     * Constructor.<a name="line.73"></a>
+<span class="sourceLineNo">074</span>     *<a name="line.74"></a>
+<span class="sourceLineNo">075</span>     * This constructor initializes only MSH.1 and MSH.2.<a name="line.75"></a>
 <span class="sourceLineNo">076</span>     *<a name="line.76"></a>
-<span class="sourceLineNo">077</span>     * This constructor initializes only MSH.1 and MSH.2.<a name="line.77"></a>
-<span class="sourceLineNo">078</span>     *<a name="line.78"></a>
-<span class="sourceLineNo">079</span>     * @param seps separator and escape characters for this message<a name="line.79"></a>
-<span class="sourceLineNo">080</span>     */<a name="line.80"></a>
-<span class="sourceLineNo">081</span>    public MSHSegment(HL7Seps seps) {<a name="line.81"></a>
-<span class="sourceLineNo">082</span>        this.fields.add(new HL7Field(MSH_SEGMENT_NAME));<a name="line.82"></a>
-<span class="sourceLineNo">083</span>        this.setHL7Seps(seps);<a name="line.83"></a>
-<span class="sourceLineNo">084</span>    }<a name="line.84"></a>
-<span class="sourceLineNo">085</span><a name="line.85"></a>
-<span class="sourceLineNo">086</span>    /**<a name="line.86"></a>
-<span class="sourceLineNo">087</span>     * Convenience constructor. Equivalent to:<a name="line.87"></a>
+<span class="sourceLineNo">077</span>     * @param seps separator and escape characters for this message<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     */<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    public MSHSegment(HL7Seps seps) {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        this.fields.add(new HL7Field(MSH_SEGMENT_NAME));<a name="line.80"></a>
+<span class="sourceLineNo">081</span>        this.setHL7Seps(seps);<a name="line.81"></a>
+<span class="sourceLineNo">082</span>    }<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>    /**<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     * Convenience constructor. Equivalent to:<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     *  &lt;blockquote&gt;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>     *  &lt;code&gt;MSHSegment(HL7Seps.DEFAULT)&lt;/code&gt;<a name="line.87"></a>
 <span class="sourceLineNo">088</span>     *  &lt;blockquote&gt;<a name="line.88"></a>
-<span class="sourceLineNo">089</span>     *  &lt;code&gt;MSHSegment(HL7Seps.DEFAULT)&lt;/code&gt;<a name="line.89"></a>
-<span class="sourceLineNo">090</span>     *  &lt;blockquote&gt;<a name="line.90"></a>
-<span class="sourceLineNo">091</span>     */<a name="line.91"></a>
-<span class="sourceLineNo">092</span>    public MSHSegment() {<a name="line.92"></a>
-<span class="sourceLineNo">093</span>        this(HL7Seps.DEFAULT);<a name="line.93"></a>
-<span class="sourceLineNo">094</span>    }<a name="line.94"></a>
-<span class="sourceLineNo">095</span><a name="line.95"></a>
-<span class="sourceLineNo">096</span>    /**<a name="line.96"></a>
-<span class="sourceLineNo">097</span>     * Copy constructor.<a name="line.97"></a>
-<span class="sourceLineNo">098</span>     */<a name="line.98"></a>
-<span class="sourceLineNo">099</span>    public MSHSegment(MSHSegment msh) {<a name="line.99"></a>
-<span class="sourceLineNo">100</span>        super(msh);<a name="line.100"></a>
-<span class="sourceLineNo">101</span>    }<a name="line.101"></a>
-<span class="sourceLineNo">102</span><a name="line.102"></a>
-<span class="sourceLineNo">103</span>    /**<a name="line.103"></a>
-<span class="sourceLineNo">104</span>     * Returns sending application from MSH.3.<a name="line.104"></a>
-<span class="sourceLineNo">105</span>     *<a name="line.105"></a>
-<span class="sourceLineNo">106</span>     * @return MSH.3, or null if there is none<a name="line.106"></a>
-<span class="sourceLineNo">107</span>     */<a name="line.107"></a>
-<span class="sourceLineNo">108</span>    public HL7Field getSendingApplication() {<a name="line.108"></a>
-<span class="sourceLineNo">109</span>        return getField(3);<a name="line.109"></a>
-<span class="sourceLineNo">110</span>    }<a name="line.110"></a>
-<span class="sourceLineNo">111</span>    public void setSendingApplication(HL7Field field) {<a name="line.111"></a>
-<span class="sourceLineNo">112</span>        this.setField(3, field);<a name="line.112"></a>
-<span class="sourceLineNo">113</span>    }<a name="line.113"></a>
-<span class="sourceLineNo">114</span><a name="line.114"></a>
-<span class="sourceLineNo">115</span>    /**<a name="line.115"></a>
-<span class="sourceLineNo">116</span>     * Returns sending facility from MSH.4.<a name="line.116"></a>
-<span class="sourceLineNo">117</span>     *<a name="line.117"></a>
-<span class="sourceLineNo">118</span>     * @return MSH.4, or null if there is none<a name="line.118"></a>
-<span class="sourceLineNo">119</span>     */<a name="line.119"></a>
-<span class="sourceLineNo">120</span>    public HL7Field getSendingFacility() {<a name="line.120"></a>
-<span class="sourceLineNo">121</span>        return getField(4);<a name="line.121"></a>
-<span class="sourceLineNo">122</span>    }<a name="line.122"></a>
-<span class="sourceLineNo">123</span>    public void setSendingFacility(HL7Field field) {<a name="line.123"></a>
-<span class="sourceLineNo">124</span>        this.setField(4, field);<a name="line.124"></a>
-<span class="sourceLineNo">125</span>    }<a name="line.125"></a>
-<span class="sourceLineNo">126</span><a name="line.126"></a>
-<span class="sourceLineNo">127</span>    /**<a name="line.127"></a>
-<span class="sourceLineNo">128</span>     * Returns receiving application from MSH.5.<a name="line.128"></a>
-<span class="sourceLineNo">129</span>     *<a name="line.129"></a>
-<span class="sourceLineNo">130</span>     * @return MSH.5, or null if there is none<a name="line.130"></a>
-<span class="sourceLineNo">131</span>     */<a name="line.131"></a>
-<span class="sourceLineNo">132</span>    public HL7Field getReceivingApplication() {<a name="line.132"></a>
-<span class="sourceLineNo">133</span>        return getField(5);<a name="line.133"></a>
-<span class="sourceLineNo">134</span>    }<a name="line.134"></a>
-<span class="sourceLineNo">135</span>    public void setReceivingApplication(HL7Field field) {<a name="line.135"></a>
-<span class="sourceLineNo">136</span>        this.setField(5, field);<a name="line.136"></a>
-<span class="sourceLineNo">137</span>    }<a name="line.137"></a>
-<span class="sourceLineNo">138</span><a name="line.138"></a>
-<span class="sourceLineNo">139</span>    /**<a name="line.139"></a>
-<span class="sourceLineNo">140</span>     * Returns receiving facility from MSH.6.<a name="line.140"></a>
-<span class="sourceLineNo">141</span>     *<a name="line.141"></a>
-<span class="sourceLineNo">142</span>     * @return MSH.6, or null if there is none<a name="line.142"></a>
-<span class="sourceLineNo">143</span>     */<a name="line.143"></a>
-<span class="sourceLineNo">144</span>    public HL7Field getReceivingFacility() {<a name="line.144"></a>
-<span class="sourceLineNo">145</span>        return getField(6);<a name="line.145"></a>
-<span class="sourceLineNo">146</span>    }<a name="line.146"></a>
-<span class="sourceLineNo">147</span>    public void setReceivingFacility(HL7Field field) {<a name="line.147"></a>
-<span class="sourceLineNo">148</span>        this.setField(6, field);<a name="line.148"></a>
-<span class="sourceLineNo">149</span>    }<a name="line.149"></a>
-<span class="sourceLineNo">150</span><a name="line.150"></a>
-<span class="sourceLineNo">151</span>    /**<a name="line.151"></a>
-<span class="sourceLineNo">152</span>     * Returns message timestamp from MSH.7.<a name="line.152"></a>
-<span class="sourceLineNo">153</span>     *<a name="line.153"></a>
-<span class="sourceLineNo">154</span>     * @return MSH.7, or null if there is none<a name="line.154"></a>
-<span class="sourceLineNo">155</span>     */<a name="line.155"></a>
-<span class="sourceLineNo">156</span>    public HL7Field getTimestamp() {<a name="line.156"></a>
-<span class="sourceLineNo">157</span>        return getField(7);<a name="line.157"></a>
-<span class="sourceLineNo">158</span>    }<a name="line.158"></a>
-<span class="sourceLineNo">159</span>    public void setTimestamp(HL7Field field) {<a name="line.159"></a>
-<span class="sourceLineNo">160</span>        this.setField(7, field);<a name="line.160"></a>
-<span class="sourceLineNo">161</span>    }<a name="line.161"></a>
-<span class="sourceLineNo">162</span><a name="line.162"></a>
-<span class="sourceLineNo">163</span>    /**<a name="line.163"></a>
-<span class="sourceLineNo">164</span>     * Returns message type from MSH.9.<a name="line.164"></a>
-<span class="sourceLineNo">165</span>     *<a name="line.165"></a>
-<span class="sourceLineNo">166</span>     * @return MSH.9, or null if there is none<a name="line.166"></a>
-<span class="sourceLineNo">167</span>     */<a name="line.167"></a>
-<span class="sourceLineNo">168</span>    public HL7Field getMessageType() {<a name="line.168"></a>
-<span class="sourceLineNo">169</span>        return getField(9);<a name="line.169"></a>
-<span class="sourceLineNo">170</span>    }<a name="line.170"></a>
-<span class="sourceLineNo">171</span>    public void setMessageType(HL7Field field) {<a name="line.171"></a>
-<span class="sourceLineNo">172</span>        this.setField(9, field);<a name="line.172"></a>
-<span class="sourceLineNo">173</span>    }<a name="line.173"></a>
-<span class="sourceLineNo">174</span><a name="line.174"></a>
-<span class="sourceLineNo">175</span>    /**<a name="line.175"></a>
-<span class="sourceLineNo">176</span>     * Returns control ID from MSH.10.<a name="line.176"></a>
-<span class="sourceLineNo">177</span>     *<a name="line.177"></a>
-<span class="sourceLineNo">178</span>     * @return MSH.10, or null if there is none<a name="line.178"></a>
-<span class="sourceLineNo">179</span>     */<a name="line.179"></a>
-<span class="sourceLineNo">180</span>    public HL7Field getControlID() {<a name="line.180"></a>
-<span class="sourceLineNo">181</span>        return getField(10);<a name="line.181"></a>
-<span class="sourceLineNo">182</span>    }<a name="line.182"></a>
-<span class="sourceLineNo">183</span>    public void setControlID(HL7Field field) {<a name="line.183"></a>
-<span class="sourceLineNo">184</span>        this.setField(10, field);<a name="line.184"></a>
-<span class="sourceLineNo">185</span>    }<a name="line.185"></a>
-<span class="sourceLineNo">186</span><a name="line.186"></a>
-<span class="sourceLineNo">187</span>    /**<a name="line.187"></a>
-<span class="sourceLineNo">188</span>     * Returns control ID from MSH.11.<a name="line.188"></a>
-<span class="sourceLineNo">189</span>     *<a name="line.189"></a>
-<span class="sourceLineNo">190</span>     * @return MSH.11, or null if there is none<a name="line.190"></a>
-<span class="sourceLineNo">191</span>     */<a name="line.191"></a>
-<span class="sourceLineNo">192</span>    public HL7Field getProcessingID() {<a name="line.192"></a>
-<span class="sourceLineNo">193</span>        return getField(11);<a name="line.193"></a>
-<span class="sourceLineNo">194</span>    }<a name="line.194"></a>
-<span class="sourceLineNo">195</span>    public void setProcessingID(HL7Field field) {<a name="line.195"></a>
-<span class="sourceLineNo">196</span>        this.setField(11, field);<a name="line.196"></a>
-<span class="sourceLineNo">197</span>    }<a name="line.197"></a>
-<span class="sourceLineNo">198</span><a name="line.198"></a>
-<span class="sourceLineNo">199</span>    /**<a name="line.199"></a>
-<span class="sourceLineNo">200</span>     * Returns HL7 version from MSH.12.<a name="line.200"></a>
-<span class="sourceLineNo">201</span>     *<a name="line.201"></a>
-<span class="sourceLineNo">202</span>     * @return MSH.12, or null if there is none<a name="line.202"></a>
-<span class="sourceLineNo">203</span>     */<a name="line.203"></a>
-<span class="sourceLineNo">204</span>    public HL7Field getVersionID() {<a name="line.204"></a>
-<span class="sourceLineNo">205</span>        return getField(12);<a name="line.205"></a>
-<span class="sourceLineNo">206</span>    }<a name="line.206"></a>
-<span class="sourceLineNo">207</span>    public void setVersionID(HL7Field field) {<a name="line.207"></a>
-<span class="sourceLineNo">208</span>        this.setField(12, field);<a name="line.208"></a>
-<span class="sourceLineNo">209</span>    }<a name="line.209"></a>
-<span class="sourceLineNo">210</span><a name="line.210"></a>
-<span class="sourceLineNo">211</span>    /**<a name="line.211"></a>
-<span class="sourceLineNo">212</span>     * Get the separator and escape characters defined by MSH.1 and MSH.2.<a name="line.212"></a>
-<span class="sourceLineNo">213</span>     */<a name="line.213"></a>
-<span class="sourceLineNo">214</span>    public HL7Seps getHL7Seps() {<a name="line.214"></a>
-<span class="sourceLineNo">215</span>        String msh1 = this.getField(1).get(0, 0, 0);<a name="line.215"></a>
-<span class="sourceLineNo">216</span>        String msh2 = this.getField(2).get(0, 0, 0);<a name="line.216"></a>
-<span class="sourceLineNo">217</span>        try {<a name="line.217"></a>
-<span class="sourceLineNo">218</span>            return new HL7Seps(msh1.charAt(0), msh2.charAt(0), msh2.charAt(1),<a name="line.218"></a>
-<span class="sourceLineNo">219</span>              msh2.length() &gt; 2 ? msh2.charAt(2) : '\u0000',<a name="line.219"></a>
-<span class="sourceLineNo">220</span>              msh2.length() &gt; 3 ? msh2.charAt(3) : '\u0000');<a name="line.220"></a>
-<span class="sourceLineNo">221</span>        } catch (HL7ContentException e) {<a name="line.221"></a>
-<span class="sourceLineNo">222</span>            throw new RuntimeException("impossible", e);<a name="line.222"></a>
-<span class="sourceLineNo">223</span>        }<a name="line.223"></a>
-<span class="sourceLineNo">224</span>    }<a name="line.224"></a>
-<span class="sourceLineNo">225</span><a name="line.225"></a>
-<span class="sourceLineNo">226</span>    /**<a name="line.226"></a>
-<span class="sourceLineNo">227</span>     * Set MSH.1 and MSH.2 based on the provided separator and<a name="line.227"></a>
-<span class="sourceLineNo">228</span>     * escape characters.<a name="line.228"></a>
-<span class="sourceLineNo">229</span>     */<a name="line.229"></a>
-<span class="sourceLineNo">230</span>    public void setHL7Seps(HL7Seps seps) {<a name="line.230"></a>
-<span class="sourceLineNo">231</span>        super.setField(1, new HL7Field("" + seps.getFieldSep()));<a name="line.231"></a>
-<span class="sourceLineNo">232</span>        super.setField(2, new HL7Field("" + seps.getCompSep() + seps.getRepSep()<a name="line.232"></a>
-<span class="sourceLineNo">233</span>          + (seps.hasEscapeCharacter() ? "" + seps.getEscChar() : "")<a name="line.233"></a>
-<span class="sourceLineNo">234</span>          + (seps.hasSubcomponentSeparator() ? "" + seps.getSubSep() : "")));<a name="line.234"></a>
-<span class="sourceLineNo">235</span>    }<a name="line.235"></a>
-<span class="sourceLineNo">236</span><a name="line.236"></a>
-<span class="sourceLineNo">237</span>    /**<a name="line.237"></a>
-<span class="sourceLineNo">238</span>     * This subclass version disallows trimming away MSH.1 or MSH.2.<a name="line.238"></a>
-<span class="sourceLineNo">239</span>     *<a name="line.239"></a>
-<span class="sourceLineNo">240</span>     * @throws IllegalArgumentException if &lt;code&gt;size&lt;/code&gt; is less than three<a name="line.240"></a>
-<span class="sourceLineNo">241</span>     */<a name="line.241"></a>
-<span class="sourceLineNo">242</span>    @Override<a name="line.242"></a>
-<span class="sourceLineNo">243</span>    public void trimTo(int size) {<a name="line.243"></a>
-<span class="sourceLineNo">244</span>        if (size &lt; 3)<a name="line.244"></a>
-<span class="sourceLineNo">245</span>            throw new IllegalArgumentException("size &lt; 3");<a name="line.245"></a>
-<span class="sourceLineNo">246</span>        super.trimTo(size);<a name="line.246"></a>
-<span class="sourceLineNo">247</span>    }<a name="line.247"></a>
-<span class="sourceLineNo">248</span><a name="line.248"></a>
-<span class="sourceLineNo">249</span>    /**<a name="line.249"></a>
-<span class="sourceLineNo">250</span>     * This subclass version disallows setting MSH.1 or MSH.2 directly.<a name="line.250"></a>
-<span class="sourceLineNo">251</span>     *<a name="line.251"></a>
-<span class="sourceLineNo">252</span>     * @throws IllegalArgumentException if &lt;code&gt;index&lt;/code&gt; is less than three<a name="line.252"></a>
-<span class="sourceLineNo">253</span>     * @throws IllegalArgumentException if field is null<a name="line.253"></a>
-<span class="sourceLineNo">254</span>     */<a name="line.254"></a>
-<span class="sourceLineNo">255</span>    @Override<a name="line.255"></a>
-<span class="sourceLineNo">256</span>    public void setField(int index, HL7Field field) {<a name="line.256"></a>
-<span class="sourceLineNo">257</span>        if (index &lt; 3)<a name="line.257"></a>
-<span class="sourceLineNo">258</span>            throw new IllegalArgumentException("index &lt; 3");<a name="line.258"></a>
-<span class="sourceLineNo">259</span>        super.setField(index, field);<a name="line.259"></a>
-<span class="sourceLineNo">260</span>    }<a name="line.260"></a>
-<span class="sourceLineNo">261</span><a name="line.261"></a>
-<span class="sourceLineNo">262</span>    /**<a name="line.262"></a>
-<span class="sourceLineNo">263</span>     * Create an acknowlegement message for this message.<a name="line.263"></a>
-<span class="sourceLineNo">264</span>     *<a name="line.264"></a>
-<span class="sourceLineNo">265</span>     * @param serno next local HL7 serial number<a name="line.265"></a>
-<span class="sourceLineNo">266</span>     * @return an acknowlegement of this message<a name="line.266"></a>
-<span class="sourceLineNo">267</span>     * @throws HL7ContentException if the required fields are not present<a name="line.267"></a>
-<span class="sourceLineNo">268</span>     *  in this instance<a name="line.268"></a>
-<span class="sourceLineNo">269</span>     */<a name="line.269"></a>
-<span class="sourceLineNo">270</span>    public HL7Message createACK(long serno) throws HL7ContentException {<a name="line.270"></a>
-<span class="sourceLineNo">271</span><a name="line.271"></a>
-<span class="sourceLineNo">272</span>        // We must have at least up to MSH.11<a name="line.272"></a>
-<span class="sourceLineNo">273</span>        if (getNumFields() &lt; 12)<a name="line.273"></a>
-<span class="sourceLineNo">274</span>            throw new HL7ContentException("insufficient fields for ACK'ing");<a name="line.274"></a>
-<span class="sourceLineNo">275</span>        HL7Field versionID = this.getVersionID() != null ? this.getVersionID() : new HL7Field(DEFAULT_VERSION_ID);<a name="line.275"></a>
-<span class="sourceLineNo">276</span><a name="line.276"></a>
-<span class="sourceLineNo">277</span>        // Build ACK<a name="line.277"></a>
-<span class="sourceLineNo">278</span>        HL7Message ack = new HL7Message();<a name="line.278"></a>
-<span class="sourceLineNo">279</span>        MSHSegment msh = ack.getMSHSegment();<a name="line.279"></a>
-<span class="sourceLineNo">280</span>        msh.setTimestamp(new HL7Field(new SimpleDateFormat(TIMESTAMP_FORMAT).format(new Date())));<a name="line.280"></a>
-<span class="sourceLineNo">281</span>        msh.setMessageType(ACK_MSH_9);<a name="line.281"></a>
-<span class="sourceLineNo">282</span>        msh.setControlID(new HL7Field("" + serno));<a name="line.282"></a>
-<span class="sourceLineNo">283</span>        msh.setProcessingID(this.getProcessingID());<a name="line.283"></a>
-<span class="sourceLineNo">284</span>        msh.setVersionID(versionID);<a name="line.284"></a>
-<span class="sourceLineNo">285</span>        HL7Segment msa = new HL7Segment(MSA_SEGMENT_NAME);<a name="line.285"></a>
-<span class="sourceLineNo">286</span>        msa.setField(1, ACK_MSA_1);<a name="line.286"></a>
-<span class="sourceLineNo">287</span>        msa.setField(2, this.getControlID());<a name="line.287"></a>
-<span class="sourceLineNo">288</span>        ack.getSegments().add(msa);<a name="line.288"></a>
-<span class="sourceLineNo">289</span><a name="line.289"></a>
-<span class="sourceLineNo">290</span>        // Done<a name="line.290"></a>
-<span class="sourceLineNo">291</span>        return ack;<a name="line.291"></a>
-<span class="sourceLineNo">292</span>    }<a name="line.292"></a>
-<span class="sourceLineNo">293</span><a name="line.293"></a>
-<span class="sourceLineNo">294</span>    /**<a name="line.294"></a>
-<span class="sourceLineNo">295</span>     * Check whether the given message is an acknowlegement of this MSH.<a name="line.295"></a>
-<span class="sourceLineNo">296</span>     *<a name="line.296"></a>
-<span class="sourceLineNo">297</span>     * @param ack putative acknowlegement of this message<a name="line.297"></a>
-<span class="sourceLineNo">298</span>     * @throws HL7ContentException if the required fields are not present<a name="line.298"></a>
-<span class="sourceLineNo">299</span>     *  in this instance<a name="line.299"></a>
-<span class="sourceLineNo">300</span>     */<a name="line.300"></a>
-<span class="sourceLineNo">301</span>    public boolean isACK(HL7Message ack) throws HL7ContentException {<a name="line.301"></a>
-<span class="sourceLineNo">302</span>        HL7Field controlID = this.getControlID();<a name="line.302"></a>
-<span class="sourceLineNo">303</span>        HL7Field procID = this.getProcessingID();<a name="line.303"></a>
-<span class="sourceLineNo">304</span>        if (controlID == null || procID == null)<a name="line.304"></a>
-<span class="sourceLineNo">305</span>            throw new HL7ContentException("insufficient fields for ACK'ing");<a name="line.305"></a>
-<span class="sourceLineNo">306</span>        MSHSegment ackMSH = ack.getMSHSegment();<a name="line.306"></a>
-<span class="sourceLineNo">307</span>        return ACK.equals(ack.getField("MSH.9").get(0, 0, 0))<a name="line.307"></a>
-<span class="sourceLineNo">308</span>          &amp;&amp; controlID.equals(ack.getField("MSA.2"))<a name="line.308"></a>
-<span class="sourceLineNo">309</span>          &amp;&amp; procID.equals(ackMSH.getProcessingID())<a name="line.309"></a>
-<span class="sourceLineNo">310</span>          &amp;&amp; ACK_MSA_1.equals(ack.getField("MSA.1"));<a name="line.310"></a>
-<span class="sourceLineNo">311</span>    }<a name="line.311"></a>
-<span class="sourceLineNo">312</span><a name="line.312"></a>
-<span class="sourceLineNo">313</span>    /**<a name="line.313"></a>
-<span class="sourceLineNo">314</span>     * Append string encoding of this segment to the provided buffer.<a name="line.314"></a>
-<span class="sourceLineNo">315</span>     *<a name="line.315"></a>
-<span class="sourceLineNo">316</span>     * &lt;p&gt;<a name="line.316"></a>
-<span class="sourceLineNo">317</span>     * This overridden version ensures that MSH.1 and MSH.2 are not escaped.<a name="line.317"></a>
-<span class="sourceLineNo">318</span>     */<a name="line.318"></a>
-<span class="sourceLineNo">319</span>    @Override<a name="line.319"></a>
-<span class="sourceLineNo">320</span>    public void append(StringBuilder buf, HL7Seps seps) {<a name="line.320"></a>
-<span class="sourceLineNo">321</span>        HL7Field[] fields = this.fields.toArray(new HL7Field[this.fields.size()]);<a name="line.321"></a>
-<span class="sourceLineNo">322</span>        buf.append(fields[0]);<a name="line.322"></a>
-<span class="sourceLineNo">323</span>        buf.append(seps);<a name="line.323"></a>
-<span class="sourceLineNo">324</span>        for (int i = 3; i &lt; fields.length; i++) {<a name="line.324"></a>
-<span class="sourceLineNo">325</span>            buf.append(seps.getFieldSep());<a name="line.325"></a>
-<span class="sourceLineNo">326</span>            fields[i].append(buf, seps);<a name="line.326"></a>
-<span class="sourceLineNo">327</span>        }<a name="line.327"></a>
-<span class="sourceLineNo">328</span>    }<a name="line.328"></a>
-<span class="sourceLineNo">329</span><a name="line.329"></a>
-<span class="sourceLineNo">330</span>    /**<a name="line.330"></a>
-<span class="sourceLineNo">331</span>     * Convert to a string using the provided separators.<a name="line.331"></a>
-<span class="sourceLineNo">332</span>     *<a name="line.332"></a>
-<span class="sourceLineNo">333</span>     * &lt;p&gt;<a name="line.333"></a>
-<span class="sourceLineNo">334</span>     * This overridden version ensures that MSH.1 and MSH.2 are consistent with &lt;code&gt;seps&lt;/code&gt; in the generated string.<a name="line.334"></a>
-<span class="sourceLineNo">335</span>     * This separators configured in this instance are not affected regardless.<a name="line.335"></a>
-<span class="sourceLineNo">336</span>     */<a name="line.336"></a>
-<span class="sourceLineNo">337</span>    @Override<a name="line.337"></a>
-<span class="sourceLineNo">338</span>    public String toString(HL7Seps seps) {<a name="line.338"></a>
-<span class="sourceLineNo">339</span>        if (seps.equals(getHL7Seps()))<a name="line.339"></a>
-<span class="sourceLineNo">340</span>            return super.toString(seps);<a name="line.340"></a>
-<span class="sourceLineNo">341</span>        MSHSegment copy = new MSHSegment(this);<a name="line.341"></a>
-<span class="sourceLineNo">342</span>        copy.setHL7Seps(seps);<a name="line.342"></a>
-<span class="sourceLineNo">343</span>        return copy.toString();<a name="line.343"></a>
-<span class="sourceLineNo">344</span>    }<a name="line.344"></a>
-<span class="sourceLineNo">345</span><a name="line.345"></a>
-<span class="sourceLineNo">346</span>    @Override<a name="line.346"></a>
-<span class="sourceLineNo">347</span>    public String toString() {<a name="line.347"></a>
-<span class="sourceLineNo">348</span>        return super.toString(getHL7Seps());<a name="line.348"></a>
-<span class="sourceLineNo">349</span>    }<a name="line.349"></a>
-<span class="sourceLineNo">350</span>}<a name="line.350"></a>
-<span class="sourceLineNo">351</span><a name="line.351"></a>
+<span class="sourceLineNo">089</span>     */<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    public MSHSegment() {<a name="line.90"></a>
+<span class="sourceLineNo">091</span>        this(HL7Seps.DEFAULT);<a name="line.91"></a>
+<span class="sourceLineNo">092</span>    }<a name="line.92"></a>
+<span class="sourceLineNo">093</span><a name="line.93"></a>
+<span class="sourceLineNo">094</span>    /**<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     * Copy constructor.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>     */<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    public MSHSegment(MSHSegment msh) {<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        super(msh);<a name="line.98"></a>
+<span class="sourceLineNo">099</span>    }<a name="line.99"></a>
+<span class="sourceLineNo">100</span><a name="line.100"></a>
+<span class="sourceLineNo">101</span>    /**<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     * Returns sending application from MSH.3.<a name="line.102"></a>
+<span class="sourceLineNo">103</span>     *<a name="line.103"></a>
+<span class="sourceLineNo">104</span>     * @return MSH.3, or null if there is none<a name="line.104"></a>
+<span class="sourceLineNo">105</span>     */<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    public HL7Field getSendingApplication() {<a name="line.106"></a>
+<span class="sourceLineNo">107</span>        return getField(3);<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    }<a name="line.108"></a>
+<span class="sourceLineNo">109</span>    public void setSendingApplication(HL7Field field) {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>        this.setField(3, field);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    }<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>    /**<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     * Returns sending facility from MSH.4.<a name="line.114"></a>
+<span class="sourceLineNo">115</span>     *<a name="line.115"></a>
+<span class="sourceLineNo">116</span>     * @return MSH.4, or null if there is none<a name="line.116"></a>
+<span class="sourceLineNo">117</span>     */<a name="line.117"></a>
+<span class="sourceLineNo">118</span>    public HL7Field getSendingFacility() {<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        return getField(4);<a name="line.119"></a>
+<span class="sourceLineNo">120</span>    }<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    public void setSendingFacility(HL7Field field) {<a name="line.121"></a>
+<span class="sourceLineNo">122</span>        this.setField(4, field);<a name="line.122"></a>
+<span class="sourceLineNo">123</span>    }<a name="line.123"></a>
+<span class="sourceLineNo">124</span><a name="line.124"></a>
+<span class="sourceLineNo">125</span>    /**<a name="line.125"></a>
+<span class="sourceLineNo">126</span>     * Returns receiving application from MSH.5.<a name="line.126"></a>
+<span class="sourceLineNo">127</span>     *<a name="line.127"></a>
+<span class="sourceLineNo">128</span>     * @return MSH.5, or null if there is none<a name="line.128"></a>
+<span class="sourceLineNo">129</span>     */<a name="line.129"></a>
+<span class="sourceLineNo">130</span>    public HL7Field getReceivingApplication() {<a name="line.130"></a>
+<span class="sourceLineNo">131</span>        return getField(5);<a name="line.131"></a>
+<span class="sourceLineNo">132</span>    }<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    public void setReceivingApplication(HL7Field field) {<a name="line.133"></a>
+<span class="sourceLineNo">134</span>        this.setField(5, field);<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    }<a name="line.135"></a>
+<span class="sourceLineNo">136</span><a name="line.136"></a>
+<span class="sourceLineNo">137</span>    /**<a name="line.137"></a>
+<span class="sourceLineNo">138</span>     * Returns receiving facility from MSH.6.<a name="line.138"></a>
+<span class="sourceLineNo">139</span>     *<a name="line.139"></a>
+<span class="sourceLineNo">140</span>     * @return MSH.6, or null if there is none<a name="line.140"></a>
+<span class="sourceLineNo">141</span>     */<a name="line.141"></a>
+<span class="sourceLineNo">142</span>    public HL7Field getReceivingFacility() {<a name="line.142"></a>
+<span class="sourceLineNo">143</span>        return getField(6);<a name="line.143"></a>
+<span class="sourceLineNo">144</span>    }<a name="line.144"></a>
+<span class="sourceLineNo">145</span>    public void setReceivingFacility(HL7Field field) {<a name="line.145"></a>
+<span class="sourceLineNo">146</span>        this.setField(6, field);<a name="line.146"></a>
+<span class="sourceLineNo">147</span>    }<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span>    /**<a name="line.149"></a>
+<span class="sourceLineNo">150</span>     * Returns message timestamp from MSH.7.<a name="line.150"></a>
+<span class="sourceLineNo">151</span>     *<a name="line.151"></a>
+<span class="sourceLineNo">152</span>     * @return MSH.7, or null if there is none<a name="line.152"></a>
+<span class="sourceLineNo">153</span>     */<a name="line.153"></a>
+<span class="sourceLineNo">154</span>    public HL7Field getTimestamp() {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>        return getField(7);<a name="line.155"></a>
+<span class="sourceLineNo">156</span>    }<a name="line.156"></a>
+<span class="sourceLineNo">157</span>    public void setTimestamp(HL7Field field) {<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        this.setField(7, field);<a name="line.158"></a>
+<span class="sourceLineNo">159</span>    }<a name="line.159"></a>
+<span class="sourceLineNo">160</span><a name="line.160"></a>
+<span class="sourceLineNo">161</span>    /**<a name="line.161"></a>
+<span class="sourceLineNo">162</span>     * Returns message type from MSH.9.<a name="line.162"></a>
+<span class="sourceLineNo">163</span>     *<a name="line.163"></a>
+<span class="sourceLineNo">164</span>     * @return MSH.9, or null if there is none<a name="line.164"></a>
+<span class="sourceLineNo">165</span>     */<a name="line.165"></a>
+<span class="sourceLineNo">166</span>    public HL7Field getMessageType() {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        return getField(9);<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    }<a name="line.168"></a>
+<span class="sourceLineNo">169</span>    public void setMessageType(HL7Field field) {<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        this.setField(9, field);<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    }<a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span>    /**<a name="line.173"></a>
+<span class="sourceLineNo">174</span>     * Returns control ID from MSH.10.<a name="line.174"></a>
+<span class="sourceLineNo">175</span>     *<a name="line.175"></a>
+<span class="sourceLineNo">176</span>     * @return MSH.10, or null if there is none<a name="line.176"></a>
+<span class="sourceLineNo">177</span>     */<a name="line.177"></a>
+<span class="sourceLineNo">178</span>    public HL7Field getControlID() {<a name="line.178"></a>
+<span class="sourceLineNo">179</span>        return getField(10);<a name="line.179"></a>
+<span class="sourceLineNo">180</span>    }<a name="line.180"></a>
+<span class="sourceLineNo">181</span>    public void setControlID(HL7Field field) {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>        this.setField(10, field);<a name="line.182"></a>
+<span class="sourceLineNo">183</span>    }<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>    /**<a name="line.185"></a>
+<span class="sourceLineNo">186</span>     * Returns control ID from MSH.11.<a name="line.186"></a>
+<span class="sourceLineNo">187</span>     *<a name="line.187"></a>
+<span class="sourceLineNo">188</span>     * @return MSH.11, or null if there is none<a name="line.188"></a>
+<span class="sourceLineNo">189</span>     */<a name="line.189"></a>
+<span class="sourceLineNo">190</span>    public HL7Field getProcessingID() {<a name="line.190"></a>
+<span class="sourceLineNo">191</span>        return getField(11);<a name="line.191"></a>
+<span class="sourceLineNo">192</span>    }<a name="line.192"></a>
+<span class="sourceLineNo">193</span>    public void setProcessingID(HL7Field field) {<a name="line.193"></a>
+<span class="sourceLineNo">194</span>        this.setField(11, field);<a name="line.194"></a>
+<span class="sourceLineNo">195</span>    }<a name="line.195"></a>
+<span class="sourceLineNo">196</span><a name="line.196"></a>
+<span class="sourceLineNo">197</span>    /**<a name="line.197"></a>
+<span class="sourceLineNo">198</span>     * Returns HL7 version from MSH.12.<a name="line.198"></a>
+<span class="sourceLineNo">199</span>     *<a name="line.199"></a>
+<span class="sourceLineNo">200</span>     * @return MSH.12, or null if there is none<a name="line.200"></a>
+<span class="sourceLineNo">201</span>     */<a name="line.201"></a>
+<span class="sourceLineNo">202</span>    public HL7Field getVersionID() {<a name="line.202"></a>
+<span class="sourceLineNo">203</span>        return getField(12);<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    }<a name="line.204"></a>
+<span class="sourceLineNo">205</span>    public void setVersionID(HL7Field field) {<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        this.setField(12, field);<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    }<a name="line.207"></a>
+<span class="sourceLineNo">208</span><a name="line.208"></a>
+<span class="sourceLineNo">209</span>    /**<a name="line.209"></a>
+<span class="sourceLineNo">210</span>     * Get the separator and escape characters defined by MSH.1 and MSH.2.<a name="line.210"></a>
+<span class="sourceLineNo">211</span>     */<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    public HL7Seps getHL7Seps() {<a name="line.212"></a>
+<span class="sourceLineNo">213</span>        String msh1 = this.getField(1).get(0, 0, 0);<a name="line.213"></a>
+<span class="sourceLineNo">214</span>        String msh2 = this.getField(2).get(0, 0, 0);<a name="line.214"></a>
+<span class="sourceLineNo">215</span>        try {<a name="line.215"></a>
+<span class="sourceLineNo">216</span>            return new HL7Seps(msh1.charAt(0), msh2.charAt(0), msh2.charAt(1),<a name="line.216"></a>
+<span class="sourceLineNo">217</span>              msh2.length() &gt; 2 ? msh2.charAt(2) : '\u0000',<a name="line.217"></a>
+<span class="sourceLineNo">218</span>              msh2.length() &gt; 3 ? msh2.charAt(3) : '\u0000');<a name="line.218"></a>
+<span class="sourceLineNo">219</span>        } catch (HL7ContentException e) {<a name="line.219"></a>
+<span class="sourceLineNo">220</span>            throw new RuntimeException("impossible", e);<a name="line.220"></a>
+<span class="sourceLineNo">221</span>        }<a name="line.221"></a>
+<span class="sourceLineNo">222</span>    }<a name="line.222"></a>
+<span class="sourceLineNo">223</span><a name="line.223"></a>
+<span class="sourceLineNo">224</span>    /**<a name="line.224"></a>
+<span class="sourceLineNo">225</span>     * Set MSH.1 and MSH.2 based on the provided separator and<a name="line.225"></a>
+<span class="sourceLineNo">226</span>     * escape characters.<a name="line.226"></a>
+<span class="sourceLineNo">227</span>     */<a name="line.227"></a>
+<span class="sourceLineNo">228</span>    public void setHL7Seps(HL7Seps seps) {<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        super.setField(1, new HL7Field("" + seps.getFieldSep()));<a name="line.229"></a>
+<span class="sourceLineNo">230</span>        super.setField(2, new HL7Field("" + seps.getCompSep() + seps.getRepSep()<a name="line.230"></a>
+<span class="sourceLineNo">231</span>          + (seps.hasEscapeCharacter() ? "" + seps.getEscChar() : "")<a name="line.231"></a>
+<span class="sourceLineNo">232</span>          + (seps.hasSubcomponentSeparator() ? "" + seps.getSubSep() : "")));<a name="line.232"></a>
+<span class="sourceLineNo">233</span>    }<a name="line.233"></a>
+<span class="sourceLineNo">234</span><a name="line.234"></a>
+<span class="sourceLineNo">235</span>    /**<a name="line.235"></a>
+<span class="sourceLineNo">236</span>     * This subclass version disallows trimming away MSH.1 or MSH.2.<a name="line.236"></a>
+<span class="sourceLineNo">237</span>     *<a name="line.237"></a>
+<span class="sourceLineNo">238</span>     * @throws IllegalArgumentException if &lt;code&gt;size&lt;/code&gt; is less than three<a name="line.238"></a>
+<span class="sourceLineNo">239</span>     */<a name="line.239"></a>
+<span class="sourceLineNo">240</span>    @Override<a name="line.240"></a>
+<span class="sourceLineNo">241</span>    public void trimTo(int size) {<a name="line.241"></a>
+<span class="sourceLineNo">242</span>        if (size &lt; 3)<a name="line.242"></a>
+<span class="sourceLineNo">243</span>            throw new IllegalArgumentException("size &lt; 3");<a name="line.243"></a>
+<span class="sourceLineNo">244</span>        super.trimTo(size);<a name="line.244"></a>
+<span class="sourceLineNo">245</span>    }<a name="line.245"></a>
+<span class="sourceLineNo">246</span><a name="line.246"></a>
+<span class="sourceLineNo">247</span>    /**<a name="line.247"></a>
+<span class="sourceLineNo">248</span>     * This subclass version disallows setting MSH.1 or MSH.2 directly.<a name="line.248"></a>
+<span class="sourceLineNo">249</span>     *<a name="line.249"></a>
+<span class="sourceLineNo">250</span>     * @throws IllegalArgumentException if &lt;code&gt;index&lt;/code&gt; is less than three<a name="line.250"></a>
+<span class="sourceLineNo">251</span>     * @throws IllegalArgumentException if field is null<a name="line.251"></a>
+<span class="sourceLineNo">252</span>     */<a name="line.252"></a>
+<span class="sourceLineNo">253</span>    @Override<a name="line.253"></a>
+<span class="sourceLineNo">254</span>    public void setField(int index, HL7Field field) {<a name="line.254"></a>
+<span class="sourceLineNo">255</span>        if (index &lt; 3)<a name="line.255"></a>
+<span class="sourceLineNo">256</span>            throw new IllegalArgumentException("index &lt; 3");<a name="line.256"></a>
+<span class="sourceLineNo">257</span>        super.setField(index, field);<a name="line.257"></a>
+<span class="sourceLineNo">258</span>    }<a name="line.258"></a>
+<span class="sourceLineNo">259</span><a name="line.259"></a>
+<span class="sourceLineNo">260</span>    /**<a name="line.260"></a>
+<span class="sourceLineNo">261</span>     * Create an acknowlegement message for this message.<a name="line.261"></a>
+<span class="sourceLineNo">262</span>     *<a name="line.262"></a>
+<span class="sourceLineNo">263</span>     * @param serno next local HL7 serial number<a name="line.263"></a>
+<span class="sourceLineNo">264</span>     * @return an acknowlegement of this message<a name="line.264"></a>
+<span class="sourceLineNo">265</span>     * @throws HL7ContentException if the required fields are not present<a name="line.265"></a>
+<span class="sourceLineNo">266</span>     *  in this instance<a name="line.266"></a>
+<span class="sourceLineNo">267</span>     */<a name="line.267"></a>
+<span class="sourceLineNo">268</span>    public HL7Message createACK(long serno) throws HL7ContentException {<a name="line.268"></a>
+<span class="sourceLineNo">269</span><a name="line.269"></a>
+<span class="sourceLineNo">270</span>        // We must have at least up to MSH.11<a name="line.270"></a>
+<span class="sourceLineNo">271</span>        if (getNumFields() &lt; 12)<a name="line.271"></a>
+<span class="sourceLineNo">272</span>            throw new HL7ContentException("insufficient fields for ACK'ing");<a name="line.272"></a>
+<span class="sourceLineNo">273</span>        HL7Field versionID = this.getVersionID() != null ? this.getVersionID() : new HL7Field(DEFAULT_VERSION_ID);<a name="line.273"></a>
+<span class="sourceLineNo">274</span><a name="line.274"></a>
+<span class="sourceLineNo">275</span>        // Build ACK<a name="line.275"></a>
+<span class="sourceLineNo">276</span>        HL7Message ack = new HL7Message();<a name="line.276"></a>
+<span class="sourceLineNo">277</span>        MSHSegment msh = ack.getMSHSegment();<a name="line.277"></a>
+<span class="sourceLineNo">278</span>        msh.setTimestamp(new HL7Field(new SimpleDateFormat(TIMESTAMP_FORMAT).format(new Date())));<a name="line.278"></a>
+<span class="sourceLineNo">279</span>        msh.setMessageType(ACK_MSH_9);<a name="line.279"></a>
+<span class="sourceLineNo">280</span>        msh.setControlID(new HL7Field("" + serno));<a name="line.280"></a>
+<span class="sourceLineNo">281</span>        msh.setProcessingID(this.getProcessingID());<a name="line.281"></a>
+<span class="sourceLineNo">282</span>        msh.setVersionID(versionID);<a name="line.282"></a>
+<span class="sourceLineNo">283</span>        HL7Segment msa = new HL7Segment(MSA_SEGMENT_NAME);<a name="line.283"></a>
+<span class="sourceLineNo">284</span>        msa.setField(1, ACK_MSA_1);<a name="line.284"></a>
+<span class="sourceLineNo">285</span>        msa.setField(2, this.getControlID());<a name="line.285"></a>
+<span class="sourceLineNo">286</span>        ack.getSegments().add(msa);<a name="line.286"></a>
+<span class="sourceLineNo">287</span><a name="line.287"></a>
+<span class="sourceLineNo">288</span>        // Done<a name="line.288"></a>
+<span class="sourceLineNo">289</span>        return ack;<a name="line.289"></a>
+<span class="sourceLineNo">290</span>    }<a name="line.290"></a>
+<span class="sourceLineNo">291</span><a name="line.291"></a>
+<span class="sourceLineNo">292</span>    /**<a name="line.292"></a>
+<span class="sourceLineNo">293</span>     * Check whether the given message is an acknowlegement of this MSH.<a name="line.293"></a>
+<span class="sourceLineNo">294</span>     *<a name="line.294"></a>
+<span class="sourceLineNo">295</span>     * @param ack putative acknowlegement of this message<a name="line.295"></a>
+<span class="sourceLineNo">296</span>     * @throws HL7ContentException if the required fields are not present<a name="line.296"></a>
+<span class="sourceLineNo">297</span>     *  in this instance<a name="line.297"></a>
+<span class="sourceLineNo">298</span>     */<a name="line.298"></a>
+<span class="sourceLineNo">299</span>    public boolean isACK(HL7Message ack) throws HL7ContentException {<a name="line.299"></a>
+<span class="sourceLineNo">300</span>        HL7Field controlID = this.getControlID();<a name="line.300"></a>
+<span class="sourceLineNo">301</span>        HL7Field procID = this.getProcessingID();<a name="line.301"></a>
+<span class="sourceLineNo">302</span>        if (controlID == null || procID == null)<a name="line.302"></a>
+<span class="sourceLineNo">303</span>            throw new HL7ContentException("insufficient fields for ACK'ing");<a name="line.303"></a>
+<span class="sourceLineNo">304</span>        MSHSegment ackMSH = ack.getMSHSegment();<a name="line.304"></a>
+<span class="sourceLineNo">305</span>        return ACK.equals(ack.getField("MSH.9").get(0, 0, 0))<a name="line.305"></a>
+<span class="sourceLineNo">306</span>          &amp;&amp; controlID.equals(ack.getField("MSA.2"))<a name="line.306"></a>
+<span class="sourceLineNo">307</span>          &amp;&amp; procID.equals(ackMSH.getProcessingID())<a name="line.307"></a>
+<span class="sourceLineNo">308</span>          &amp;&amp; ACK_MSA_1.equals(ack.getField("MSA.1"));<a name="line.308"></a>
+<span class="sourceLineNo">309</span>    }<a name="line.309"></a>
+<span class="sourceLineNo">310</span><a name="line.310"></a>
+<span class="sourceLineNo">311</span>    /**<a name="line.311"></a>
+<span class="sourceLineNo">312</span>     * Append string encoding of this segment to the provided buffer.<a name="line.312"></a>
+<span class="sourceLineNo">313</span>     *<a name="line.313"></a>
+<span class="sourceLineNo">314</span>     * &lt;p&gt;<a name="line.314"></a>
+<span class="sourceLineNo">315</span>     * This overridden version ensures that MSH.1 and MSH.2 are not escaped.<a name="line.315"></a>
+<span class="sourceLineNo">316</span>     */<a name="line.316"></a>
+<span class="sourceLineNo">317</span>    @Override<a name="line.317"></a>
+<span class="sourceLineNo">318</span>    public void append(StringBuilder buf, HL7Seps seps) {<a name="line.318"></a>
+<span class="sourceLineNo">319</span>        HL7Field[] fields = this.fields.toArray(new HL7Field[this.fields.size()]);<a name="line.319"></a>
+<span class="sourceLineNo">320</span>        buf.append(fields[0]);<a name="line.320"></a>
+<span class="sourceLineNo">321</span>        buf.append(seps);<a name="line.321"></a>
+<span class="sourceLineNo">322</span>        for (int i = 3; i &lt; fields.length; i++) {<a name="line.322"></a>
+<span class="sourceLineNo">323</span>            buf.append(seps.getFieldSep());<a name="line.323"></a>
+<span class="sourceLineNo">324</span>            fields[i].append(buf, seps);<a name="line.324"></a>
+<span class="sourceLineNo">325</span>        }<a name="line.325"></a>
+<span class="sourceLineNo">326</span>    }<a name="line.326"></a>
+<span class="sourceLineNo">327</span><a name="line.327"></a>
+<span class="sourceLineNo">328</span>    /**<a name="line.328"></a>
+<span class="sourceLineNo">329</span>     * Convert to a string using the provided separators.<a name="line.329"></a>
+<span class="sourceLineNo">330</span>     *<a name="line.330"></a>
+<span class="sourceLineNo">331</span>     * &lt;p&gt;<a name="line.331"></a>
+<span class="sourceLineNo">332</span>     * This overridden version ensures that MSH.1 and MSH.2 are consistent with &lt;code&gt;seps&lt;/code&gt; in the generated string.<a name="line.332"></a>
+<span class="sourceLineNo">333</span>     * This separators configured in this instance are not affected regardless.<a name="line.333"></a>
+<span class="sourceLineNo">334</span>     */<a name="line.334"></a>
+<span class="sourceLineNo">335</span>    @Override<a name="line.335"></a>
+<span class="sourceLineNo">336</span>    public String toString(HL7Seps seps) {<a name="line.336"></a>
+<span class="sourceLineNo">337</span>        if (seps.equals(getHL7Seps()))<a name="line.337"></a>
+<span class="sourceLineNo">338</span>            return super.toString(seps);<a name="line.338"></a>
+<span class="sourceLineNo">339</span>        MSHSegment copy = new MSHSegment(this);<a name="line.339"></a>
+<span class="sourceLineNo">340</span>        copy.setHL7Seps(seps);<a name="line.340"></a>
+<span class="sourceLineNo">341</span>        return copy.toString();<a name="line.341"></a>
+<span class="sourceLineNo">342</span>    }<a name="line.342"></a>
+<span class="sourceLineNo">343</span><a name="line.343"></a>
+<span class="sourceLineNo">344</span>    @Override<a name="line.344"></a>
+<span class="sourceLineNo">345</span>    public String toString() {<a name="line.345"></a>
+<span class="sourceLineNo">346</span>        return super.toString(getHL7Seps());<a name="line.346"></a>
+<span class="sourceLineNo">347</span>    }<a name="line.347"></a>
+<span class="sourceLineNo">348</span>}<a name="line.348"></a>
+<span class="sourceLineNo">349</span><a name="line.349"></a>
 
 
 

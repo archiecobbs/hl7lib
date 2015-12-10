@@ -9,75 +9,73 @@
 <pre><span class="sourceLineNo">001</span><a name="line.1"></a>
 <span class="sourceLineNo">002</span>/*<a name="line.2"></a>
 <span class="sourceLineNo">003</span> * Copyright (C) 2008 Archie L. Cobbs. All rights reserved.<a name="line.3"></a>
-<span class="sourceLineNo">004</span> *<a name="line.4"></a>
-<span class="sourceLineNo">005</span> * $Id$<a name="line.5"></a>
-<span class="sourceLineNo">006</span> */<a name="line.6"></a>
+<span class="sourceLineNo">004</span> */<a name="line.4"></a>
+<span class="sourceLineNo">005</span><a name="line.5"></a>
+<span class="sourceLineNo">006</span>package org.dellroad.hl7;<a name="line.6"></a>
 <span class="sourceLineNo">007</span><a name="line.7"></a>
-<span class="sourceLineNo">008</span>package org.dellroad.hl7;<a name="line.8"></a>
+<span class="sourceLineNo">008</span>import java.util.ArrayList;<a name="line.8"></a>
 <span class="sourceLineNo">009</span><a name="line.9"></a>
-<span class="sourceLineNo">010</span>import java.util.ArrayList;<a name="line.10"></a>
-<span class="sourceLineNo">011</span><a name="line.11"></a>
-<span class="sourceLineNo">012</span>/**<a name="line.12"></a>
-<span class="sourceLineNo">013</span> * List of {@link HL7Segment} objects that requires there to always be an initial MSH segment.<a name="line.13"></a>
-<span class="sourceLineNo">014</span> * In particular, this class enforces the following constraints:<a name="line.14"></a>
-<span class="sourceLineNo">015</span> * &lt;ul&gt;<a name="line.15"></a>
-<span class="sourceLineNo">016</span> *  &lt;li&gt;There must be at least one item in the list&lt;/li&gt;<a name="line.16"></a>
-<span class="sourceLineNo">017</span> *  &lt;li&gt;The first item in the list must be an {@link MSHSegment}&lt;/li&gt;<a name="line.17"></a>
-<span class="sourceLineNo">018</span> * &lt;/ul&gt;<a name="line.18"></a>
+<span class="sourceLineNo">010</span>/**<a name="line.10"></a>
+<span class="sourceLineNo">011</span> * List of {@link HL7Segment} objects that requires there to always be an initial MSH segment.<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * In particular, this class enforces the following constraints:<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * &lt;ul&gt;<a name="line.13"></a>
+<span class="sourceLineNo">014</span> *  &lt;li&gt;There must be at least one item in the list&lt;/li&gt;<a name="line.14"></a>
+<span class="sourceLineNo">015</span> *  &lt;li&gt;The first item in the list must be an {@link MSHSegment}&lt;/li&gt;<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * &lt;/ul&gt;<a name="line.16"></a>
+<span class="sourceLineNo">017</span> *<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * Illegal operations result in an {@link IllegalStateException} being thrown.<a name="line.18"></a>
 <span class="sourceLineNo">019</span> *<a name="line.19"></a>
-<span class="sourceLineNo">020</span> * Illegal operations result in an {@link IllegalStateException} being thrown.<a name="line.20"></a>
-<span class="sourceLineNo">021</span> *<a name="line.21"></a>
-<span class="sourceLineNo">022</span> * &lt;p&gt;<a name="line.22"></a>
-<span class="sourceLineNo">023</span> * Note we do not enforce the other segments to be anything, not even non-null.<a name="line.23"></a>
-<span class="sourceLineNo">024</span> */<a name="line.24"></a>
-<span class="sourceLineNo">025</span>@SuppressWarnings("serial")<a name="line.25"></a>
-<span class="sourceLineNo">026</span>public final class HL7SegmentList extends ArrayList&lt;HL7Segment&gt; {<a name="line.26"></a>
-<span class="sourceLineNo">027</span><a name="line.27"></a>
-<span class="sourceLineNo">028</span>    /**<a name="line.28"></a>
-<span class="sourceLineNo">029</span>     * Constructor.<a name="line.29"></a>
-<span class="sourceLineNo">030</span>     *<a name="line.30"></a>
-<span class="sourceLineNo">031</span>     * @throws IllegalArgumentException if &lt;code&gt;msh&lt;/code&gt; is null<a name="line.31"></a>
-<span class="sourceLineNo">032</span>     */<a name="line.32"></a>
-<span class="sourceLineNo">033</span>    public HL7SegmentList(MSHSegment msh) {<a name="line.33"></a>
-<span class="sourceLineNo">034</span>        if (msh == null)<a name="line.34"></a>
-<span class="sourceLineNo">035</span>            throw new IllegalArgumentException("null msh");<a name="line.35"></a>
-<span class="sourceLineNo">036</span>        this.add(msh);<a name="line.36"></a>
-<span class="sourceLineNo">037</span>    }<a name="line.37"></a>
-<span class="sourceLineNo">038</span><a name="line.38"></a>
-<span class="sourceLineNo">039</span>    @Override<a name="line.39"></a>
-<span class="sourceLineNo">040</span>    public void clear() {<a name="line.40"></a>
-<span class="sourceLineNo">041</span>        throw new IllegalStateException("list can't be empty");<a name="line.41"></a>
-<span class="sourceLineNo">042</span>    }<a name="line.42"></a>
-<span class="sourceLineNo">043</span><a name="line.43"></a>
-<span class="sourceLineNo">044</span>    @Override<a name="line.44"></a>
-<span class="sourceLineNo">045</span>    public HL7Segment remove(int index) {<a name="line.45"></a>
-<span class="sourceLineNo">046</span>        if (index == 0 &amp;&amp; !(this.get(0) instanceof MSHSegment))<a name="line.46"></a>
-<span class="sourceLineNo">047</span>            throw new IllegalStateException("can't remove initial MSH");<a name="line.47"></a>
-<span class="sourceLineNo">048</span>        return super.remove(index);<a name="line.48"></a>
-<span class="sourceLineNo">049</span>    }<a name="line.49"></a>
-<span class="sourceLineNo">050</span><a name="line.50"></a>
-<span class="sourceLineNo">051</span>    @Override<a name="line.51"></a>
-<span class="sourceLineNo">052</span>    public boolean remove(Object obj) {<a name="line.52"></a>
-<span class="sourceLineNo">053</span>        if (obj != null &amp;&amp; obj.equals(get(0)))<a name="line.53"></a>
-<span class="sourceLineNo">054</span>            throw new IllegalStateException("can't remove initial MSH");<a name="line.54"></a>
-<span class="sourceLineNo">055</span>        return super.remove(obj);<a name="line.55"></a>
-<span class="sourceLineNo">056</span>    }<a name="line.56"></a>
-<span class="sourceLineNo">057</span><a name="line.57"></a>
-<span class="sourceLineNo">058</span>    @Override<a name="line.58"></a>
-<span class="sourceLineNo">059</span>    protected void removeRange(int fromIndex, int toIndex) {<a name="line.59"></a>
-<span class="sourceLineNo">060</span>        if (fromIndex &lt;= 0 &amp;&amp; toIndex &gt; 0 &amp;&amp; !(this.get(0) instanceof MSHSegment))<a name="line.60"></a>
-<span class="sourceLineNo">061</span>            throw new IllegalStateException("can't remove initial MSH");<a name="line.61"></a>
-<span class="sourceLineNo">062</span>        super.removeRange(fromIndex, toIndex);<a name="line.62"></a>
-<span class="sourceLineNo">063</span>    }<a name="line.63"></a>
-<span class="sourceLineNo">064</span><a name="line.64"></a>
-<span class="sourceLineNo">065</span>    @Override<a name="line.65"></a>
-<span class="sourceLineNo">066</span>    public HL7Segment set(int index, HL7Segment segment) {<a name="line.66"></a>
-<span class="sourceLineNo">067</span>        if (index == 0 &amp;&amp; !(segment instanceof MSHSegment))<a name="line.67"></a>
-<span class="sourceLineNo">068</span>            throw new IllegalStateException("can't replace initial MSH segment with non-MSH segment");<a name="line.68"></a>
-<span class="sourceLineNo">069</span>        return super.set(index, segment);<a name="line.69"></a>
-<span class="sourceLineNo">070</span>    }<a name="line.70"></a>
-<span class="sourceLineNo">071</span>}<a name="line.71"></a>
-<span class="sourceLineNo">072</span><a name="line.72"></a>
+<span class="sourceLineNo">020</span> * &lt;p&gt;<a name="line.20"></a>
+<span class="sourceLineNo">021</span> * Note we do not enforce the other segments to be anything, not even non-null.<a name="line.21"></a>
+<span class="sourceLineNo">022</span> */<a name="line.22"></a>
+<span class="sourceLineNo">023</span>@SuppressWarnings("serial")<a name="line.23"></a>
+<span class="sourceLineNo">024</span>public final class HL7SegmentList extends ArrayList&lt;HL7Segment&gt; {<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>    /**<a name="line.26"></a>
+<span class="sourceLineNo">027</span>     * Constructor.<a name="line.27"></a>
+<span class="sourceLineNo">028</span>     *<a name="line.28"></a>
+<span class="sourceLineNo">029</span>     * @throws IllegalArgumentException if &lt;code&gt;msh&lt;/code&gt; is null<a name="line.29"></a>
+<span class="sourceLineNo">030</span>     */<a name="line.30"></a>
+<span class="sourceLineNo">031</span>    public HL7SegmentList(MSHSegment msh) {<a name="line.31"></a>
+<span class="sourceLineNo">032</span>        if (msh == null)<a name="line.32"></a>
+<span class="sourceLineNo">033</span>            throw new IllegalArgumentException("null msh");<a name="line.33"></a>
+<span class="sourceLineNo">034</span>        this.add(msh);<a name="line.34"></a>
+<span class="sourceLineNo">035</span>    }<a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>    @Override<a name="line.37"></a>
+<span class="sourceLineNo">038</span>    public void clear() {<a name="line.38"></a>
+<span class="sourceLineNo">039</span>        throw new IllegalStateException("list can't be empty");<a name="line.39"></a>
+<span class="sourceLineNo">040</span>    }<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>    @Override<a name="line.42"></a>
+<span class="sourceLineNo">043</span>    public HL7Segment remove(int index) {<a name="line.43"></a>
+<span class="sourceLineNo">044</span>        if (index == 0 &amp;&amp; !(this.get(0) instanceof MSHSegment))<a name="line.44"></a>
+<span class="sourceLineNo">045</span>            throw new IllegalStateException("can't remove initial MSH");<a name="line.45"></a>
+<span class="sourceLineNo">046</span>        return super.remove(index);<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    }<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>    @Override<a name="line.49"></a>
+<span class="sourceLineNo">050</span>    public boolean remove(Object obj) {<a name="line.50"></a>
+<span class="sourceLineNo">051</span>        if (obj != null &amp;&amp; obj.equals(get(0)))<a name="line.51"></a>
+<span class="sourceLineNo">052</span>            throw new IllegalStateException("can't remove initial MSH");<a name="line.52"></a>
+<span class="sourceLineNo">053</span>        return super.remove(obj);<a name="line.53"></a>
+<span class="sourceLineNo">054</span>    }<a name="line.54"></a>
+<span class="sourceLineNo">055</span><a name="line.55"></a>
+<span class="sourceLineNo">056</span>    @Override<a name="line.56"></a>
+<span class="sourceLineNo">057</span>    protected void removeRange(int fromIndex, int toIndex) {<a name="line.57"></a>
+<span class="sourceLineNo">058</span>        if (fromIndex &lt;= 0 &amp;&amp; toIndex &gt; 0 &amp;&amp; !(this.get(0) instanceof MSHSegment))<a name="line.58"></a>
+<span class="sourceLineNo">059</span>            throw new IllegalStateException("can't remove initial MSH");<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        super.removeRange(fromIndex, toIndex);<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    }<a name="line.61"></a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span>    @Override<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    public HL7Segment set(int index, HL7Segment segment) {<a name="line.64"></a>
+<span class="sourceLineNo">065</span>        if (index == 0 &amp;&amp; !(segment instanceof MSHSegment))<a name="line.65"></a>
+<span class="sourceLineNo">066</span>            throw new IllegalStateException("can't replace initial MSH segment with non-MSH segment");<a name="line.66"></a>
+<span class="sourceLineNo">067</span>        return super.set(index, segment);<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    }<a name="line.68"></a>
+<span class="sourceLineNo">069</span>}<a name="line.69"></a>
+<span class="sourceLineNo">070</span><a name="line.70"></a>
 
 
 
