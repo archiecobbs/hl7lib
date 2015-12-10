@@ -1,4 +1,4 @@
-Version Next
+Version 1.1.0 Release December 10, 2015
 
     - Added support for escaping hex character data
 
