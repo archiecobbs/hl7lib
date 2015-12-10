@@ -24,6 +24,7 @@ public final class HL7Seps implements Serializable {
     public static final char REPEAT_SEPARATOR_ESCAPE = 'R';
     public static final char ESCAPE_CHARACTER_ESCAPE = 'E';
     public static final char SUBCOMPONENT_SEPARATOR_ESCAPE = 'T';
+    public static final char HEX_DATA_ESCAPE = 'X';
 
     /**
      * Separator using the default HL7 separator and escape characters.
@@ -174,24 +175,27 @@ public final class HL7Seps implements Serializable {
      */
     public void escape(String value, StringBuilder buf) {
         final int length = value.length();
+        final StringBuilder escapeCode = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            char ch = value.charAt(i);
-            char escapeCode;
+            final char ch = value.charAt(i);
+            escapeCode.setLength(0);
             if (ch == this.fieldSep)
-                escapeCode = FIELD_SEPARATOR_ESCAPE;
+                escapeCode.append(FIELD_SEPARATOR_ESCAPE);
             else if (ch == this.repSep)
-                escapeCode = REPEAT_SEPARATOR_ESCAPE;
+                escapeCode.append(REPEAT_SEPARATOR_ESCAPE);
             else if (ch == this.compSep)
-                escapeCode = COMPONENT_SEPARATOR_ESCAPE;
+                escapeCode.append(COMPONENT_SEPARATOR_ESCAPE);
             else if (ch == this.subSep && this.subSep != '\u0000')
-                escapeCode = SUBCOMPONENT_SEPARATOR_ESCAPE;
+                escapeCode.append(SUBCOMPONENT_SEPARATOR_ESCAPE);
             else if (ch == this.escChar && this.escChar != '\u0000')
-                escapeCode = ESCAPE_CHARACTER_ESCAPE;
+                escapeCode.append(ESCAPE_CHARACTER_ESCAPE);
+            else if (ch < 0x0020)
+                escapeCode.append(String.format("%c%02x", HEX_DATA_ESCAPE, (int)ch));
             else {
                 buf.append(ch);
                 continue;
             }
-            if (this.escChar != '\u0000') {
+            if (this.escChar != '\u0000' && escapeCode.length() > 0) {
                 buf.append(this.escChar);
                 buf.append(escapeCode);
                 buf.append(this.escChar);
@@ -256,9 +260,14 @@ public final class HL7Seps implements Serializable {
                 break;
             }
 
-            // Check for a known escape match
-            if (escapes[i] == escapes[i - 1] + 2) {
-                switch (value.charAt(escapes[i] - 1)) {
+            // Decode escape
+            final int escStart = escapes[i - 1] + 1;
+            final int escEnd = escapes[i];
+            switch (escEnd - escStart) {
+            case 0:                                                                 // empty escape - ignore
+                break;
+            case 1:                                                                 // single character escapes
+                switch (value.charAt(escStart)) {
                 case FIELD_SEPARATOR_ESCAPE:
                     buf.append(this.fieldSep);
                     break;
@@ -276,16 +285,39 @@ public final class HL7Seps implements Serializable {
                         buf.append(this.subSep);
                         break;
                     }
-                    // Elide unknown escape
+                    // elide unknown escape
                     break;
                 default:
-                    // Elide unknown escape
+                    // elide unknown escape
+                    break;
+                }
+                break;
+            // CHECKSTYLE OFF: FallThroughCheck
+            default:                                                                // multi-character escapes
+            // CHECKSTYLE ON: FallThroughCheck
+                final String remainder = value.substring(escStart + 1, escEnd);
+            multiswitch:
+                switch (value.charAt(escStart)) {
+                case HEX_DATA_ESCAPE:
+                    final char[] chars = new char[remainder.length() / 2];
+                    for (int j = 0; j < chars.length; j++) {
+                        final String digits = remainder.substring(j * 2, j * 2 + 2);
+                        try {
+                            chars[j] = (char)Integer.parseInt(digits, 16);
+                        } catch (NumberFormatException e) {
+                            break multiswitch;
+                        }
+                    }
+                    buf.append(chars);
+                    break;
+                default:
+                    // elide unknown escape
                     break;
                 }
             }
 
             // Update next starting position
-            posn = escapes[i] + 1;
+            posn = escEnd + 1;
         }
 
         // Done

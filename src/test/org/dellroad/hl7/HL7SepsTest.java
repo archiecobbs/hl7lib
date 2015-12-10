@@ -152,6 +152,8 @@ public class HL7SepsTest {
         list.add(new Object[] { "aafrcs$zz", "aa$F$$R$$S$$T$$E$zz" });
         list.add(new Object[] {
           "a serf circus", "a $T$e$R$$F$ $S$i$R$$S$u$T$" });
+        list.add(new Object[] { "aaa\rbbb", "aaa$X0d$bbb" });
+        list.add(new Object[] { "aaa\u0001\u0002\u0003bbb", "aaa$X01$$X02$$X03$bbb" });
         return list.iterator();
     }
 

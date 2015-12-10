@@ -1,3 +1,7 @@
+Version Next
+
+    - Added support for escaping hex character data
+
 Version 1.0.24 Released December 12, 2014
 
     - Added XMLStreamWriter support to XMLConverter
