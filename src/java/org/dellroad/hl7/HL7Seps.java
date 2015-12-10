@@ -292,9 +292,7 @@ public final class HL7Seps implements Serializable {
                     break;
                 }
                 break;
-            // CHECKSTYLE OFF: FallThroughCheck
             default:                                                                // multi-character escapes
-            // CHECKSTYLE ON: FallThroughCheck
                 final String remainder = value.substring(escStart + 1, escEnd);
             multiswitch:
                 switch (value.charAt(escStart)) {
@@ -314,6 +312,7 @@ public final class HL7Seps implements Serializable {
                     // elide unknown escape
                     break;
                 }
+                break;
             }
 
             // Update next starting position
