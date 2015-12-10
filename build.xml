@@ -6,18 +6,18 @@
   xmlns:ivy="urn:org.apache.ivy.ant">
 
     <!-- Configure build & stuff -->
-    <property name="library.version" value="1.0"/>
     <property name="javac.compiler.flags" value="-Xlint:all"/>
     <property name="java.source.version" value="1.7"/>
 
     <!-- Import generic build macros -->
     <import file="${basedir}/src/build/macros.xml"/>
 
-    <!-- Determine SVN revision and full version -->
-    <dellroad:svnrevision property="svn.revision"/>
-    <property name="full.version" value="${library.version}.${svn.revision}"/>
+    <!-- Determine version -->
+    <exec outputproperty="library.version" executable="git" logError="true" failonerror="true">
+        <arg value="describe"/>
+    </exec>
     <echo message=""/>
-    <echo message="Version is ${library.version}.${svn.revision}"/>
+    <echo message="Version is ${library.version}"/>
     <echo message=""/>
 
     <!-- Classpath targets -->
@@ -43,8 +43,8 @@
     <!-- Main JAR -->
     <target name="jar" depends="javac" unless="jar.completed">
         <mkdir dir="build/dist"/>
-        <delete file="build/dist/${ant.project.name}-${full.version}.jar"/>
-        <jar destfile="build/dist/${ant.project.name}-${full.version}.jar">
+        <delete file="build/dist/${ant.project.name}-${library.version}.jar"/>
+        <jar destfile="build/dist/${ant.project.name}-${library.version}.jar">
             <fileset dir="build/classes"/>
         </jar>
         <property name="jar.completed" value="true"/>
@@ -53,12 +53,12 @@
     <!-- All distribution files -->
     <target name="jars" depends="jar, javadoc" unless="jars.completed">
         <mkdir dir="build/dist"/>
-        <delete file="build/dist/${ant.project.name}-sources-${full.version}.zip"/>
-        <zip destfile="build/dist/${ant.project.name}-sources-${full.version}.zip">
+        <delete file="build/dist/${ant.project.name}-sources-${library.version}.zip"/>
+        <zip destfile="build/dist/${ant.project.name}-sources-${library.version}.zip">
             <fileset dir="src/java" includes="**/*"/>
         </zip>
-        <delete file="build/dist/${ant.project.name}-javadocs-${full.version}.zip"/>
-        <zip destfile="build/dist/${ant.project.name}-javadocs-${full.version}.zip">
+        <delete file="build/dist/${ant.project.name}-javadocs-${library.version}.zip"/>
+        <zip destfile="build/dist/${ant.project.name}-javadocs-${library.version}.zip">
             <fileset dir="build/reports/javadoc" includes="**/*"/>
         </zip>
         <property name="jars.completed" value="true"/>
@@ -71,7 +71,7 @@
         <copy todir="build/javadoc">
             <fileset dir="src/java/org/dellroad/hl7" includes="overview.html"/>
             <filterset>
-                <filter token="VERSION" value="${full.version}"/>
+                <filter token="VERSION" value="${library.version}"/>
             </filterset>
         </copy>
         <dellroad:javadoc overview="build/javadoc/overview.html">
