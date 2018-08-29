@@ -6,4 +6,4 @@ Features include:
   * Java API for creating, editing, and querying
   * An efficient and semantically equivalent XML encoding
 
-See the [Javadocs API](http://archiecobbs.github.io/hl7lib/publish/reports/javadoc/index.html) for more information.
+See the [Javadocs API](http://archiecobbs.github.io/hl7lib/site/apidocs/index.html) for more information.
