@@ -185,7 +185,7 @@ public class MSHSegment extends HL7Segment {
     }
 
     /**
-     * Returns control ID from MSH.11.
+     * Returns processing ID from MSH.11.
      *
      * @return MSH.11, or null if there is none
      */
