@@ -274,19 +274,19 @@ public class MSHSegment extends HL7Segment {
     public HL7Message createACK(long serno) throws HL7ContentException {
 
         // We must have at least up to MSH.11
-        if (getNumFields() < 12)
-            throw new HL7ContentException("insufficient fields for ACK'ing");
-        HL7Field versionID = this.getVersionID() != null ? this.getVersionID() : new HL7Field(DEFAULT_VERSION_ID);
+        if (this.getNumFields() < 12)
+            throw new HL7ContentException("insufficient fields for ACK'ing (missing processing ID)");
+        final HL7Field versionID = this.getVersionID() != null ? this.getVersionID() : new HL7Field(DEFAULT_VERSION_ID);
 
         // Build ACK
-        HL7Message ack = new HL7Message();
-        MSHSegment msh = ack.getMSHSegment();
+        final HL7Message ack = new HL7Message();
+        final MSHSegment msh = ack.getMSHSegment();
         msh.setTimestamp(new HL7Field(new SimpleDateFormat(TIMESTAMP_FORMAT).format(new Date())));
         msh.setMessageType(ACK_MSH_9);
         msh.setControlID(new HL7Field("" + serno));
         msh.setProcessingID(this.getProcessingID());
         msh.setVersionID(versionID);
-        HL7Segment msa = new HL7Segment(MSA_SEGMENT_NAME);
+        final HL7Segment msa = new HL7Segment(MSA_SEGMENT_NAME);
         msa.setField(1, ACK_MSA_1);
         msa.setField(2, this.getControlID());
         ack.getSegments().add(msa);
