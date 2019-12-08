@@ -31,7 +31,53 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * Converts {@link HL7Message}s to and from XML.
+ * Converts {@link HL7Message}(s) to and from XML.
+ *
+ * <p>
+ * Example of what the XML looks like:
+ * <blockquote><pre>
+ * &lt;HL7&gt;
+ *  &lt;MESSAGE&gt;
+ *    &lt;MSH&gt;
+ *      &lt;MSH.1&gt;|&lt;/MSH.1&gt;
+ *      &lt;MSH.2&gt;^~\&amp;amp;&lt;/MSH.2&gt;
+ *      &lt;MSH.3&gt;ST01&lt;/MSH.3&gt;
+ *      &lt;MSH.4&gt;B&lt;/MSH.4&gt;
+ *      &lt;MSH.5&gt;IM&lt;/MSH.5&gt;
+ *      &lt;MSH.6&gt;B&lt;/MSH.6&gt;
+ *      &lt;MSH.7&gt;20191203131805&lt;/MSH.7&gt;
+ *      &lt;MSH.9&gt;
+ *        &lt;MSH.9.1&gt;ADT&lt;/MSH.9.1&gt;
+ *        &lt;MSH.9.2&gt;A04&lt;/MSH.9.2&gt;
+ *      &lt;/MSH.9&gt;
+ *      &lt;MSH.10&gt;99479783&lt;/MSH.10&gt;
+ *      &lt;MSH.11&gt;P&lt;/MSH.11&gt;
+ *      &lt;MSH.12&gt;2.2&lt;/MSH.12&gt;
+ *      &lt;MSH.13&gt;99479783&lt;/MSH.13&gt;
+ *      &lt;MSH.15&gt;AL&lt;/MSH.15&gt;
+ *      &lt;MSH.22&gt;2.2b&lt;/MSH.22&gt;
+ *    &lt;/MSH&gt;
+ *    &lt;EVN&gt;
+ *      &lt;EVN.1&gt;A04&lt;/EVN.1&gt;
+ *      &lt;EVN.2&gt;20160815131805&lt;/EVN.2&gt;
+ *      &lt;EVN.5&gt;
+ *        &lt;EVN.5.1&gt;DMB&lt;/EVN.5.1&gt;
+ *        &lt;EVN.5.2&gt;WASHINGTON&lt;/EVN.5.2&gt;
+ *        &lt;EVN.5.3&gt;GEORGE&lt;/EVN.5.3&gt;
+ *        &lt;EVN.5.4&gt;M&lt;/EVN.5.4&gt;
+ *      &lt;/EVN.5&gt;
+ *    &lt;/EVN&gt;
+ *    &lt;PID&gt;
+ *      &lt;PID.1&gt;1&lt;/PID.1&gt;
+ *      &lt;PID.2&gt;344356467&lt;/PID.2&gt;
+ *      &lt;PID.3&gt;345345456&lt;/PID.3&gt;
+ *      &lt;PID.4&gt;123132423&lt;/PID.4&gt;
+ *      &lt;PID.5&gt;
+ *        &lt;PID.5.1&gt;HAMILTON&lt;/PID.5.1&gt;
+ *        &lt;PID.5.2&gt;ALEXANDER&lt;/PID.5.2&gt;
+ *      &lt;/PID.5&gt;
+ *    ...
+ * </pre></blockquote>
  */
 public final class XMLConverter {
 
@@ -56,7 +102,7 @@ public final class XMLConverter {
     /**
      * Create an empty XML document for HL7 messages.
      *
-     * @return empty document
+     * @return XML document consisting of one empty {@code &lt;HL7/&gt;} tag
      */
     public static Document createDocument() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
