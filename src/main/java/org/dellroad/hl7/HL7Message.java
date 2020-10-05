@@ -255,7 +255,7 @@ public class HL7Message implements Serializable {
     /**
      * Convenience method. Equivalent to:
      *  <blockquote>
-     *  <code>getField(name, 0, 0)</code>
+     *  <code>get(name, 0, 0)</code>
      *  </blockquote>
      *
      * @param name HL7 value name, e.g., "PV1.3", "MSH.9.1", "ZZZ.3.2.1"
