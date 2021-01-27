@@ -5,9 +5,6 @@
 
 package org.dellroad.hl7;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -22,17 +19,6 @@ public class HL7MessageTest extends Input1Test {
         HL7Message[] tests = new HL7Message[] { this.msg1, this.msg2 };
         for (HL7Message msg : tests)
             assertEquals(new HL7Message(msg.toString()), msg);
-    }
-
-    @Test
-    public void testHBOCWorkaround() throws IOException, HL7ContentException {
-        StringWriter writer = new StringWriter();
-        InputStreamReader reader = new InputStreamReader(
-          getClass().getResourceAsStream("input2.bin"));
-        char[] buf = new char[100];
-        for (int r; (r = reader.read(buf)) != -1; )
-            writer.write(buf, 0, r);
-        assertEquals(new HL7Message(writer.toString()), this.msg2);
     }
 
     @Test

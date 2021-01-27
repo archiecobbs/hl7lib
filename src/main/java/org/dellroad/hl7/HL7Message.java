@@ -83,23 +83,6 @@ public class HL7Message implements Serializable {
         this.segments = new HL7SegmentList(msh);
         HL7Seps seps = msh.getHL7Seps();
 
-        // Workaround McKesson HBOC bug (extra mid-segment carriage returns)
-        for (int i = 1; i < segs.length - 1; ) {
-            if (segs[i] + 3 >= msg.length()
-              || msg.charAt(segs[i] + 1) == seps.getFieldSep()
-              || msg.charAt(segs[i] + 2) == seps.getFieldSep()
-              || msg.charAt(segs[i] + 3) == seps.getFieldSep()) {
-                msg = msg.substring(0, segs[i]) + msg.substring(segs[i] + 1);
-                for (int j = i + 1; j < segs.length; j++)
-                    segs[j]--;
-                int[] segs2 = new int[segs.length - 1];
-                System.arraycopy(segs, 0, segs2, 0, i);
-                System.arraycopy(segs, i + 1, segs2, i, segs2.length - i);
-                segs = segs2;
-            } else
-                i++;
-        }
-
         // Add subsequent segments
         for (int i = 0; i < segs.length - 1; i++)
             this.segments.add(new HL7Segment(msg.substring(segs[i] + 1, segs[i + 1]), seps));

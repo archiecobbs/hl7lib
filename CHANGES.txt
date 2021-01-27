@@ -1,3 +1,7 @@
+Version Next
+
+    - Removed obsolete McKesson HBOC bug workaround
+
 Version 1.2.0 Released May 8, 2018
 
     - Miscellaneous bug fixes
