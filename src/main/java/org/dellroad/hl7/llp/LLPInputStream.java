@@ -19,6 +19,9 @@ import org.dellroad.hl7.HL7Reader;
 
 /**
  * Reads HL7 messages framed in the "lower layer protocol" (LLP).
+ *
+ * <p>
+ * Instances are not thread safe.
  */
 public class LLPInputStream implements HL7Reader, Closeable {
 
@@ -32,10 +35,12 @@ public class LLPInputStream implements HL7Reader, Closeable {
     private byte[] buf = new byte[MIN_BUFLEN];
 
     /**
-     * Constructor.
+     * Constructor for when {@link StandardCharsets#ISO_8859_1} character encoding is to be used for all messages.
      *
      * <p>
-     * Equivalent to: {@link #LLPInputStream(InputStream, Charset, int)}{@code (input, StandardCharsets.ISO_8859_1, maxLength)}.
+     * Equivalent to:
+     * {@link #LLPInputStream(InputStream, Charset, int)
+     *  LLPInputStream}{@code (input, }{@link StandardCharsets#ISO_8859_1 StandardCharsets.ISO_8859_1}{@code , maxLength)}.
      *
      * @param input underlying input stream
      * @param maxLength maximum allowed message length
@@ -161,4 +166,3 @@ public class LLPInputStream implements HL7Reader, Closeable {
         this.inputStream.close();
     }
 }
-

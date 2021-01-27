@@ -20,6 +20,9 @@ import org.dellroad.hl7.HL7Writer;
 
 /**
  * Writes out HL7 messages using the "lower layer protocol".
+ *
+ * <p>
+ * Instances are not thread safe.
  */
 public class LLPOutputStream implements HL7Writer, Closeable {
 
@@ -27,10 +30,11 @@ public class LLPOutputStream implements HL7Writer, Closeable {
     private final OutputStreamWriter outputWriter;
 
     /**
-     * Constructor.
+     * Constructor for when {@link StandardCharsets#ISO_8859_1} character encoding is to be used for all messages.
      *
      * <p>
-     * Equivalent to: {@link #LLPOutputStream(OutputStream, Charset)}{@code (output, StandardCharsets.ISO_8859_1)}.
+     * Equivalent to: {@link #LLPOutputStream(OutputStream, Charset)
+     *  LLPOutputStream}{@code (output, }{@link StandardCharsets#ISO_8859_1 StandardCharsets.ISO_8859_1}{@code )}.
      *
      * @param output underlying output stream
      * @throws IllegalArgumentException if {@code output} is null
@@ -88,4 +92,3 @@ public class LLPOutputStream implements HL7Writer, Closeable {
         this.outputWriter.close();
     }
 }
-
