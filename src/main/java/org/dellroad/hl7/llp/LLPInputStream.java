@@ -29,7 +29,7 @@ public class LLPInputStream implements HL7Reader, Closeable {
     private static final int MAX_BUFLEN = 16 * 1024;
 
     private final BufferedInputStream inputStream;
-    private final Charset charset;
+    private final CharsetDecoder charsetDecoder;
     private final int maxLength;
 
     private byte[] buf = new byte[MIN_BUFLEN];
@@ -52,7 +52,7 @@ public class LLPInputStream implements HL7Reader, Closeable {
     }
 
     /**
-     * Constructor.
+     * Constructor for when a fixed character encoding is to be used for all messages.
      *
      * @param input underlying input stream
      * @param maxLength maximum allowed message length
@@ -61,14 +61,27 @@ public class LLPInputStream implements HL7Reader, Closeable {
      * @throws IllegalArgumentException if maxLength is negative
      */
     public LLPInputStream(InputStream input, Charset charset, int maxLength) {
+        this(input, CharsetDecoder.fixed(charset), maxLength);
+    }
+
+    /**
+     * Primary constructor.
+     *
+     * @param input underlying input stream
+     * @param maxLength maximum allowed message length
+     * @param charsetDecoder determines the character encoding for each incoming message
+     * @throws IllegalArgumentException if any parameter is null
+     * @throws IllegalArgumentException if maxLength is negative
+     */
+    public LLPInputStream(InputStream input, CharsetDecoder charsetDecoder, int maxLength) {
         if (input == null)
             throw new IllegalArgumentException("null input");
-        if (charset == null)
-            throw new IllegalArgumentException("null charset");
+        if (charsetDecoder == null)
+            throw new IllegalArgumentException("null charsetDecoder");
         if (maxLength < 0)
             throw new IllegalArgumentException("maxLength is negative");
         this.inputStream = new BufferedInputStream(input);
-        this.charset = charset;
+        this.charsetDecoder = charsetDecoder;
         this.maxLength = maxLength;
     }
 
@@ -106,8 +119,13 @@ public class LLPInputStream implements HL7Reader, Closeable {
         // Read second trailing byte
         this.readByte(LLPConstants.TRAILING_BYTE_1);
 
+        // Determine the character set
+        final Charset charset = this.charsetDecoder.charsetForIncomingMessage(this.buf, 0, len);
+        if (charset == null)
+            throw new LLPException("null character encoding returned by CharsetDecoder");
+
         // Extract message text
-        String text = new String(buf, 0, len, this.charset);
+        final String text = new String(buf, 0, len, charset);
         if (this.buf.length > MAX_BUFLEN)
             this.buf = new byte[MIN_BUFLEN];
 

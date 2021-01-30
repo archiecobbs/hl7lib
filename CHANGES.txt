@@ -1,5 +1,6 @@
 Version Next
 
+    - Added support for dynamic determination of character encoding
     - Removed obsolete McKesson HBOC bug workaround
 
 Version 1.2.0 Released May 8, 2018

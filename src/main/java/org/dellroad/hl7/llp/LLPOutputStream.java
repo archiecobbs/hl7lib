@@ -27,7 +27,7 @@ import org.dellroad.hl7.HL7Writer;
 public class LLPOutputStream implements HL7Writer, Closeable {
 
     private final BufferedOutputStream outputStream;
-    private final OutputStreamWriter outputWriter;
+    private final CharsetDecoder charsetDecoder;
 
     /**
      * Constructor for when {@link StandardCharsets#ISO_8859_1} character encoding is to be used for all messages.
@@ -44,19 +44,30 @@ public class LLPOutputStream implements HL7Writer, Closeable {
     }
 
     /**
-     * Constructor.
+     * Constructor for when a fixed character encoding is to be used for all messages.
      *
      * @param output underlying output stream
-     * @param charset character encoding for messages
+     * @param charset character encoding for all messages
      * @throws IllegalArgumentException if either parameter is null
      */
     public LLPOutputStream(OutputStream output, Charset charset) {
+        this(output, CharsetDecoder.fixed(charset));
+    }
+
+    /**
+     * Primary constructor.
+     *
+     * @param output underlying output stream
+     * @param charsetDecoder determines the character encoding to use for each outgoing message
+     * @throws IllegalArgumentException if either parameter is null
+     */
+    public LLPOutputStream(OutputStream output, CharsetDecoder charsetDecoder) {
         if (output == null)
             throw new IllegalArgumentException("null output");
-        if (charset == null)
-            throw new IllegalArgumentException("null charset");
+        if (charsetDecoder == null)
+            throw new IllegalArgumentException("null charsetDecoder");
         this.outputStream = new BufferedOutputStream(output);
-        this.outputWriter = new OutputStreamWriter(this.outputStream, charset);
+        this.charsetDecoder = charsetDecoder;
     }
 
     /**
@@ -67,16 +78,22 @@ public class LLPOutputStream implements HL7Writer, Closeable {
         // Write start byte
         this.outputStream.write(LLPConstants.LEADING_BYTE);
 
+        // Get character encoding
+        final Charset charset = this.charsetDecoder.charsetForOutgoingMessage(message);
+        if (charset == null)
+            throw new LLPException("null character encoding returned by CharsetDecoder");
+
         // Write message segments
-        HL7Seps seps = message.getMSHSegment().getHL7Seps();
-        StringBuilder buf = new StringBuilder();
+        final OutputStreamWriter writer = new OutputStreamWriter(this.outputStream, charset);
+        final HL7Seps seps = message.getMSHSegment().getHL7Seps();
+        final StringBuilder buf = new StringBuilder();
         for (HL7Segment segment : message.getSegments()) {
             segment.append(buf, seps);
             buf.append(HL7Message.SEGMENT_TERMINATOR);
-            this.outputWriter.write(buf.toString());
+            writer.write(buf.toString());
             buf.setLength(0);
         }
-        this.outputWriter.flush();
+        writer.flush();
 
         // Write stop bytes
         this.outputStream.write(LLPConstants.TRAILING_BYTE_0);
@@ -89,6 +106,6 @@ public class LLPOutputStream implements HL7Writer, Closeable {
      */
     @Override
     public void close() throws IOException {
-        this.outputWriter.close();
+        this.outputStream.close();
     }
 }
