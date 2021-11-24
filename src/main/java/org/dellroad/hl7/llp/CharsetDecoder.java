@@ -47,7 +47,7 @@ public interface CharsetDecoder {
             @Override
             public Charset charsetForIncomingMessage(byte[] buf, int offset, int length) {
                 if (buf == null)
-                    throw new IllegalArgumentException("null buf ");
+                    throw new IllegalArgumentException("null buf");
                 return charset;
             }
 
