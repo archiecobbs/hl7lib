@@ -37,6 +37,7 @@
     <properties>
 
         <!-- Basic stuff -->
+        <auto.module.name>org.dellroad.hl7</auto.module.name>
         <checkstyle.config.location>src/checkstyle/checkstyle.xml</checkstyle.config.location>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -157,6 +158,9 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
+                        <manifestEntries>
+                            <Automatic-Module-Name>${auto.module.name}</Automatic-Module-Name>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>

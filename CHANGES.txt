@@ -1,6 +1,7 @@
 Version Next
 
     - Added support for dynamic determination of character encoding
+    - Added Automatic-Module-Name manifest entry for JDK 9+
     - Removed obsolete McKesson HBOC bug workaround
 
 Version 1.2.0 Released May 8, 2018
