@@ -1,5 +1,10 @@
 <FindBugsFilter>
     <Match>
+        <Class name="org.dellroad.hl7.HL7Message"/>
+        <Method name="getSegments"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
         <Class name="org.dellroad.hl7.HL7Field"/>
         <Method name="&lt;init&gt;"/>
         <Bug pattern="EI_EXPOSE_REP2"/>
