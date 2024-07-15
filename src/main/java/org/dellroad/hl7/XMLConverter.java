@@ -79,7 +79,7 @@ import org.w3c.dom.Node;
  *    ...
  * </pre></blockquote>
  */
-public final class XMLConverter {
+public class XMLConverter {
 
     /**
      * HL7 message XML namespace.
@@ -96,7 +96,26 @@ public final class XMLConverter {
      */
     public static final String MESSAGE_TAG = "MESSAGE";
 
-    private XMLConverter() {
+    protected final DocumentBuilderFactory documentBuilderFactory;
+
+    /**
+     * Default constructor.
+     */
+    public XMLConverter() {
+        this(DocumentBuilderFactory.newInstance());
+        this.documentBuilderFactory.setNamespaceAware(true);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param documentBuilderFactory factory for creating new XML documents
+     * @throws IllegalArgumentException if {@code documentBuilderFactory} is null
+     */
+    public XMLConverter(DocumentBuilderFactory documentBuilderFactory) {
+        if (documentBuilderFactory == null)
+            throw new IllegalArgumentException("null documentBuilderFactory");
+        this.documentBuilderFactory = documentBuilderFactory;
     }
 
     /**
@@ -104,12 +123,10 @@ public final class XMLConverter {
      *
      * @return XML document consisting of one empty {@code &lt;HL7/&gt;} tag
      */
-    public static Document createDocument() {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        documentBuilderFactory.setNamespaceAware(true);
+    public Document createDocument() {
         DocumentBuilder documentBuilder;
         try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            documentBuilder = this.documentBuilderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
         }
@@ -127,9 +144,9 @@ public final class XMLConverter {
      * @param omitEmpty Omit empty tags (other than the last one)
      * @return HL7 message encoded as an XML document
      */
-    public static Document toXML(HL7Message message, boolean omitEmpty) {
-        Document doc = createDocument();
-        XMLConverter.appendMessage(doc.getDocumentElement(), message, omitEmpty);
+    public Document toXML(HL7Message message, boolean omitEmpty) {
+        final Document doc = this.createDocument();
+        this.appendMessage(doc.getDocumentElement(), message, omitEmpty);
         return doc;
     }
 
@@ -140,10 +157,10 @@ public final class XMLConverter {
      * @param message HL7 message to append
      * @param omitEmpty Omit empty tags (other than the last one)
      */
-    public static void appendMessage(Node parent, HL7Message message, boolean omitEmpty) {
-        Element messageTag = parent.getOwnerDocument().createElementNS(HL7_NAMESPACE_URI, MESSAGE_TAG);
+    public void appendMessage(Node parent, HL7Message message, boolean omitEmpty) {
+        final Element messageTag = parent.getOwnerDocument().createElementNS(HL7_NAMESPACE_URI, MESSAGE_TAG);
         for (HL7Segment segment : message.getSegments())
-            XMLConverter.appendSegment(messageTag, segment, omitEmpty);
+            this.appendSegment(messageTag, segment, omitEmpty);
         parent.appendChild(messageTag);
     }
 
@@ -155,11 +172,11 @@ public final class XMLConverter {
      * @param omitEmpty Omit empty tags (other than the last one)
      * @throws XMLStreamException if an XML error occurs
      */
-    public static void appendMessage(XMLStreamWriter writer, HL7Message message, boolean omitEmpty) throws XMLStreamException {
+    public void appendMessage(XMLStreamWriter writer, HL7Message message, boolean omitEmpty) throws XMLStreamException {
         writer.writeStartElement(MESSAGE_TAG);
         writer.setDefaultNamespace(HL7_NAMESPACE_URI);
         for (HL7Segment segment : message.getSegments())
-            XMLConverter.appendSegment(writer, segment, omitEmpty);
+            this.appendSegment(writer, segment, omitEmpty);
         writer.writeEndElement();
     }
 
@@ -170,18 +187,18 @@ public final class XMLConverter {
      * @param segment HL7 segment to append
      * @param omitEmpty Omit empty tags (other than the last one)
      */
-    public static void appendSegment(Node parent, HL7Segment segment, boolean omitEmpty) {
-        String segName = segment.getName();
-        Document doc = parent.getOwnerDocument();
-        Element segXML = doc.createElementNS(HL7_NAMESPACE_URI, segName);
-        HL7Field[] fields = segment.getFields();
+    public void appendSegment(Node parent, HL7Segment segment, boolean omitEmpty) {
+        final String segName = segment.getName();
+        final Document doc = parent.getOwnerDocument();
+        final Element segXML = doc.createElementNS(HL7_NAMESPACE_URI, segName);
+        final HL7Field[] fields = segment.getFields();
         for (int i = 1; i < fields.length; i++) {
-            HL7Field field = fields[i];
+            final HL7Field field = fields[i];
             if (omitEmpty && i < fields.length - 1 && field.isEmpty())
                 continue;
-            String fieldTag = segName + "." + i;
+            final String fieldTag = segName + "." + i;
             for (String[][] repeat : field.getValue()) {
-                Element repeatXML = doc.createElementNS(HL7_NAMESPACE_URI, fieldTag);
+                final Element repeatXML = doc.createElementNS(HL7_NAMESPACE_URI, fieldTag);
                 segXML.appendChild(repeatXML);
                 if (repeat.length == 1 && repeat[0].length == 1) {
                     if (repeat[0][0].length() > 0)
@@ -189,13 +206,13 @@ public final class XMLConverter {
                     continue;
                 }
                 for (int j = 0; j < repeat.length; j++) {
-                    String[] comp = repeat[j];
+                    final String[] comp = repeat[j];
                     if (omitEmpty
                       && j < repeat.length - 1
                       && comp.length == 1 && comp[0].length() == 0)
                         continue;
-                    String compTag = fieldTag + "." + (j + 1);
-                    Element compXML = doc.createElementNS(HL7_NAMESPACE_URI, compTag);
+                    final String compTag = fieldTag + "." + (j + 1);
+                    final Element compXML = doc.createElementNS(HL7_NAMESPACE_URI, compTag);
                     repeatXML.appendChild(compXML);
                     if (comp.length == 1) {
                         if (comp[0].length() > 0)
@@ -203,12 +220,12 @@ public final class XMLConverter {
                         continue;
                     }
                     for (int k = 0; k < comp.length; k++) {
-                        String subcomp = comp[k];
+                        final String subcomp = comp[k];
                         if (omitEmpty
                           && k < comp.length - 1 && subcomp.length() == 0)
                             continue;
-                        String subcompTag = compTag + "." + (k + 1);
-                        Element subcompXML = doc.createElementNS(HL7_NAMESPACE_URI, subcompTag);
+                        final String subcompTag = compTag + "." + (k + 1);
+                        final Element subcompXML = doc.createElementNS(HL7_NAMESPACE_URI, subcompTag);
                         if (subcomp.length() > 0)
                             subcompXML.appendChild(doc.createTextNode(subcomp));
                         compXML.appendChild(subcompXML);
@@ -227,7 +244,7 @@ public final class XMLConverter {
      * @param omitEmpty Omit empty tags (other than the last one)
      * @throws XMLStreamException if an XML error occurs
      */
-    public static void appendSegment(XMLStreamWriter writer, HL7Segment segment, boolean omitEmpty) throws XMLStreamException {
+    public void appendSegment(XMLStreamWriter writer, HL7Segment segment, boolean omitEmpty) throws XMLStreamException {
         final String segName = segment.getName();
         final HL7Field[] fields = segment.getFields();
         writer.writeStartElement(segName);
@@ -285,16 +302,14 @@ public final class XMLConverter {
      * @param out output desination
      * @throws IOException if an I/O error occurs
      */
-    public static void stream(Document doc, OutputStream out) throws IOException {
-
-        // Create and configure Transformer
+    public void stream(Document doc, OutputStream out) throws IOException {
         TransformerFactory transformFactory = TransformerFactory.newInstance();
         try {
             transformFactory.setAttribute("indent-number", 2);
         } catch (IllegalArgumentException e) {
             // ignore
         }
-        XMLConverter.stream(transformFactory, doc, out);
+        this.stream(transformFactory, doc, out);
     }
 
     /**
@@ -305,10 +320,10 @@ public final class XMLConverter {
      * @param out output desination
      * @throws IOException if an I/O error occurs
      */
-    public static void stream(TransformerFactory transformerFactory, Document doc, OutputStream out) throws IOException {
+    public void stream(TransformerFactory transformerFactory, Document doc, OutputStream out) throws IOException {
 
         // Create and configure Transformer
-        Transformer transformer;
+        final Transformer transformer;
         try {
             transformer = transformerFactory.newTransformer();
         } catch (TransformerConfigurationException e) {
@@ -320,7 +335,7 @@ public final class XMLConverter {
         // Transform DOM into serialized output stream.
         // Wrap output stream in a writer to work around this bug:
         // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6337981
-        OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
+        final OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
         try {
             transformer.transform(new DOMSource(doc), new StreamResult(writer));
         } catch (TransformerException e) {
@@ -339,36 +354,37 @@ public final class XMLConverter {
      */
     @SuppressWarnings("fallthrough")
     public static void main(String[] args) throws Exception {
-        InputStream in = System.in;
         boolean verbose = false;
         if (args.length > 0 && args[0].equals("-v")) {
             verbose = true;
-            String[] args2 = new String[args.length - 1];
+            final String[] args2 = new String[args.length - 1];
             System.arraycopy(args, 1, args2, 0, args2.length);
             args = args2;
         }
+        final InputStream in;
         switch (args.length) {
         case 1:
             in = new FileInputStream(args[0]);
             break;
         case 0:
+            in = System.in;
             break;
         default:
             System.err.println("Usage: XMLConverter [-v] [filename]");
             System.exit(1);
-            break;
+            throw new RuntimeException();
         }
-        HL7FileReader reader = new HL7FileReader(in);
-        Document doc = createDocument();
-        while (true) {
-            try {
-                XMLConverter.appendMessage(doc.getDocumentElement(), reader.readMessage(), !verbose);
-            } catch (EOFException e) {
-                break;
+        try (HL7FileReader reader = new HL7FileReader(in)) {
+            final XMLConverter xmlConverter = new XMLConverter();
+            final Document doc = xmlConverter.createDocument();
+            while (true) {
+                try {
+                    xmlConverter.appendMessage(doc.getDocumentElement(), reader.readMessage(), !verbose);
+                } catch (EOFException e) {
+                    break;
+                }
             }
+            xmlConverter.stream(doc, System.out);
         }
-        reader.close();
-        XMLConverter.stream(doc, System.out);
     }
 }
-

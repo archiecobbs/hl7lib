@@ -33,11 +33,12 @@ public class XMLConverterTest extends InputTest {
 
     @Test(dataProvider = "xmlTests")
     public void testXML(boolean omit, String resource) throws IOException {
-        Document doc = XMLConverter.createDocument();
-        XMLConverter.appendMessage(doc.getDocumentElement(), this.msg, omit);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        XMLConverter.stream(doc, out);
-        InputStream in = new ByteArrayInputStream(out.toByteArray());
+        final XMLConverter xmlConverter = new XMLConverter();
+        final Document doc = xmlConverter.createDocument();
+        xmlConverter.appendMessage(doc.getDocumentElement(), this.msg, omit);
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        xmlConverter.stream(doc, out);
+        final InputStream in = new ByteArrayInputStream(out.toByteArray());
         try {
             this.compare(in, getClass().getResourceAsStream(resource));
         } catch (RuntimeException e) {
@@ -56,7 +57,8 @@ public class XMLConverterTest extends InputTest {
         writer.setDefaultNamespace(XMLConverter.HL7_NAMESPACE_URI);
         writer.writeStartDocument("UTF-8", "1.0");
         writer.writeStartElement(XMLConverter.HL7_TAG);
-        XMLConverter.appendMessage(writer, this.msg, omit);
+        final XMLConverter xmlConverter = new XMLConverter();
+        xmlConverter.appendMessage(writer, this.msg, omit);
         writer.writeEndElement();
         writer.close();
         out.write('\n');    // add final newline
