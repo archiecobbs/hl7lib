@@ -6,6 +6,7 @@
 package org.dellroad.hl7.llp;
 
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Optional;
@@ -121,7 +122,7 @@ public class MSH18CharsetDecoder implements CharsetDecoder {
         if (name.startsWith("8859/")) {
             try {
                 return Charset.forName("ISO-8859-" + name.substring(5));
-            } catch (UnsupportedCharsetException e) {
+            } catch (UnsupportedCharsetException | IllegalCharsetNameException e) {
                 // ignore
             }
         }
@@ -131,7 +132,7 @@ public class MSH18CharsetDecoder implements CharsetDecoder {
         if (matcher.matches()) {
             try {
                 return Charset.forName(matcher.group(2));
-            } catch (UnsupportedCharsetException e) {
+            } catch (UnsupportedCharsetException | IllegalCharsetNameException e) {
                 // ignore
             }
         }
@@ -139,7 +140,7 @@ public class MSH18CharsetDecoder implements CharsetDecoder {
         // Try whatever
         try {
             return Charset.forName(name.replaceAll("[-/_]", "-"));
-        } catch (UnsupportedCharsetException e) {
+        } catch (UnsupportedCharsetException | IllegalCharsetNameException e) {
             // ignore
         }
 
