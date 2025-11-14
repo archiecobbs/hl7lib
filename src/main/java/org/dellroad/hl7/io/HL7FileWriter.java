@@ -26,6 +26,9 @@ import org.dellroad.hl7.HL7Writer;
  */
 public class HL7FileWriter implements HL7Writer, Closeable {
 
+    /**
+     * The underlying writer.
+     */
     protected final BufferedWriter writer;
 
     /**

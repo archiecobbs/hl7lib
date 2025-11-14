@@ -13,17 +13,36 @@ public class HL7ContentException extends Exception {
 
     private String content;
 
+    /**
+     * Default constructor.
+     */
     public HL7ContentException() {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param message detail message
+     */
     public HL7ContentException(String message) {
         super(message);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param message detail message
+     * @param cause underlying cause
+     */
     public HL7ContentException(String message, Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param cause underlying cause
+     */
     public HL7ContentException(Throwable cause) {
         super(cause);
     }

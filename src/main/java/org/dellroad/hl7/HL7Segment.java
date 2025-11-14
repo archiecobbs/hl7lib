@@ -14,6 +14,9 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class HL7Segment implements Serializable {
 
+    /**
+     * The fields comprising this segment.
+     */
     protected final ArrayList<HL7Field> fields = new ArrayList<HL7Field>();
 
     /**

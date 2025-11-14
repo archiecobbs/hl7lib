@@ -12,8 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dellroad.hl7.io.HL7FileReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class InputTest {
+
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Reads all messages from the reader, then closes it.

@@ -35,6 +35,9 @@ import org.dellroad.hl7.MSHSegment;
  */
 public class HL7FileReader implements HL7Reader, Closeable {
 
+    /**
+     * The underlying reader.
+     */
     protected final BufferedReader reader;
 
     private String nextLine;

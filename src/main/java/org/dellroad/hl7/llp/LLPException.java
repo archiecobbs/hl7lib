@@ -13,9 +13,17 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class LLPException extends IOException {
 
+    /**
+     * Default constructor.
+     */
     public LLPException() {
     }
 
+    /**
+     * Constructor.
+     *
+     * @param message detail message
+     */
     public LLPException(String message) {
         super(message);
     }

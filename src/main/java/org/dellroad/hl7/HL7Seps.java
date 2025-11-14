@@ -13,17 +13,28 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public final class HL7Seps implements Serializable {
 
+    /** The default field separator character. */
     public static final char DEFAULT_FIELD_SEPARATOR = '|';
+    /** The default component separator character. */
     public static final char DEFAULT_COMPONENT_SEPARATOR = '^';
+    /** The default repeat separator character. */
     public static final char DEFAULT_REPEAT_SEPARATOR = '~';
+    /** The default sub-component separator character. */
     public static final char DEFAULT_SUBCOMPONENT_SEPARATOR = '&';
+    /** The default escape character. */
     public static final char DEFAULT_ESCAPE_CHARACTER = '\\';
 
+    /** The escape code for field separator characters. */
     public static final char FIELD_SEPARATOR_ESCAPE = 'F';
+    /** The escape code for component separator characters. */
     public static final char COMPONENT_SEPARATOR_ESCAPE = 'S';
+    /** The escape code for repeat separator characters. */
     public static final char REPEAT_SEPARATOR_ESCAPE = 'R';
+    /** The escape code for escape characters. */
     public static final char ESCAPE_CHARACTER_ESCAPE = 'E';
+    /** The escape code for sub-component seprator characters. */
     public static final char SUBCOMPONENT_SEPARATOR_ESCAPE = 'T';
+    /** The escape code for hexadecimal character codes. */
     public static final char HEX_DATA_ESCAPE = 'X';
 
     /**

@@ -26,6 +26,9 @@ import org.dellroad.hl7.MSHSegment;
  */
 public class MSH18CharsetDecoder implements CharsetDecoder {
 
+    /**
+     * Default charset.
+     */
     protected final Charset defaultCharset;
 
     /**

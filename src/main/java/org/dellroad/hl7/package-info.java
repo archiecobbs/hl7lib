@@ -18,7 +18,6 @@
  * <li>An efficient and semantically equivalent XML encoding</li>
  * </ul>
  *
- * <p>
  * @see <a href="https://github.com/archiecobbs/hl7lib">Project Homepage</a>
  */
 package org.dellroad.hl7;

@@ -24,6 +24,9 @@ public final class HL7Field implements Serializable {
      */
     public static final HL7Field EMPTY = new HL7Field("");
 
+    /**
+     * Field value, with dimensions being: repeats, components, and sub-components.
+     */
     protected final String[][][] value;
 
     /**
@@ -136,6 +139,11 @@ public final class HL7Field implements Serializable {
         return this.value;
     }
 
+    /**
+     * Determine whether this field is empty.
+     *
+     * @return true if this field is empty, otherwise false
+     */
     public boolean isEmpty() {
         return EMPTY.equals(this);
     }

@@ -18,12 +18,17 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class MSHSegment extends HL7Segment {
 
+    /** Default processing ID. */
     public static final String DEFAULT_PROCESSING_ID = "P";
+    /** Default HL7 version. */
     public static final String DEFAULT_VERSION_ID = "2.3";
 
+    /** MSH segment name. */
     public static final String MSH_SEGMENT_NAME = "MSH";
+    /** MSA segment name. */
     public static final String MSA_SEGMENT_NAME = "MSA";
 
+    /** Format for timestamps in the timestamp field (MSH.7). */
     public static final String TIMESTAMP_FORMAT = "yyyyMMddHHmmss.SSSZ";
 
     private static final String ACK = "ACK";
@@ -108,6 +113,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getSendingApplication() {
         return getField(3);
     }
+
+    /**
+     * Set sending application in MSH.3.
+     *
+     * @param field field value
+     */
     public void setSendingApplication(HL7Field field) {
         this.setField(3, field);
     }
@@ -120,6 +131,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getSendingFacility() {
         return getField(4);
     }
+
+    /**
+     * Set sending facility in MSH.4.
+     *
+     * @param field field value
+     */
     public void setSendingFacility(HL7Field field) {
         this.setField(4, field);
     }
@@ -132,6 +149,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getReceivingApplication() {
         return getField(5);
     }
+
+    /**
+     * Set receiving application in MSH.5.
+     *
+     * @param field field value
+     */
     public void setReceivingApplication(HL7Field field) {
         this.setField(5, field);
     }
@@ -144,6 +167,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getReceivingFacility() {
         return getField(6);
     }
+
+    /**
+     * Set receiving facility in MSH.6.
+     *
+     * @param field field value
+     */
     public void setReceivingFacility(HL7Field field) {
         this.setField(6, field);
     }
@@ -156,6 +185,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getTimestamp() {
         return getField(7);
     }
+
+    /**
+     * Set timestamp in MSH.7.
+     *
+     * @param field field value
+     */
     public void setTimestamp(HL7Field field) {
         this.setField(7, field);
     }
@@ -168,6 +203,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getMessageType() {
         return getField(9);
     }
+
+    /**
+     * Set message type in MSH.9.
+     *
+     * @param field field value
+     */
     public void setMessageType(HL7Field field) {
         this.setField(9, field);
     }
@@ -180,6 +221,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getControlID() {
         return getField(10);
     }
+
+    /**
+     * Set control ID in MSH.10.
+     *
+     * @param field field value
+     */
     public void setControlID(HL7Field field) {
         this.setField(10, field);
     }
@@ -192,6 +239,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getProcessingID() {
         return getField(11);
     }
+
+    /**
+     * Set processing ID in MSH.11.
+     *
+     * @param field field value
+     */
     public void setProcessingID(HL7Field field) {
         this.setField(11, field);
     }
@@ -204,6 +257,12 @@ public class MSHSegment extends HL7Segment {
     public HL7Field getVersionID() {
         return getField(12);
     }
+
+    /**
+     * Set version ID in MSH.12.
+     *
+     * @param field field value
+     */
     public void setVersionID(HL7Field field) {
         this.setField(12, field);
     }
