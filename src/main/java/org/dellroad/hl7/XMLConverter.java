@@ -11,11 +11,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+import java.util.regex.Pattern;
 
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -135,6 +144,8 @@ public class XMLConverter {
         return document;
     }
 
+// OUTPUT
+
     /**
      * Convert an HL7 message message to an XML document. The document
      * element will be &lt;HL7&gt; and contain one child which is the
@@ -177,6 +188,21 @@ public class XMLConverter {
         writer.setDefaultNamespace(HL7_NAMESPACE_URI);
         for (HL7Segment segment : message.getSegments())
             this.appendSegment(writer, segment, omitEmpty);
+        writer.writeEndElement();
+    }
+
+    /**
+     * Convert the given messages to XML and append them to given XML output, enclosed in an {@code <HL7>} element.
+     *
+     * @param writer XML output
+     * @param list list of messages
+     * @param omitEmpty Omit empty tags (other than the last one)
+     * @throws XMLStreamException if an XML error occurs
+     */
+    public void appendMessages(XMLStreamWriter writer, List<HL7Message> list, boolean omitEmpty) throws XMLStreamException {
+        writer.writeStartElement(HL7_TAG);
+        for (HL7Message message : list)
+            this.appendMessage(writer, message, omitEmpty);
         writer.writeEndElement();
     }
 
@@ -344,6 +370,332 @@ public class XMLConverter {
             throw new RuntimeException(e);
         }
         writer.flush();
+    }
+
+// INPUT
+
+    /**
+     * Parse HL7 messages as XML from the given input stream.
+     *
+     * This method expects to see a {@code <HL7>} tag containing zero or more {@code <MESSAGE>} tags.
+     * Parsing stops after encountering a closing {@code <HL7>}.
+     *
+     * @param reader XML input stream
+     * @return list of zero or more HL7 messages parsed from stream
+     * @throws XMLStreamException if an XML error occurs
+     */
+    public List<HL7Message> readMessages(XMLStreamReader reader) throws XMLStreamException {
+
+        // Read opening <HL7> element
+        this.expectTag(reader, HL7_TAG);
+
+        // Read zero or more <MESSAGE> tags
+        final ArrayList<HL7Message> list = new ArrayList<>();
+        HL7Message message;
+        while ((message = this.readMessage(reader)) != null)
+            list.add(message);
+
+        // Done
+        return list;
+    }
+
+    /**
+     * Parse an HL7 message as XML from the given input stream.
+     *
+     * This method expects to see an opening {@code <MESSAGE>} tag as the next event (not counting whitespace, comments, etc.).
+     * It will be consumed up through the closing {@code </MESSAGE>} event. Therefore it could be part of a larger XML document.
+     * If, instead, any closing XML tag is seen, null is returned.
+     *
+     * @param reader XML input
+     * @return next HL7 message from stream, or null if a closing tag is encountered
+     * @throws XMLStreamException if an XML error occurs
+     */
+    public HL7Message readMessage(XMLStreamReader reader) throws XMLStreamException {
+
+        // Some tag names
+        String name;
+        String value;
+
+        // Read opening <MESSAGE> element
+        if ((name = this.nextTag(reader, MESSAGE_TAG, true)) == null)
+            return null;
+
+        // Read MSH.1 and MSH.2
+        this.expectTag(reader, "MSH");
+        this.expectTag(reader, "MSH.1");
+        if ((value = this.readText(reader)).length() != 1)
+            throw this.newInvalidInputException(reader, "<MSH.1> must contain a single character (field separator)");
+        final char fieldSep = value.charAt(0);
+        this.expectTag(reader, "MSH.2");
+        if ((value = this.readText(reader)).length() < 2 || value.length() > 4)
+            throw this.newInvalidInputException(reader, "<MSH.2> must contain a 2-4 characters");
+
+        // Create MSH segment
+        final char compSep = value.charAt(0);
+        final char repSep = value.charAt(1);
+        final char escChar = value.length() > 2 ? value.charAt(2) : (char)0;
+        final char subSep = value.length() > 3 ? value.charAt(3) : (char)0;
+        final HL7Seps seps;
+        try {
+            seps = new HL7Seps(fieldSep, compSep, repSep, escChar, subSep);
+        } catch (HL7ContentException e) {
+            throw this.newInvalidInputException(reader, e, "Invalid characters in MSH.2");
+        }
+        final MSHSegment msh = new MSHSegment(seps);
+
+        // Read the rest of the MSH segment
+        this.readFields(reader, msh);
+
+        // Initialize message
+        final HL7Message message = new HL7Message(msh);
+
+        // Read additional segments
+        HL7Segment segment;
+        while ((segment = this.readSegment(reader)) != null)
+            message.getSegments().add(segment);
+
+        // Done
+        return message;
+    }
+
+    protected HL7Segment readSegment(XMLStreamReader reader) throws XMLStreamException {
+
+        // Read segment opening tag, if any
+        final String name = this.nextTag(reader, this.segmentNamePattern(), true);
+        if (name == null)
+            return null;
+
+        // Create segment
+        HL7Segment segment;
+        try {
+            segment = new HL7Segment(name);
+        } catch (HL7ContentException e) {
+            throw this.newInvalidInputException(reader, e, "invalid segment name \"%s\"", name);
+        }
+
+        // Read fields
+        this.readFields(reader, segment);
+
+        // Done
+        return segment;
+    }
+
+    protected void readFields(XMLStreamReader reader, HL7Segment segment) throws XMLStreamException {
+
+        // Read field content
+        Content content;
+        while ((content = this.readFieldTag(reader, segment.getName(), false)) != null) {
+            assert !content.isText();
+            final String[][] repeat = this.readFieldRepeat(reader, reader.getName().getLocalPart());
+            final int index = content.index;
+            HL7Field field = segment.getField(index);
+            final String[][][] repeats = Optional.ofNullable(segment.getField(index))
+              .map(HL7Field::getValue)
+              .map(value -> this.append(value, repeat))
+              .orElseGet(() -> new String[][][] { repeat });
+            segment.setField(index, new HL7Field(repeats));
+        }
+    }
+
+    protected String[][] readFieldRepeat(XMLStreamReader reader, String parentName) throws XMLStreamException {
+        Content content;
+        String[][] array = new String[0][];
+        while ((content = this.readFieldTag(reader, parentName, true)) != null) {
+            if (content.isText())
+                return new String[][] { { content.text } };
+            final String[] component = this.readComponent(reader, reader.getName().getLocalPart());
+            array = this.extend(array, content.index, () -> new String[] { "" });
+            array[content.index - 1] = component;
+        }
+        return array;
+    }
+
+    protected String[] readComponent(XMLStreamReader reader, String parentName) throws XMLStreamException {
+        Content content;
+        String[] array = new String[0];
+        while ((content = this.readFieldTag(reader, parentName, true)) != null) {
+            if (content.isText())
+                return new String[] { content.text };
+            final String subComponent = this.readSubComponent(reader, reader.getName().getLocalPart());
+            array = this.extend(array, content.index, () -> "");
+            array[content.index - 1] = subComponent;
+        }
+        return array;
+    }
+
+    protected String readSubComponent(XMLStreamReader reader, String parentName) throws XMLStreamException {
+        final Content content = this.readFieldTag(reader, parentName, true);
+        if (!content.isText())
+            throw this.newInvalidInputException(reader, "encountered <%s> but expected text content instead", reader.getName());
+        return content.text;
+    }
+
+    private static class Content {
+
+        final String text;
+        final int index;
+
+        Content(String text, int index) {
+            this.text = text;
+            this.index = index;
+        }
+        Content(String text) {
+            this(text, -1);
+        }
+        Content(int index) {
+            this(null, index);
+        }
+        boolean isText() {
+            return this.text != null;
+        }
+    }
+
+    /**
+     * Scan the content of the current field tag, which is either text or a nested field tag.
+     * In the latter case, the tag name must be be the current tag's name plus {@code ".N"} for some {@code N},
+     * and on return the current event will be that nested opening tag. In the former case, the
+     * text content is returned and the current event will be the closing curent field tag.
+     *
+     * @param reader input
+     * @param parentName parent tag name
+     * @param allowText whether to allow text as an option
+     * @return scanned content, or null if text not allowed and closing tag encountered
+     */
+    protected Content readFieldTag(XMLStreamReader reader, String parentName, boolean allowText) throws XMLStreamException {
+
+        // Sanity check
+        final int previousType = reader.getEventType();
+        switch (previousType) {
+        case XMLStreamConstants.START_ELEMENT:
+        case XMLStreamConstants.END_ELEMENT:
+            break;
+        default:
+            throw this.newInvalidInputException(reader, "internal error: wrong current event type: " + reader.getEventType());
+        }
+        final Pattern subTagPattern = this.subTagPattern(parentName);
+
+        // Scan
+        final StringBuilder cdata = new StringBuilder();
+        for (int eventType = reader.next(); true; eventType = reader.next()) {
+            switch (eventType) {
+            case XMLStreamConstants.CHARACTERS:
+            case XMLStreamConstants.CDATA:
+            case XMLStreamConstants.SPACE:
+            case XMLStreamConstants.ENTITY_REFERENCE:
+                cdata.append(reader.getText());
+                break;
+            case XMLStreamConstants.PROCESSING_INSTRUCTION:
+            case XMLStreamConstants.COMMENT:
+                break;
+            case XMLStreamConstants.START_ELEMENT:
+                final QName qname = reader.getName();
+                final String name = qname.getLocalPart();
+                if ((qname.getNamespaceURI() != null && !qname.getNamespaceURI().isEmpty())
+                  || !subTagPattern.matcher(name).matches())
+                    throw this.newInvalidInputException(reader, "unexpected tag <%s> within <%s>", qname, parentName);
+                final int index = Integer.parseInt(name.substring(parentName.length() + 1), 10);
+                return new Content(index);
+            case XMLStreamConstants.END_ELEMENT:
+                return allowText && previousType == XMLStreamConstants.START_ELEMENT ? new Content(cdata.toString()) : null;
+            default:
+                throw this.newInvalidInputException(reader, "unexpected XML content (type " + eventType + ")");
+            }
+        }
+    }
+
+    protected void expectTag(XMLStreamReader reader, String expect) throws XMLStreamException {
+        this.nextTag(reader, expect, false);
+    }
+
+    protected String nextTag(XMLStreamReader reader, String expect, boolean closingOK) throws XMLStreamException {
+        return this.nextTag(reader, Pattern.compile(Pattern.quote(expect)), closingOK);
+    }
+
+    /**
+     * Scan forward until we see an opening or closing tag.
+     * If opening tag is seen, its name is returned. If a closing tag is seen, null is returned
+     * if {@code closingOK}, else an exception thrown.
+     *
+     * @param reader XML input
+     * @param expect expected name pattern
+     * @param closingOK true if a closing tag is OK, otherwise false
+     * @return opening tag name, or null if closing tag found
+     * @throws XMLStreamException if something unexpected is encountered
+     */
+    protected String nextTag(XMLStreamReader reader, Pattern expect, boolean closingOK) throws XMLStreamException {
+        while (true) {
+            if (!reader.hasNext())
+                throw this.newInvalidInputException(reader, "unexpected end of input");
+            final int eventType = reader.next();
+            switch (eventType) {
+            case XMLStreamConstants.START_ELEMENT:
+                final QName qname = reader.getName();
+                if (qname.getNamespaceURI() != null && !qname.getNamespaceURI().isEmpty())
+                    throw this.newInvalidInputException(reader, "encountered <%s> with non-null namespace", qname);
+                final String name = qname.getLocalPart();
+                if (!expect.matcher(name).matches()) {
+                    throw this.newInvalidInputException(reader,
+                      "encountered unexpected element <%s> (expecting \"%s\")", name, expect);
+                }
+                return name;
+            case XMLStreamConstants.END_ELEMENT:
+                if (!closingOK)
+                    throw this.newInvalidInputException(reader, "found unexpected closing <%s> tag", reader.getName());
+                return null;
+            default:
+                break;
+            }
+        }
+    }
+
+    protected String readText(XMLStreamReader reader) throws XMLStreamException {
+        try {
+            return reader.getElementText();
+        } catch (Exception e) {
+            throw this.newInvalidInputException(reader, e, "invalid content in <%s> element: %s", reader.getName(), e.getMessage());
+        }
+    }
+
+    private Pattern subTagPattern(String name) {
+        return Pattern.compile(Pattern.quote(name) + "\\.[1-9][0-9]{0,8}");
+    }
+
+    private Pattern segmentNamePattern() {
+        return Pattern.compile("[A-Z][A-Z0-9]{2}");
+    }
+
+    protected XMLStreamException newInvalidInputException(XMLStreamReader reader, String format, Object... args) {
+        return this.newInvalidInputException(reader, null, format, args);
+    }
+
+    protected XMLStreamException newInvalidInputException(XMLStreamReader reader, Throwable cause, String format, Object... args) {
+        final XMLStreamException e = new XMLStreamException(String.format(format, args), reader.getLocation());
+        if (cause != null)
+            e.initCause(cause);
+        return e;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T[] append(T[] array, T element) {
+        final Class<?> elementType = array.getClass().getComponentType();
+        final int arrayLength = Array.getLength(array);
+        Object array2 = Array.newInstance(elementType, arrayLength + 1);
+        System.arraycopy(array, 0, array2, 0, arrayLength);
+        Array.set(array2, arrayLength, element);
+        return (T[])array2;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> T[] extend(T[] array, int minLength, Supplier<T> filler) {
+        final int arrayLength = Array.getLength(array);
+        if (arrayLength >= minLength)
+            return array;
+        final Class<?> elementType = array.getClass().getComponentType();
+        Object array2 = Array.newInstance(elementType, minLength);
+        System.arraycopy(array, 0, array2, 0, arrayLength);
+        for (int i = arrayLength; i < minLength; i++)
+            Array.set(array2, i, filler.get());
+        return (T[])array2;
     }
 
     /**
