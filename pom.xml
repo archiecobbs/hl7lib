@@ -8,7 +8,7 @@
     <groupId>org.dellroad</groupId>
     <artifactId>hl7lib</artifactId>
     <name>HL7Lib</name>
-    <version>1.3.1</version>
+    <version>1.3.2</version>
     <description>Lightweight Java library for HL7 messages </description>
     <url>https://github.com/archiecobbs/hl7lib</url>
     <licenses>
