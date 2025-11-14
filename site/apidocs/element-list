@@ -1,3 +1,4 @@
+module:org.dellroad.hl7
 org.dellroad.hl7
 org.dellroad.hl7.io
 org.dellroad.hl7.llp
