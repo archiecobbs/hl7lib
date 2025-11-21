@@ -22,9 +22,15 @@ import org.dellroad.hl7.HL7Writer;
  * Writes out HL7 messages in "file format".
  *
  * <p>
- * Each segment is terminated with LF, and a blank line is added between messages.
+ * Each segment is terminated by an end-of-segement character (default LF), and each message is terminated
+ * by an end-of-message character (default LF).
  */
 public class HL7FileWriter implements HL7Writer, Closeable {
+
+    /** The default end-of-segment character (newline) **/
+    public static final char DEFAULT_EOS = '\n';
+    /** The default end-of-message character (newline) **/
+    public static final char DEFAULT_EOM = '\n';
 
     /**
      * The underlying writer.
@@ -32,14 +38,23 @@ public class HL7FileWriter implements HL7Writer, Closeable {
     protected final BufferedWriter writer;
 
     /**
+     * The end-of-segment character.
+     */
+    protected final char eos;
+
+    /**
+     * The end-of-message character.
+     */
+    protected final char eom;
+
+    /**
      * Constructor.
      *
      * @param out underlying writer
+     * @throws IllegalArgumentException if {@code out} is null
      */
     public HL7FileWriter(Writer out) {
-        if (out == null)
-            throw new IllegalArgumentException("null out");
-        this.writer = new BufferedWriter(out);
+        this(out, DEFAULT_EOS, DEFAULT_EOM);
     }
 
     /**
@@ -48,10 +63,55 @@ public class HL7FileWriter implements HL7Writer, Closeable {
      *  <code>HL7FileWriter(new OutputStreamWriter(out, StandardCharsets.ISO_8859_1))</code>
      *  </blockquote>
      *
-     * @param out underlying input stream
+     * @param out underlying output
+     * @throws IllegalArgumentException if {@code out} is null
      */
     public HL7FileWriter(OutputStream out) {
-        this(new OutputStreamWriter(out, StandardCharsets.ISO_8859_1));
+        this(new OutputStreamWriter(HL7FileWriter.checkNull(out, "out"), StandardCharsets.ISO_8859_1));
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param out underlying writer
+     * @param eos end-of-segment character
+     * @param eom end-of-message character, or {@code '\u005Cu0000'} for none
+     * @throws IllegalArgumentException if {@code eos} or {@code eom} is not a
+     *  {@linkplain Character#isISOControl control character}.
+     * @throws IllegalArgumentException if {@code out} is null
+     */
+    public HL7FileWriter(Writer out, char eos, char eom) {
+        HL7FileWriter.checkNull(out, "out");
+        if (!Character.isISOControl(eos))
+            throw new IllegalArgumentException("invalid EOS character");
+        if (!Character.isISOControl(eom))
+            throw new IllegalArgumentException("invalid EOM character");
+        this.writer = new BufferedWriter(out);
+        this.eos = eos;
+        this.eom = eom;
+    }
+
+    /**
+     * Convenience constructor. Equivalent to:
+     *  <blockquote>
+     *  <code>HL7FileWriter(new OutputStreamWriter(out, StandardCharsets.ISO_8859_1), eos, eom)</code>
+     *  </blockquote>
+     *
+     * @param out underlying output
+     * @param eos end-of-segment character
+     * @param eom end-of-message character, or {@code '\u005Cu0000'} for none
+     * @throws IllegalArgumentException if {@code eos} or {@code eom} is not a
+     *  {@linkplain Character#isISOControl control character}.
+     * @throws IllegalArgumentException if {@code out} is null
+     */
+    public HL7FileWriter(OutputStream out, char eos, char eom) {
+        this(new OutputStreamWriter(HL7FileWriter.checkNull(out, "out"), StandardCharsets.ISO_8859_1), eos, eom);
+    }
+
+    private static <T> T checkNull(T obj, String name) {
+        if (obj == null)
+            throw new IllegalArgumentException("null " + name);
+        return obj;
     }
 
     /**
@@ -61,9 +121,10 @@ public class HL7FileWriter implements HL7Writer, Closeable {
         HL7Seps seps = message.getMSHSegment().getHL7Seps();
         for (HL7Segment segment : message.getSegments()) {
             this.writer.write(segment.toString(seps));
-            this.writer.write('\n');
+            this.writer.write(this.eos);
         }
-        this.writer.write('\n');
+        if (this.eom != '\0')
+            this.writer.write(this.eom);
         this.writer.flush();
     }
 
@@ -75,4 +136,3 @@ public class HL7FileWriter implements HL7Writer, Closeable {
         this.writer.close();
     }
 }
-
