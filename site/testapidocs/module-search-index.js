@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"org.dellroad.hl7"}];updateSearchResults();
+moduleSearchIndex = [];updateSearchResults();

@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"org.dellroad.hl7","l":"org.dellroad.hl7"},{"m":"org.dellroad.hl7","l":"org.dellroad.hl7.io"},{"m":"org.dellroad.hl7","l":"org.dellroad.hl7.llp"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.dellroad.hl7"},{"l":"org.dellroad.hl7.io"},{"l":"org.dellroad.hl7.llp"}];updateSearchResults();
